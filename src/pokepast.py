@@ -49,9 +49,12 @@ def parsePokepast(url):
         paste_mon = PokepastMon()
         p_soup = a.contents[3].contents
         name_soup = p_soup[0]
+        print(type(name_soup))
         if(type(name_soup) == bs4.element.Tag):
             paste_mon.name = name_soup.text
         elif(type(name_soup) == bs4.element.NavigableString):
+            print(p_soup)
+            print(str(name_soup))
             paste_mon.name = str(name_soup).split("(")[0].split("@")[0].strip()
         for i in range(len(p_soup)):
             if(type(p_soup[i]) == bs4.element.Tag):

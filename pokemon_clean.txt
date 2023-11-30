@@ -1289,3 +1289,7 @@ ursaluna-bloodmoon|0901_01
 ogerpon-wellspring-mask|1017_01
 ogerpon-hearthflame-mask|1017_02
 ogerpon-cornerstone-mask|1017_03
+ogerpon-wellspring|1017_01
+ogerpon-hearthflame|1017_02
+ogerpon-cornerstone|1017_03
+urshifu|0892

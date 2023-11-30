@@ -1,38 +1,52 @@
 {
     "tour_name": "Portugal VGC Weekly #6",
     "tour_type": "PREMIER",
+    "divisions": 
+    {
+        "junior": 0,
+        "senior": 0,
+        "master": 49
+    },
     "players": [
         {
             "name": "João Veloso",
-            "pokepast": "https://pokepast.es/0961bde1f12617d0"
+            "pokepast": "https://pokepast.es/0961bde1f12617d0",
+            "record": "3-1"
         },
         {
-            "name": "c c",
-            "pokepast": "https://pokepast.es/ecbc58c9d610167b"
+            "name": "Daravone Souphommanychanh",
+            "pokepast": "https://pokepast.es/ecbc58c9d610167b",
+            "record": "4-0"
         },
         {
             "name": "João Santos",
-            "pokepast": "https://pokepast.es/e8c1a8dfda6aa325"
+            "pokepast": "https://pokepast.es/e8c1a8dfda6aa325",
+            "record": "3-1"
         },
         {
             "name": "Sara Moreno",
-            "pokepast": "https://pokepast.es/c6f9365ea0422143"
+            "pokepast": "https://pokepast.es/c6f9365ea0422143",
+            "record": "3-1"
         },
         {
             "name": "Simão Faria",
-            "pokepast": "https://pokepast.es/3d6c20d1047c452d"
+            "pokepast": "https://pokepast.es/3d6c20d1047c452d",
+            "record": "3-1"
         },
         {
             "name": "Hugo Rodrigues",
-            "pokepast": "https://pokepast.es/cd416135c3c8636f"
+            "pokepast": "https://pokepast.es/cd416135c3c8636f",
+            "record": "3-1"
         },
         {
             "name": "Pedro Ferreira",
-            "pokepast": "https://pokepast.es/f152d924b7322e3b"
+            "pokepast": "https://pokepast.es/f152d924b7322e3b",
+            "record": "2-2"
         },
         {
             "name": "Fernando Albuquerque",
-            "pokepast": "https://pokepast.es/1192c7661a412a0c"
+            "pokepast": "https://pokepast.es/1192c7661a412a0c",
+            "record": "2-2"
         }
     ]
 }
