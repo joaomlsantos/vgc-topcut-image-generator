@@ -32,3 +32,5 @@ class TopCut(BaseModel):
     date: str
     format: str
 
+class TomHtmlUrl(BaseModel):
+    url: str
