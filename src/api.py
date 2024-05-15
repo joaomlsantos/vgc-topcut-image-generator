@@ -6,6 +6,7 @@ from model import TournamentType, Player, TopCut, TomHtmlUrl
 import base64
 from typing import Union
 import tom_html_parser
+import uvicorn
 
 
 
@@ -44,3 +45,6 @@ async def postTopcut(topcut: TopCut, format: Union[str, None] = None):
 async def postPairings(url: TomHtmlUrl):
     pairings = tom_html_parser.parseTomHtml(url)
     return pairings
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

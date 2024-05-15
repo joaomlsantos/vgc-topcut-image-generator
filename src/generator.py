@@ -114,6 +114,7 @@ def genTemplate(topcut):
     d.text((1080,115), str(topcut.divisions.master), fill="white", anchor="rs", font=font_bold)
 
 
+    pokepastTeams = []      # this is a hack; i'm too sleepy to change the Player class in the proper way rn
 
 
     mult_2 = 0
@@ -174,7 +175,12 @@ def genTemplate(topcut):
         icon_tera_x_base = 93 if (i % 2 == 0) else 631
 
         pokepast = parsePokepast(topcut.players[i].pokepast)
+        
+        pokepastTeams.append(pokepast)  # change this in the future to be in the Player class
+        
+
         for p in range(len(pokepast)):
+            print(pokepast[p])
             icon_name = pokepast[p].name.lower().replace(" ", "-")
             pokemon_icon_id = pokemonindex[icon_name]
             if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
@@ -194,7 +200,7 @@ def genTemplate(topcut):
             item_icon = item_icon.resize((24,24))
             im.paste(item_icon, (icon_item_x_base + 80*p, icon_item_y), mask=item_icon)
 
-            tera_icon = Image.open(LOCAL_TERA_ICONS_SRC + pokepast[p].tera.lower() + ".png")
+            tera_icon = Image.open(LOCAL_TERA_ICONS_SRC + pokepast[p].tera.strip().lower() + ".png")
             tera_icon = tera_icon.convert("RGBA")
             tera_icon = tera_icon.resize((32,32))
             im.paste(tera_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=tera_icon)
@@ -206,10 +212,26 @@ def genTemplate(topcut):
     #im.paste(icon_test, (60, 280), mask=icon_test)
 
 
-
+    usages = computeUsage(pokepastTeams)
     
 
     return im
+
+
+def computeUsage(teams):
+    pokemon_count = {}
+    total_pokemon = 0
+    for t in teams:
+        for p in t:
+            if(p.name not in pokemon_count.keys()):
+                pokemon_count[p.name] = 0
+            pokemon_count[p.name] += 1
+            total_pokemon += 1
+
+    pokemon_ratio = {k: v / len(teams) for k, v in pokemon_count.items()}
+
+    return sorted(pokemon_ratio.items(), key=lambda i: i[1], reverse=True)
+
 
 
 
