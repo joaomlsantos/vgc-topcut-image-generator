@@ -1015,6 +1015,13 @@ okidogi|1014
 munkidori|1015
 fezandipiti|1016
 ogerpon|1017
+archaludon|1018
+hydrapple|1019
+gouging-fire|1020
+raging-bolt|1021
+iron-boulder|1022
+iron-crown|1023
+terapagos|1024
 deoxys-attack|0386_01
 deoxys-defense|0386_02
 deoxys-speed|0386_03
@@ -1289,3 +1296,7 @@ ursaluna-bloodmoon|0901_01
 ogerpon-wellspring-mask|1017_01
 ogerpon-hearthflame-mask|1017_02
 ogerpon-cornerstone-mask|1017_03
+ogerpon-wellspring|1017_01
+ogerpon-hearthflame|1017_02
+ogerpon-cornerstone|1017_03
+urshifu|0892

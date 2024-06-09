@@ -48,6 +48,7 @@ def parsePokepast(url):
     for a in articles:
         paste_mon = PokepastMon()
         p_soup = a.contents[3].contents
+        print(p_soup)
         name_soup = p_soup[0]
         if(type(name_soup) == bs4.element.Tag):
             paste_mon.name = name_soup.text

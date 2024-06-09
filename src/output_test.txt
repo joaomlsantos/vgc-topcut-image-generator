@@ -1,0 +1,905 @@
+{
+    "tour_name": "Midseason Showdown Dreamhack",
+    "pairings": [
+        {
+            "player1": "Adrian Cabero Diez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "David nicodemus franquet",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Adrian Ortega",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "IVAN PRIETO LORENTE",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "SR"
+        },
+        {
+            "player1": "Aitor Rebollido Gomez",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Gabriel Sobalvarro Barb\u00e9",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Alberto Comeche Mart\u00ednez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Alex Moreno. Robles",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Alejandro Reaza Martinez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Joel Sanchez Rodriguez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Alejandro Santos Peyr\u00f3",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Guillem L\u00f3pez Fern\u00e1ndez L\u00f3pez Fern\u00e1ndez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Alejandro Tovar Asensio",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Jos\u00e9 Elguea Arribas",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "ALEX CHOCANO PEREZ",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "Salvador Bertomeu",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Alex Moreno. Robles",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Alberto Comeche Mart\u00ednez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Alexis Munera Rodr\u00edguez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Fernando Risoto D\u00edaz",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Andr\u00e9s Tomeo S\u00e1nchez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Heliott Chiral",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Angel Rodriguez",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Marcos Recuenco de Moya",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Axel Reyes Exposito",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Juan Francisco Alcaraz Paterna",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Benji Clemente Barreda",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Raico Pardo Martorell",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Carlos Ca\u00f1o Berm\u00fadez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Rafael Busutil Martinez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Carlos Plazuelo de Luchi",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "SR",
+            "player2": "Tony Erwin Martineau Gil",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Carlos Robledo Badia",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Manuel Hernandez Marin",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Carlos San Juan Garcia",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Manuel Pitel Gomez",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Cl\u00e0udia Garcia",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "RODRIGO IGNACIO ROJAS CARMONA",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Daniel Soler S\u00e1nchez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Olga Elias",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "David D\u00edaz Linares",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Osel Trenado",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "David nicodemus franquet",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Adrian Cabero Diez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "David P\u00e9rez Bermejo",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Pau Alonso S\u00e1nchez",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Enrique P\u00e9rez Edo",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "V\u00edctor Jimeno Moreno",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Enrique Schwartz Cuder",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "Joaquin Carlos Jurado Garz\u00f3n",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Fernando Risoto D\u00edaz",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Alexis Munera Rodr\u00edguez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Forhad Chodhoury Chodhoury",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Jose Miguel Mata Boza",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Fran Martinez Perez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Juan Ben\u00edtez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Francisco Fern\u00e1ndez Cervilla",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Jorge Salinas",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Francisco Javier Pe\u00f1a Rodr\u00edguez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Javier Frances Belda",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Gabriel Sobalvarro Barb\u00e9",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Aitor Rebollido Gomez",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Gerard Torres Villa",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Joaqu\u00edn Blanch V\u00e1zquez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Guillem L\u00f3pez Fern\u00e1ndez L\u00f3pez Fern\u00e1ndez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Alejandro Santos Peyr\u00f3",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Heliott Chiral",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Andr\u00e9s Tomeo S\u00e1nchez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "H\u00e9ctor Paniagua Delgado",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Jorge Victorio Carretero Rodr\u00edguez-Bobada",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Iker De Dios Soto",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Jes\u00fas Marchena Carrera",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "IVAN PRIETO LORENTE",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "SR",
+            "player2": "Adrian Ortega",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Javier Corrales Mart\u00ednez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Mart\u00edn S\u00e1ez Mart\u00ednez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Javier Fombuena Sanmiguel",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "V\u00edctor Miguel Navarro Monle\u00f3n",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Javier Frances Belda",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Francisco Javier Pe\u00f1a Rodr\u00edguez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Javier Moreno Gonz\u00e1lez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Sergio P\u00e9rez Widera",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Javier Plazuelo de Luchi",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "SR",
+            "player2": "Julen Maeso Calzada",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Jes\u00fas Marchena Carrera",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Iker De Dios Soto",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Joaquin Carlos Jurado Garz\u00f3n",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "Enrique Schwartz Cuder",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Joaqu\u00edn Blanch V\u00e1zquez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Gerard Torres Villa",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Joel Sanchez Rodriguez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Alejandro Reaza Martinez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Jonathan San Jose Lozano",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "Michael Jon Lim Carena",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Jorge Alfonso Garcia",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Juan Manuel Odriozola Herr\u00e1n",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Jorge Salinas",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Francisco Fern\u00e1ndez Cervilla",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Jorge Victorio Carretero Rodr\u00edguez-Bobada",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "H\u00e9ctor Paniagua Delgado",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Jose Miguel Mata Boza",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Forhad Chodhoury Chodhoury",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Josu\u00e9 Sim\u00f3n Penalba",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "pedro corro lopez",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Jos\u00e9 Elguea Arribas",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Alejandro Tovar Asensio",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Juan Antonio Fern\u00e1ndez Alcaide",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Pau Bragulat F\u00e0bregas",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Juan Ben\u00edtez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Fran Martinez Perez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Juan Francisco Alcaraz Paterna",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Axel Reyes Exposito",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Juan Francisco Escobosa Brocal",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Luis Maeso Miralles",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Juan Manuel Odriozola Herr\u00e1n",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Jorge Alfonso Garcia",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Juan Miguel Cort\u00e9s Enrique",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Julio Morales Gonz\u00e1lez",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Juan N\u00fa\u00f1ez Moreno",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Miguel Latorre Marco",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Julen Maeso Calzada",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Javier Plazuelo de Luchi",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "SR"
+        },
+        {
+            "player1": "Julio Morales Gonz\u00e1lez",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Juan Miguel Cort\u00e9s Enrique",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Luis Maeso Miralles",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Juan Francisco Escobosa Brocal",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Manuel Cervera Ortiz",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Mario Ibor Nicol\u00e1s",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Manuel Hernandez Marin",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Carlos Robledo Badia",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Manuel Pitel Gomez",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Carlos San Juan Garcia",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Marcos Recuenco de Moya",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Angel Rodriguez",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Mario Ibor Nicol\u00e1s",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Manuel Cervera Ortiz",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Mart\u00edn S\u00e1ez Mart\u00ednez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Javier Corrales Mart\u00ednez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Michael Jon Lim Carena",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "Jonathan San Jose Lozano",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Miguel Latorre Marco",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Juan N\u00fa\u00f1ez Moreno",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Miguel \u00c1ngel Alc\u00e1cer Gil",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Rub\u00e9n Biot",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Miquel Nicolau G\u00f3mez",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Samuel Lorenzo",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Olga Elias",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Daniel Soler S\u00e1nchez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Osel Trenado",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "David D\u00edaz Linares",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Pau Alonso S\u00e1nchez",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "David P\u00e9rez Bermejo",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Pau Bragulat F\u00e0bregas",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Juan Antonio Fern\u00e1ndez Alcaide",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "pedro corro lopez",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Josu\u00e9 Sim\u00f3n Penalba",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Rafael Busutil Martinez",
+            "wlratio1": "3/0/0",
+            "score1": "9",
+            "division1": "MA",
+            "player2": "Carlos Ca\u00f1o Berm\u00fadez",
+            "wlratio2": "3/0/0",
+            "score2": "9",
+            "division2": "MA"
+        },
+        {
+            "player1": "Raico Pardo Martorell",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Benji Clemente Barreda",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Raul Suarez Busto",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Rub\u00e9n G\u00f3mez Cornejo",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "RODRIGO IGNACIO ROJAS CARMONA",
+            "wlratio1": "1/2/0",
+            "score1": "3",
+            "division1": "MA",
+            "player2": "Cl\u00e0udia Garcia",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        },
+        {
+            "player1": "Rub\u00e9n Biot",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Miguel \u00c1ngel Alc\u00e1cer Gil",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Rub\u00e9n G\u00f3mez Cornejo",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Raul Suarez Busto",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Salvador Bertomeu",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "ALEX CHOCANO PEREZ",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "MA"
+        },
+        {
+            "player1": "Samuel Lorenzo",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Miquel Nicolau G\u00f3mez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Sergio P\u00e9rez Widera",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Javier Moreno Gonz\u00e1lez",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "Tony Erwin Martineau Gil",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "Carlos Plazuelo de Luchi",
+            "wlratio2": "0/3/0",
+            "score2": "0",
+            "division2": "SR"
+        },
+        {
+            "player1": "V\u00edctor Jimeno Moreno",
+            "wlratio1": "2/1/0",
+            "score1": "6",
+            "division1": "MA",
+            "player2": "Enrique P\u00e9rez Edo",
+            "wlratio2": "2/1/0",
+            "score2": "6",
+            "division2": "MA"
+        },
+        {
+            "player1": "V\u00edctor Miguel Navarro Monle\u00f3n",
+            "wlratio1": "0/3/0",
+            "score1": "0",
+            "division1": "MA",
+            "player2": "Javier Fombuena Sanmiguel",
+            "wlratio2": "1/2/0",
+            "score2": "3",
+            "division2": "MA"
+        }
+    ]
+}

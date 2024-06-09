@@ -16,10 +16,21 @@ class TournamentType(str, Enum):
 class Player(BaseModel):
     name: str
     pokepast: str
+    record: str
+
+class Division(BaseModel):
+    junior: int
+    senior: int
+    master: int
 
 
 class TopCut(BaseModel):
     tour_name: str
     tour_type: TournamentType
+    divisions: Division
     players: List[Player]
+    date: str
+    format: str
 
+class TomHtmlUrl(BaseModel):
+    url: str
