@@ -195,15 +195,17 @@ def genTemplate(topcut):
             p_icon = p_icon.resize((60,60))
             im.paste(p_icon, (icon_pokemon_x_base + 80*p, icon_pokemon_y), mask=p_icon)
 
-            item_icon = Image.open(LOCAL_ITEM_ICONS_SRC + itemIndex[pokepast[p].item] + ".png")
-            item_icon = item_icon.convert("RGBA")
-            item_icon = item_icon.resize((24,24))
-            im.paste(item_icon, (icon_item_x_base + 80*p, icon_item_y), mask=item_icon)
+            if(pokepast[p].item != ""):
+                item_icon = Image.open(LOCAL_ITEM_ICONS_SRC + itemIndex[pokepast[p].item] + ".png")
+                item_icon = item_icon.convert("RGBA")
+                item_icon = item_icon.resize((24,24))
+                im.paste(item_icon, (icon_item_x_base + 80*p, icon_item_y), mask=item_icon)
 
-            tera_icon = Image.open(LOCAL_TERA_ICONS_SRC + pokepast[p].tera.strip().lower() + ".png")
-            tera_icon = tera_icon.convert("RGBA")
-            tera_icon = tera_icon.resize((32,32))
-            im.paste(tera_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=tera_icon)
+            if(pokepast[p].tera.strip().lower() != ""):
+                tera_icon = Image.open(LOCAL_TERA_ICONS_SRC + pokepast[p].tera.strip().lower() + ".png")
+                tera_icon = tera_icon.convert("RGBA")
+                tera_icon = tera_icon.resize((32,32))
+                im.paste(tera_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=tera_icon)
 
 
 

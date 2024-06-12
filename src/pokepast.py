@@ -51,10 +51,19 @@ def parsePokepast(url):
         name_soup = p_soup[0]
         if(type(name_soup) == bs4.element.Tag):
             paste_mon.name = name_soup.text
-        elif(type(name_soup) == bs4.element.NavigableString and "@" in str(name_soup)):
-            paste_mon.name = str(name_soup).split("(")[0].split("@")[0].strip()
         elif(type(name_soup) == bs4.element.NavigableString):
-            paste_mon.name = p_soup[1].text
+            if("@" in str(name_soup)):
+                get_parenthesis = str(name_soup).split("(")
+                if(len(get_parenthesis) > 1):
+                    paste_mon.name = get_parenthesis[1].split(")")[0].strip()
+                    if(paste_mon.name.lower() in ["f", "m"]):
+                        paste_mon.name = p_soup[1].text
+                else:
+                    paste_mon.name = str(name_soup).split("@")[0].strip()
+            else:
+                paste_mon.name = p_soup[1].text
+                if(paste_mon.name.lower() in ["f", "m"]):
+                    paste_mon.name = p_soup[0].text.split("(")[0].strip()
         for i in range(len(p_soup)):
             if(type(p_soup[i]) == bs4.element.Tag):
                 if("class" in p_soup[i].attrs and "gender" in p_soup[i]["class"][0]):
