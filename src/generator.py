@@ -35,8 +35,12 @@ pokemonindex = loadPokemonIndex()
 cp_distribution = {}    # tour_type -> (points, kicker)
 cp_distribution["PREMIER"] = [(30, 0), (16, 0), (12, 0), (8, 17), (6, 48), (4, 80)]
 cp_distribution["MSS"] = [(50, 0), (40, 0), (32, 0), (25, 17), (20, 48), (16, 80), (13, 128)]
-cp_distribution["REGIONAL"] = [(200, 0), (160, 0), (130, 0), (100, 0), (80, 48), (60, 80), (50, 128), (40, 256), (30, 512), (20, 1024)]
-cp_distribution["INTERNATIONAL"] = [(500, 0), (400, 0), (320, 0), (250, 0), (200, 48), (160, 80), (130, 128), (100, 256), (80, 512), (60, 1024), (50, 2046)]
+cp_distribution["OLDREGIONAL"] = [(200, 0), (160, 0), (130, 0), (100, 0), (80, 48), (60, 80), (50, 128), (40, 256), (30, 512), (20, 1024)]
+cp_distribution["OLDINTERNATIONAL"] = [(500, 0), (400, 0), (320, 0), (250, 0), (200, 48), (160, 80), (130, 128), (100, 256), (80, 512), (60, 1024), (50, 2046)]
+cp_distribution["CUP"] = [(50, 0), (40, 4), (32, 8), (25, 17), (20, 48), (16, 80), (13, 128)]
+cp_distribution["CHALLENGE"] = [(15, 0), (12, 4), (10, 8), (8, 17), (6, 48), (4, 80)]
+cp_distribution["REGIONAL"] = [(350, 0), (325, 4), (300,8), (280, 17), (160, 33), (125, 65), (100, 129), (80, 257), (60, 513), (40, 1025), (20, 2049)]
+cp_distribution["INTERNATIONAL"] = [(750, 0), (700, 4), (650,8), (600, 17), (400, 33), (350, 65), (250, 129), (150, 257), (120, 513), (80, 1025), (40, 2049)]
 
 
 
@@ -85,13 +89,13 @@ def genTemplate(topcut):
     #im.paste(template, (0, 0), mask=template)
 
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL"]):
         tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours/" + topcut.tour_type.lower() + ".png"))
         im.paste(tour_icon, (22, 25), mask=tour_icon)
 
     d = ImageDraw.Draw(im)
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL"]):
         #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
@@ -129,7 +133,7 @@ def genTemplate(topcut):
         d.text((num_player_x, num_player_y), str(i+1), fill="white", anchor="rs", font=num_player_font)
         
         
-        if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL"]):
+        if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL"]):
             cur_p = i+1
             cp_dist = cp_distribution[topcut.tour_type]
             cur_sel = cp_dist[mult_2]
