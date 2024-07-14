@@ -11,6 +11,10 @@ class TournamentType(str, Enum):
     REGIONAL = "REGIONAL"
     INTERNATIONAL = "INTERNATIONAL"
     WORLDS = "WORLDS"
+    CUP = "CUP"
+    CHALLENGE = "CHALLENGE"
+    OLDREGIONAL = "OLDREGIONAL"
+    OLDINTERNATIONAL = "OLDINTERNATIONAL"
 
 
 class Player(BaseModel):
