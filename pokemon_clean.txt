@@ -899,7 +899,7 @@ calyrex|0898
 wyrdeer|0899
 kleavor|0900
 ursaluna|0901
-basculegion-male|0902
+basculegion|0902
 sneasler|0903
 overqwil|0904
 enamorus-incarnate|0905
@@ -923,6 +923,8 @@ pawmo|0922
 pawmot|0923
 tandemaus|0924
 maushold|0925
+maushold-four|0925
+maushold-three|0925
 fidough|0926
 dachsbun|0927
 smoliv|0928
