@@ -89,13 +89,13 @@ def genTemplate(topcut):
     #im.paste(template, (0, 0), mask=template)
 
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL"]):
         tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours/" + topcut.tour_type.lower() + ".png"))
         im.paste(tour_icon, (22, 25), mask=tour_icon)
 
     d = ImageDraw.Draw(im)
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL"]):
         #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
@@ -164,12 +164,20 @@ def genTemplate(topcut):
                 p_names[-1] = p_names[-1][0] + "."
                 player_name = " ".join(p_names)
 
-        if(i % 2 == 0):
-            d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
-            d.text((412, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+        if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GRASSROOTS", "WORLDS"]):
+            if(i % 2 == 0):
+                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((500, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+            else:
+                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((1038, 293 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
         else:
-            d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
-            d.text((950, 293 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+            if(i % 2 == 0):
+                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((412, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+            else:
+                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((950, 293 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
 
         icon_pokemon_y = 274 + (41 * (i % 2)) + 151*(i//2)
         icon_pokemon_x_base = 49 if (i % 2 == 0) else 587
