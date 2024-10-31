@@ -3,7 +3,7 @@ import io
 from PIL import Image, ImageDraw, ImageFont
 import os
 from model import TournamentType, Player, TopCut
-from urllib.request import urlopen
+from urllib.request import urlopen, urlretrieve
 from pokepast import parsePokepast
 
 
@@ -88,11 +88,18 @@ def genTemplate(topcut):
 
     #im.paste(template, (0, 0), mask=template)
 
-
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
-        tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours/" + topcut.tour_type.lower() + ".png"))
+    if(topcut.image_url != None):
+        new_image = urlretrieve(topcut.image_url)
+        tour_icon = Image.open(new_image[0]).convert("RGBA")
+        width, height = tour_icon.size
+        print(width, height)
+        tour_icon = tour_icon.resize((width * 144 // height, 144))
         im.paste(tour_icon, (22, 25), mask=tour_icon)
-
+    else:
+        if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
+            tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours/" + topcut.tour_type.lower() + ".png"))
+            im.paste(tour_icon, (22, 25), mask=tour_icon)
+    
     d = ImageDraw.Draw(im)
 
     if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
@@ -192,7 +199,7 @@ def genTemplate(topcut):
         
 
         for p in range(len(pokepast)):
-            print(pokepast[p])
+            #print(pokepast[p])
             icon_name = pokepast[p].name.lower().replace(" ", "-")
             pokemon_icon_id = pokemonindex[icon_name]
             if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):

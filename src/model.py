@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 
 class TournamentType(str, Enum):
@@ -39,6 +39,7 @@ class TopCut(BaseModel):
     players: List[Player]
     date: str
     format: str
+    image_url: Optional[str] = None
 
 class TomHtmlUrl(BaseModel):
     url: str
