@@ -89,13 +89,13 @@ def genTemplate(topcut):
     #im.paste(template, (0, 0), mask=template)
 
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
         tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours/" + topcut.tour_type.lower() + ".png"))
         im.paste(tour_icon, (22, 25), mask=tour_icon)
 
     d = ImageDraw.Draw(im)
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
         #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
@@ -164,7 +164,7 @@ def genTemplate(topcut):
                 p_names[-1] = p_names[-1][0] + "."
                 player_name = " ".join(p_names)
 
-        if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GRASSROOTS", "WORLDS"]):
+        if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]):
             if(i % 2 == 0):
                 d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
                 d.text((500, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
