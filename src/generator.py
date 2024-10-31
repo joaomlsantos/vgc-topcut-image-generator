@@ -102,7 +102,7 @@ def genTemplate(topcut):
     
     d = ImageDraw.Draw(im)
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"] or topcut.image_url != None):
         #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
