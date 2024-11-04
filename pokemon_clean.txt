@@ -1013,6 +1013,7 @@ iron-leaves|1010
 dipplin|1011
 poltchageist|1012
 sinistcha|1013
+sinistcha-masterpiece|1013
 okidogi|1014
 munkidori|1015
 fezandipiti|1016
