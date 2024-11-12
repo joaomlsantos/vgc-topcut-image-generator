@@ -675,6 +675,7 @@ pancham|0674
 pangoro|0675
 furfrou|0676
 espurr|0677
+meowstic|0678
 meowstic-male|0678
 honedge|0679
 doublade|0680
