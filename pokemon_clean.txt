@@ -1274,9 +1274,9 @@ palkia-origin|0484_01
 basculin-white-striped|0550_02
 basculegion-female|0902_01
 enamorus-therian|0905_01
-tauros-paldea-combat-breed|0128_01
-tauros-paldea-blaze-breed|0128_02
-tauros-paldea-aqua-breed|0128_03
+tauros-paldea-combat|0128_01
+tauros-paldea-blaze|0128_02
+tauros-paldea-aqua|0128_03
 wooper-paldea|0194_01
 oinkologne-female|0916_01
 dudunsparce-three-segment|0982_01
