@@ -21,9 +21,13 @@ class TournamentType(str, Enum):
     MASTERBALL = "MASTERBALL"
 
 
+class Pokemon(BaseModel):
+    name: str
+    teratype: str
+    item: str
 class Player(BaseModel):
     name: str
-    pokepast: str
+    pokemon: List[Pokemon]
     record: str
 
 class Division(BaseModel):
@@ -42,3 +46,5 @@ class TopCut(BaseModel):
 
 class TomHtmlUrl(BaseModel):
     url: str
+
+

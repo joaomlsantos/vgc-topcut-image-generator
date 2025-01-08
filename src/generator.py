@@ -2,10 +2,7 @@ from model import TournamentType, Player, TopCut
 import io
 from PIL import Image, ImageDraw, ImageFont
 import os
-from model import TournamentType, Player, TopCut
 from urllib.request import urlopen
-from pokepast import parsePokepast
-
 
 
 def loadItemIndex():
@@ -117,10 +114,6 @@ def genTemplate(topcut):
     d.text((1010,115), str(topcut.divisions.senior), fill="white", anchor="rs", font=font_bold)
     d.text((1080,115), str(topcut.divisions.master), fill="white", anchor="rs", font=font_bold)
 
-
-    pokepastTeams = []      # this is a hack; i'm too sleepy to change the Player class in the proper way rn
-
-
     mult_2 = 0
     for i in range(len(topcut.players)):
         player_el = Image.open(os.path.join(SOURCE_PATH, "player_element_circles.png"))
@@ -186,17 +179,14 @@ def genTemplate(topcut):
         icon_tera_y = 270 + (40 * (i % 2)) + 150*(i//2)
         icon_tera_x_base = 93 if (i % 2 == 0) else 631
 
-        pokepast = parsePokepast(topcut.players[i].pokepast)
-        
-        pokepastTeams.append(pokepast)  # change this in the future to be in the Player class
-        
+        newPokemon = topcut.players[i].pokemon
 
-        for p in range(len(pokepast)):
-            print(pokepast[p])
-            icon_name = pokepast[p].name.lower().replace(" ", "-")
+        for p in range(len(newPokemon)):
+            print(newPokemon[p])
+            icon_name = newPokemon[p].name.lower().replace(" ", "-")
             pokemon_icon_id = pokemonindex[icon_name]
             if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
-                print(POKEMON_ICONS_SRC + pokepast[p].name.lower().replace(" ", "-") + ".png")
+                print(POKEMON_ICONS_SRC + newPokemon[p].name.lower().replace(" ", "-") + ".png")
                 icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
                 content = icon_url.read()
                 with open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png", "wb") as download:
@@ -207,14 +197,14 @@ def genTemplate(topcut):
             p_icon = p_icon.resize((60,60))
             im.paste(p_icon, (icon_pokemon_x_base + 80*p, icon_pokemon_y), mask=p_icon)
 
-            if(pokepast[p].item != ""):
-                item_icon = Image.open(LOCAL_ITEM_ICONS_SRC + itemIndex[pokepast[p].item] + ".png")
+            if(newPokemon[p].item != ""):
+                item_icon = Image.open(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
                 item_icon = item_icon.convert("RGBA")
                 item_icon = item_icon.resize((24,24))
                 im.paste(item_icon, (icon_item_x_base + 80*p, icon_item_y), mask=item_icon)
 
-            if(pokepast[p].tera.strip().lower() != ""):
-                tera_icon = Image.open(LOCAL_TERA_ICONS_SRC + pokepast[p].tera.strip().lower() + ".png")
+            if(newPokemon[p].teratype.strip().lower() != ""):
+                tera_icon = Image.open(LOCAL_TERA_ICONS_SRC + newPokemon[p].teratype.strip().lower() + ".png")
                 tera_icon = tera_icon.convert("RGBA")
                 tera_icon = tera_icon.resize((32,32))
                 im.paste(tera_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=tera_icon)
@@ -226,7 +216,7 @@ def genTemplate(topcut):
     #im.paste(icon_test, (60, 280), mask=icon_test)
 
 
-    usages = computeUsage(pokepastTeams)
+    #usages = computeUsage(pokepastTeams)
     
 
     return im
