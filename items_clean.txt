@@ -1654,10 +1654,6 @@ Honey Cake|1652
 Grain Cake|1653
 Bean Cake|1654
 Salt Cake|1655
-Potion|1656
-Super Potion|1657
-Hyper Potion|1658
-Max Potion|1659
 Full Restore|1660
 Remedy|1661
 Fine Remedy|1662
