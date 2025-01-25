@@ -1638,9 +1638,6 @@ Crunchy Salt|1636
 Wood|1637
 King's Leaf|1638
 Marsh Balm|1639
-Poké Ball|1640
-Great Ball|1641
-Ultra Ball|1642
 Feather Ball|1643
 Pokéshi Doll|1644
 ???|1645
@@ -1704,9 +1701,6 @@ Tempting Charm T|1706
 Tempting Charm Y|1707
 Candy Truffle|1708
 Cake-Lure Base|1709
-Poké Ball|1710
-Great Ball|1711
-Ultra Ball|1712
 Feather Ball|1713
 ???|1714
 ???|1715
