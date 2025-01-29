@@ -20,30 +20,39 @@ class TournamentType(str, Enum):
     PREMIERBALL = "PREMIERBALL"
     MASTERBALL = "MASTERBALL"
 
+'''
+set up to 
+class TournamentType(BaseModel):
+    name: str = ""
+    img_path: str = ""
+    hasChampionshipPoints: bool = False
+'''
+
 
 class Pokemon(BaseModel):
-    name: str
-    teratype: str
-    item: str
-    gmax: bool
+    name: str = ""
+    teratype: str = ""
+    item: str = ""
+    gmax: bool = False
+
 class Player(BaseModel):
-    name: str
-    pokemon: List[Pokemon]
-    record: str
+    name: str = ""
+    pokemon: List[Pokemon] = []
+    record: str = ""
 
 class Division(BaseModel):
-    junior: int
-    senior: int
-    master: int
+    junior: int = 0
+    senior: int = 0
+    master: int = 0
 
 
 class TopCut(BaseModel):
-    tour_name: str
+    tour_name: str = ""
     tour_type: TournamentType
     divisions: Division
     players: List[Player]
-    date: str
-    format: str
+    date: str = ""
+    format: str = ""
 
 class TomHtmlUrl(BaseModel):
     url: str
