@@ -178,6 +178,7 @@ def genTemplate(topcut):
         icon_item_x_base = 94 if (i % 2 == 0) else 632
         icon_tera_y = 270 + (40 * (i % 2)) + 150*(i//2)
         icon_tera_x_base = 93 if (i % 2 == 0) else 631
+        icon_gmax_x_base = 43 if (i % 2 == 0) else 587
 
         newPokemon = topcut.players[i].pokemon
 
@@ -196,6 +197,12 @@ def genTemplate(topcut):
             p_icon = p_icon.convert("RGBA")
             p_icon = p_icon.resize((60,60))
             im.paste(p_icon, (icon_pokemon_x_base + 80*p, icon_pokemon_y), mask=p_icon)
+
+            if(newPokemon[p].gmax):
+                gmax_icon = Image.open(os.path.join(SOURCE_PATH, "gmax.png"))
+                gmax_icon = gmax_icon.convert("RGBA")
+                gmax_icon = gmax_icon.resize((24,24))
+                im.paste(gmax_icon, (icon_gmax_x_base + 80*p, icon_tera_y), mask=gmax_icon)
 
             if(newPokemon[p].item != ""):
                 item_icon = Image.open(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")

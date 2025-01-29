@@ -25,6 +25,7 @@ class Pokemon(BaseModel):
     name: str
     teratype: str
     item: str
+    gmax: bool
 class Player(BaseModel):
     name: str
     pokemon: List[Pokemon]
