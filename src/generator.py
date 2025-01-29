@@ -86,13 +86,13 @@ def genTemplate(topcut):
     #im.paste(template, (0, 0), mask=template)
 
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "WORLDS"]):
         tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours/" + topcut.tour_type.lower() + ".png"))
         im.paste(tour_icon, (22, 25), mask=tour_icon)
 
     d = ImageDraw.Draw(im)
 
-    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL"]):
+    if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL", "PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "WORLDS"]):
         #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
