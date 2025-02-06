@@ -187,6 +187,8 @@ def genTemplate(topcut):
         for p in range(len(newPokemon)):
             print(newPokemon[p])
             icon_name = newPokemon[p].name.lower().replace(" ", "-")
+            if(icon_name == ""):
+                continue
             pokemon_icon_id = pokemonindex[icon_name]
             if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
                 print(POKEMON_ICONS_SRC + newPokemon[p].name.lower().replace(" ", "-") + ".png")
