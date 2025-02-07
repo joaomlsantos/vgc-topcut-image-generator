@@ -23,3 +23,9 @@ def merge(im1, im2):
     im.paste(im2, (im1.size[0], 0))
 
     return im
+
+# Function to reorder newPokemon
+def reorder_pokemon(pokemon_list, restricted_list):
+    restricted_pokemon = [p for p in pokemon_list if p.name in restricted_list]
+    non_restricted_pokemon = [p for p in pokemon_list if p.name not in restricted_list]
+    return restricted_pokemon + non_restricted_pokemon

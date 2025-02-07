@@ -1,3 +1,5 @@
+import json
+from helper import reorder_pokemon
 from model import TournamentType, Player, TopCut
 import io
 from PIL import Image, ImageDraw, ImageFont
@@ -183,6 +185,18 @@ def genTemplate(topcut):
         icon_gmax_x_base = 43 if (i % 2 == 0) else 587
 
         newPokemon = topcut.players[i].pokemon
+
+        with open('../data/restricted.json') as f:
+            restricted_list = json.load(f)
+
+        hasEmpty = False
+        for pokemon in newPokemon:
+            if not pokemon.name:
+                hasEmpty = True
+                break
+        print(hasEmpty)
+        if not hasEmpty:
+            newPokemon = reorder_pokemon(newPokemon, restricted_list)
 
         for p in range(len(newPokemon)):
             print(newPokemon[p])
