@@ -484,6 +484,7 @@ dialga|0483
 palkia|0484
 heatran|0485
 regigigas|0486
+giratina|0487
 giratina-altered|0487
 cresselia|0488
 phione|0489
@@ -1218,7 +1219,9 @@ eternatus-eternamax|0890_01
 urshifu-rapid-strike|0892
 zarude-dada|0893_01
 calyrex-ice-rider|0898_01
+calyrex-ice|0898_01
 calyrex-shadow-rider|0898_02
+calyrex-shadow|0898_02
 venusaur-gmax|0003_02
 charizard-gmax|0006_03
 blastoise-gmax|0009_02
