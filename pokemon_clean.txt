@@ -1051,6 +1051,7 @@ kyurem-black|0646_01
 kyurem-white|0646_02
 keldeo-resolute|0647_01
 meowstic-female|0678_01
+meowstic-f|0678_01
 aegislash-blade|0681_01
 pumpkaboo-small|0710_01
 pumpkaboo-large|0710_02
@@ -1273,6 +1274,7 @@ dialga-origin|0483_01
 palkia-origin|0484_01
 basculin-white-striped|0550_02
 basculegion-female|0902_01
+basculegion-f|0902_01
 enamorus-therian|0905_01
 tauros-paldea-combat|0128_01
 tauros-paldea-blaze|0128_02
