@@ -915,6 +915,7 @@ quaxwell|0913
 quaquaval|0914
 lechonk|0915
 oinkologne|0916
+oinkologne-male|0916
 tarountula|0917
 spidops|0918
 nymble|0919
@@ -924,7 +925,7 @@ pawmo|0922
 pawmot|0923
 tandemaus|0924
 maushold|0925
-maushold-four|0925
+maushold-four|0925_01
 maushold-three|0925
 fidough|0926
 dachsbun|0927
@@ -932,6 +933,7 @@ smoliv|0928
 dolliv|0929
 arboliva|0930
 squawkabilly|0931
+squawkabilly-green-plumage|0931
 nacli|0932
 naclstack|0933
 garganacl|0934
@@ -1281,9 +1283,10 @@ tauros-paldea-blaze|0128_02
 tauros-paldea-aqua|0128_03
 wooper-paldea|0194_01
 oinkologne-female|0916_01
-dudunsparce-three-segment|0982_01
+oinkologne-f|0916_01
+dudunsparce-three-segment|0982
 palafin-hero|0964_01
-maushold-family-of-three|0925_01
+maushold-family-of-four|0925_01
 tatsugiri-droopy|0978_01
 tatsugiri-stretchy|0978_02
 squawkabilly-blue-plumage|0931_01
