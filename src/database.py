@@ -41,7 +41,7 @@ def submit_data(topcut):
         for index, player in enumerate(topcut.players):
             cursor.execute(
                 sql.SQL("INSERT INTO players (tournament_id, player_index) VALUES (%s, %s) RETURNING id"),
-                (tournament_id, player.record, index)
+                (tournament_id, index)
             )
             player_id = cursor.fetchone()[0]
             for pokemon in player.pokemon:
