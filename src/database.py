@@ -40,7 +40,7 @@ def submit_data(topcut):
         tournament_id = cursor.fetchone()[0]
         for index, player in enumerate(topcut.players):
             cursor.execute(
-                sql.SQL("INSERT INTO players (tournament_id, record, player_index) VALUES (%s, %s, %s) RETURNING id"),
+                sql.SQL("INSERT INTO players (tournament_id, player_index) VALUES (%s, %s) RETURNING id"),
                 (tournament_id, player.record, index)
             )
             player_id = cursor.fetchone()[0]
