@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 from urllib.request import urlopen
 from pathlib import Path
+from database import submit_data
 
 
 def loadItemIndex():
@@ -48,6 +49,7 @@ def generateTopcut(topcut):
     image = genTemplate(topcut)
     buf = io.BytesIO()
     image.save(buf, "PNG")
+    submit_data(topcut)
     return buf.getvalue()
 
 
