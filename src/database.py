@@ -45,9 +45,15 @@ def submit_data(topcut):
             )
             player_id = cursor.fetchone()[0]
             for pokemon in player.pokemon:
+                if pokemon.name == "":
+                    continue
+                if pokemon.item == "":
+                    pokemon.item = None
+                if pokemon.teratype == "":
+                    pokemon.teratype = None
                 cursor.execute(
-                    sql.SQL("INSERT INTO pokemon (player_id, name, item, teratype) VALUES (%s, %s, %s, %s)"),
-                    (player_id, pokemon.name, pokemon.item, pokemon.teratype)
+                    sql.SQL("INSERT INTO pokemon (player_id, name, item, teratype, gigantamax) VALUES (%s, %s, %s, %s, %s)"),
+                    (player_id, pokemon.name, pokemon.item, pokemon.teratype, pokemon.gmax)
                 )
         connection.commit()
         print("Data submitted successfully.")
