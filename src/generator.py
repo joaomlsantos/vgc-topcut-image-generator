@@ -100,8 +100,13 @@ def genTemplate(topcut):
 
     if(topcut.tour_type.lower() in formats):
         #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+        if (len(topcut.tour_name) > 38):
+            d.text((170,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
+            d.text((170,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+        else:
+            d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
+            d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+        
     else:
         #d.text((60,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((60,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
