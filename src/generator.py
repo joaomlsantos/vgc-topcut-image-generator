@@ -100,12 +100,8 @@ def genTemplate(topcut):
 
     if(topcut.tour_type.lower() in formats):
         #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        if (len(topcut.tour_name) > 38):
-            d.text((170,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-            d.text((170,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
-        else:
-            d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-            d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+        d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
+        d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
         
     else:
         #d.text((60,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
@@ -115,7 +111,10 @@ def genTemplate(topcut):
 
     #d.text((860,80), str(topcut.date), fill="white", anchor="rs", font=font_bold)
     #d.text((860,115), str(topcut.format), fill="white", anchor="rs", font=font_bold)
-    d.text((860,98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    if (len(topcut.tour_name) > 38):
+        d.text((860,115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    else:
+        d.text((860,98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
 
     d.text((940,80), "JR", fill="white", anchor="rs", font=font_bold)
     d.text((1010,80), "SR", fill="white", anchor="rs", font=font_bold)
