@@ -19,6 +19,7 @@ class TournamentType(str, Enum):
     ULTRABALL = "ULTRABALL"
     PREMIERBALL = "PREMIERBALL"
     MASTERBALL = "MASTERBALL"
+    PLAYERSCUPKR = "PLAYERSCUPKR"
 
 '''
 set up to 
