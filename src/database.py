@@ -39,16 +39,18 @@ def submit_data(topcut):
         formatted_date = topcut.date
         if topcut.date and isinstance(topcut.date, str):
             try:
-                # Try common date formats
+                date_str = topcut.date.strip()  # ← strip spaces and line breaks
                 for date_format in ['%d/%m/%Y', '%m/%d/%Y', '%Y-%m-%d', '%d-%m-%Y', '%d.%m.%Y']:
                     try:
-                        parsed_date = datetime.strptime(topcut.date, date_format)
+                        parsed_date = datetime.strptime(date_str, date_format)
                         formatted_date = parsed_date.strftime('%Y-%m-%d')  # PostgreSQL ISO format
                         break
                     except ValueError:
                         continue
             except Exception as e:
                 print(f"Warning: Could not format date '{topcut.date}'. Using as is. Error: {e}")
+
+        print("Final formatted date:", formatted_date)  # Add debug
         
         cursor.execute(
             sql.SQL("INSERT INTO tournaments (tour_name, tour_type, date, format) VALUES (%s, %s, %s, %s) RETURNING id"),
