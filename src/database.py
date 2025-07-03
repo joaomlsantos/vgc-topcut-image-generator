@@ -4,6 +4,7 @@ import psycopg2
 from psycopg2 import sql
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 # Load environment variables from .env file
 load_dotenv()
@@ -33,9 +34,25 @@ def submit_data(topcut):
     try:
         cursor = connection.cursor()
         # Insert data into the database
+        
+        # Format date to YYYY-MM-DD for PostgreSQL
+        formatted_date = topcut.date
+        if topcut.date and isinstance(topcut.date, str):
+            try:
+                # Try common date formats
+                for date_format in ['%d/%m/%Y', '%m/%d/%Y', '%Y-%m-%d', '%d-%m-%Y', '%d.%m.%Y']:
+                    try:
+                        parsed_date = datetime.strptime(topcut.date, date_format)
+                        formatted_date = parsed_date.strftime('%Y-%m-%d')  # PostgreSQL ISO format
+                        break
+                    except ValueError:
+                        continue
+            except Exception as e:
+                print(f"Warning: Could not format date '{topcut.date}'. Using as is. Error: {e}")
+        
         cursor.execute(
             sql.SQL("INSERT INTO tournaments (tour_name, tour_type, date, format) VALUES (%s, %s, %s, %s) RETURNING id"),
-            (topcut.tour_name, topcut.tour_type, topcut.date, topcut.format)
+            (topcut.tour_name, topcut.tour_type, formatted_date, topcut.format)
         )
         tournament_id = cursor.fetchone()[0]
         for index, player in enumerate(topcut.players):
