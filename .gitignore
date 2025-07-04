@@ -161,8 +161,8 @@ cython_debug/
 
 
 # Custom gitignore
-img/items/
-img/pokemon/
+#img/items/
+#img/pokemon/
 inputs/
 outputs/
 *.zip

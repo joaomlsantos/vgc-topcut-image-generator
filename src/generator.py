@@ -57,7 +57,8 @@ def generateTopcut(topcut):
 def genTemplate(topcut):
     SOURCE_PATH = "../img"
     #POKEMON_ICONS_SRC = "https://limitlesstcg.s3.us-east-2.amazonaws.com/pokemon/gen9/"
-    POKEMON_ICONS_SRC = "https://projectpokemon.org/images/sprites-models/sv-sprites-home/"
+    POKEMON_ICONS_SRC = "https://img.generator.joaoabel.pt/pokemon/projectpokemon/"
+    ITEM_ICONS_SRC = "https://img.generator.joaoabel.pt/items/item_"
     LOCAL_POKEMON_ICONS_SRC = "../img/pokemon/projectpokemon/"
     LOCAL_ITEM_ICONS_SRC = "../img/items/item_"
     LOCAL_TERA_ICONS_SRC = "../img/teras/"
@@ -223,6 +224,13 @@ def genTemplate(topcut):
                 im.paste(gmax_icon, (icon_gmax_x_base + 80*p, icon_tera_y), mask=gmax_icon)
 
             if(newPokemon[p].item != ""):
+                if(not os.path.isfile(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")):
+                    print(ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
+                    icon_url = urlopen(ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
+                    content = icon_url.read()
+                    with open(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png", "wb") as download:
+                        download.write(content)
+
                 item_icon = Image.open(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
                 item_icon = item_icon.convert("RGBA")
                 item_icon = item_icon.resize((24,24))
