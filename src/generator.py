@@ -195,9 +195,10 @@ def genTemplate(topcut):
 
         with open('../data/restricted.json') as f:
             restricted_list = json.load(f)
+        with open('../data/mythical.json') as f:
+            mythical_list = json.load(f)
 
-        if topcut.tour_type != "GRASSROOTS":
-            newPokemon = reorder_pokemon(newPokemon, restricted_list)
+        newPokemon = reorder_pokemon(newPokemon, restricted_list, mythical_list)
 
         for p in range(len(newPokemon)):
             print(newPokemon[p])

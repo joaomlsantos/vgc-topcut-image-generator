@@ -25,7 +25,8 @@ def merge(im1, im2):
     return im
 
 # Function to reorder newPokemon
-def reorder_pokemon(pokemon_list, restricted_list):
+def reorder_pokemon(pokemon_list, restricted_list, mythical_list):
     restricted_pokemon = [p for p in pokemon_list if p.name in restricted_list]
-    non_restricted_pokemon = [p for p in pokemon_list if p.name not in restricted_list]
-    return restricted_pokemon + non_restricted_pokemon
+    mythical_pokemon = [p for p in pokemon_list if p.name in mythical_list]
+    non_restricted_pokemon = [p for p in pokemon_list if p.name not in restricted_list and p.name not in mythical_list]
+    return mythical_pokemon + restricted_pokemon + non_restricted_pokemon
