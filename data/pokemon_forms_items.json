@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Zamazenta",
+    "item_name": "Rusted Shield",
+    "final": "Zamazenta-Crowned"
+  },
+  {
+    "name": "Zacian",
+    "item_name": "Rusted Sword",
+    "final": "Zacian-Crowned"
+  },
+  {
+    "name": "Groudon",
+    "item_name": "Red Orb",
+    "final": "Groudon-Primal"
+  },
+  {
+    "name": "Kyogre",
+    "item_name": "Blue Orb",
+    "final": "Kyogre-Primal"
+  },
+  {
+    "name": "Dialga",
+    "item_name": "Adamant Orb",
+    "final": "Dialga-Origin"
+  },
+  {
+    "name": "Palkia",
+    "item_name": "Lustrous Orb",
+    "final": "Palkia-Origin"
+  },
+  {
+    "name": "Giratina-Altered",
+    "item_name": "Griseous Orb",
+    "final": "Giratina-Origin"
+  },
+  {
+    "name": "Ogerpon",
+    "item_name": "Wellspring Mask",
+    "final": "Ogerpon-Wellspring"
+  },
+  {
+    "name": "Ogerpon",
+    "item_name": "Cornerstone Mask",
+    "final": "Ogerpon-Cornerstone"
+  },
+  {
+    "name": "Ogerpon",
+    "item_name": "Hearthflame Mask",
+    "final": "Ogerpon-Hearthflame"
+  }
+]

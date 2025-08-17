@@ -1,5 +1,5 @@
 import json
-from helper import reorder_pokemon
+from helper import reorder_pokemon, change_form_item, contains_cjk_characters
 from model import TournamentType, Player, TopCut
 import io
 from PIL import Image, ImageDraw, ImageFont
@@ -7,6 +7,7 @@ import os
 from urllib.request import urlopen
 from pathlib import Path
 from database import submit_data
+
 
 
 def loadItemIndex():
@@ -66,6 +67,10 @@ def genTemplate(topcut):
     font_regular = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 24)
     font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
     font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
+
+
+    font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
+    font_player_JP.set_variation_by_name("Bold")
 
     num_player_font = ImageFont.truetype("../fonts/Edo/edo.ttf", 24)
 
@@ -167,20 +172,24 @@ def genTemplate(topcut):
             else:
                 p_names[-1] = p_names[-1][0] + "."
                 player_name = " ".join(p_names)
+        
+        # Choose appropriate font based on character set
+        player_font = font_player_JP if contains_cjk_characters(player_name) else font_player
+        
 
         if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]):
             if(i % 2 == 0):
-                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
                 d.text((500, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
             else:
-                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
                 d.text((1038, 293 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
         else:
             if(i % 2 == 0):
-                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
                 d.text((412, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
             else:
-                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=font_player)
+                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
                 d.text((950, 293 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
 
         icon_pokemon_y = 274 + (41 * (i % 2)) + 151*(i//2)
@@ -197,11 +206,14 @@ def genTemplate(topcut):
             restricted_list = json.load(f)
         with open('../data/mythical.json') as f:
             mythical_list = json.load(f)
+        with open('../data/pokemon_forms_items.json') as f:
+            forms_list = json.load(f)
 
         newPokemon = reorder_pokemon(newPokemon, restricted_list, mythical_list)
 
         for p in range(len(newPokemon)):
             print(newPokemon[p])
+            newPokemon[p].name = change_form_item(newPokemon[p].name, newPokemon[p].item, forms_list)
             icon_name = newPokemon[p].name.lower().replace(" ", "-")
             if(icon_name == ""):
                 continue
