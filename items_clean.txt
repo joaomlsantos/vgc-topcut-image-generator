@@ -590,7 +590,6 @@ Relic Band|588
 Relic Statue|589
 Relic Crown|590
 Casteliacone|591
-Dire Hit 2|592
 X Speed 2|593
 X Sp. Atk 2|594
 X Sp. Def 2|595
@@ -619,23 +618,17 @@ Dark Stone|617
 TM093|618
 TM094|619
 TM095|620
-Xtransceiver|621
 ???|622
 Gram 1|623
 Gram 2|624
 Gram 3|625
-Xtransceiver|626
 Medal Box|627
-DNA Splicers|628
-DNA Splicers|629
 Permit|630
 Oval Charm|631
 Shiny Charm|632
 Plasma Card|633
 Grubby Hanky|634
 Colress Machine|635
-Dropped Item|636
-Dropped Item|637
 Reveal Glass|638
 Weakness Policy|639
 Assault Vest|640
@@ -711,8 +704,6 @@ Shalour Sable|709
 Jaw Fossil|710
 Sail Fossil|711
 Looker Ticket|712
-Bike|713
-Holo Caster|714
 Fairy Gem|715
 Mega Charm|716
 Mega Glove|717
@@ -721,24 +712,19 @@ Acro Bike|719
 Wailmer Pail|720
 Devon Parts|721
 Soot Sack|722
-Basement Key|723
 Pokéblock Kit|724
 Letter|725
 Eon Ticket|726
 Scanner|727
 Go-Goggles|728
-Meteorite|729
 Key to Room 1|730
 Key to Room 2|731
 Key to Room 4|732
 Key to Room 6|733
-Storage Key|734
 Devon Scope|735
-S.S. Ticket|736
 HM07|737
 Devon Scuba Gear|738
 Contest Costume|739
-Contest Costume|740
 Magma Suit|741
 Aqua Suit|742
 Pair of Tickets|743
@@ -749,7 +735,6 @@ Mega Anchor|747
 Mega Stickpin|748
 Mega Tiara|749
 Mega Anklet|750
-Meteorite|751
 Swampertite|752
 Sceptilite|753
 Sablenite|754
@@ -769,8 +754,6 @@ Cameruptite|767
 Lopunnite|768
 Salamencite|769
 Beedrillite|770
-Meteorite|771
-Meteorite|772
 Key Stone|773
 Meteorite Shard|774
 Eon Flute|775
@@ -805,42 +788,12 @@ Aloraichium Z|803
 Snorlium Z|804
 Eevium Z|805
 Mewnium Z|806
-Normalium Z|807
-Firium Z|808
-Waterium Z|809
-Electrium Z|810
-Grassium Z|811
-Icium Z|812
-Fightinium Z|813
-Poisonium Z|814
-Groundium Z|815
-Flyinium Z|816
-Psychium Z|817
-Buginium Z|818
-Rockium Z|819
-Ghostium Z|820
-Dragonium Z|821
-Darkinium Z|822
-Steelium Z|823
-Fairium Z|824
-Pikanium Z|825
-Decidium Z|826
-Incinium Z|827
-Primarium Z|828
-Tapunium Z|829
-Marshadium Z|830
-Aloraichium Z|831
-Snorlium Z|832
-Eevium Z|833
-Mewnium Z|834
-Pikashunium Z|835
 Pikashunium Z|836
 ???|837
 ???|838
 ???|839
 ???|840
 Forage Bag|841
-Fishing Rod|842
 Professor's Mask|843
 Festival Ticket|844
 Sparkling Stone|845
@@ -870,11 +823,7 @@ Golden Pinap Berry|866
 ???|869
 ???|870
 ???|871
-Secret Key|872
-S.S. Ticket|873
 Silph Scope|874
-Parcel|875
-Card Key|876
 Gold Teeth|877
 Lift Key|878
 Terrain Extender|879
@@ -892,8 +841,6 @@ Gold Leaf|890
 Silver Leaf|891
 Polished Mud Ball|892
 Tropical Shell|893
-Leaf Letter|894
-Leaf Letter|895
 Small Bouquet|896
 ???|897
 ???|898
@@ -925,12 +872,6 @@ Ultranecrozium Z|923
 Mimikium Z|924
 Lycanium Z|925
 Kommonium Z|926
-Solganium Z|927
-Lunalium Z|928
-Ultranecrozium Z|929
-Mimikium Z|930
-Lycanium Z|931
-Kommonium Z|932
 Z-Power Ring|933
 Pink Petal|934
 Orange Petal|935
@@ -941,10 +882,6 @@ Yellow Petal|939
 Purple Petal|940
 Rainbow Flower|941
 Surge Badge|942
-N-Solarizer|943
-N-Lunarizer|944
-N-Solarizer|945
-N-Lunarizer|946
 Ilima's Normalium Z|947
 Left Poké Ball|948
 Roto Hatch|949
@@ -1073,13 +1010,10 @@ Magmar Candy|1057
 ???|1072
 ???|1073
 Endorsement|1074
-Pokémon Box Link|1075
 Wishing Star|1076
 Dynamax Band|1077
 ???|1078
 ???|1079
-Fishing Rod|1080
-Rotom Bike|1081
 ???|1082
 ???|1083
 Sausages|1084
@@ -1264,7 +1198,6 @@ Instant Noodles|1262
 Precooked Burger|1263
 Gigantamix|1264
 Wishing Chip|1265
-Rotom Bike|1266
 Catching Charm|1267
 ???|1268
 Old Letter|1269
@@ -1583,13 +1516,9 @@ Galarica Twig|1581
 Galarica Cuff|1582
 Style Card|1583
 Armor Pass|1584
-Rotom Bike|1585
-Rotom Bike|1586
 Exp. Charm|1587
 Armorite Ore|1588
 Mark Charm|1589
-Reins of Unity|1590
-Reins of Unity|1591
 Galarica Wreath|1592
 Legendary Clue 1|1593
 Legendary Clue 2|1594
@@ -1605,22 +1534,14 @@ Shaderoot Carrot|1603
 Dynite Ore|1604
 Carrot Seeds|1605
 Ability Patch|1606
-Reins of Unity|1607
 Time Balm|1608
 Space Balm|1609
 Mysterious Balm|1610
 Linking Cord|1611
 Hometown Muffin|1612
 Apricorn|1613
-Jubilife Muffin|1614
-Aux Powerguard|1615
-Dire Hit|1616
-Choice Dumpling|1617
-Twice-Spiced Radish|1618
-Swap Snack|1619
 Caster Fern|1620
 Seed of Mastery|1621
-Poké Ball|1622
 ???|1623
 Eternal Ice|1624
 Uxie's Claw|1625
@@ -1628,8 +1549,6 @@ Azelf's Fang|1626
 Mesprit's Plume|1627
 Tumblestone|1628
 Celestica Flute|1629
-Remedy|1630
-Fine Remedy|1631
 Dazzling Honey|1632
 Hearty Grains|1633
 Plump Beans|1634
@@ -1638,37 +1557,12 @@ Crunchy Salt|1636
 Wood|1637
 King's Leaf|1638
 Marsh Balm|1639
-Feather Ball|1643
-Pokéshi Doll|1644
 ???|1645
-Smoke Bomb|1646
-Scatter Bang|1647
-Sticky Glob|1648
-Star Piece|1649
-Mushroom Cake|1650
-Bugwort|1651
-Honey Cake|1652
-Grain Cake|1653
-Bean Cake|1654
 Salt Cake|1655
-Full Restore|1660
 Remedy|1661
 Fine Remedy|1662
-Superb Remedy|1663
-Old Gateau|1664
-Jubilife Muffin|1665
-Full Heal|1666
-Revive|1667
-Max Revive|1668
-Max Ether|1669
-Max Elixir|1670
 Stealth Spray|1671
 ???|1672
-Aux Power|1673
-Aux Guard|1674
-Dire Hit|1675
-Aux Evasion|1676
-Aux Powerguard|1677
 Forest Balm|1678
 Iron Chunk|1679
 ???|1680
@@ -1680,11 +1574,8 @@ Ball of Mud|1684
 Pop Pod|1686
 Sootfoot Root|1687
 Spoiled Apricorn|1688
-Snowball|1689
-Sticky Glob|1690
 Black Augurite|1691
 Peat Block|1692
-Stealth Spray|1693
 Medicinal Leek|1694
 Vivichoke|1695
 Pep-Up Plant|1696
@@ -1701,14 +1592,10 @@ Tempting Charm T|1706
 Tempting Charm Y|1707
 Candy Truffle|1708
 Cake-Lure Base|1709
-Feather Ball|1713
 ???|1714
 ???|1715
-Scatter Bang|1716
-Smoke Bomb|1717
 ???|1718
 ???|1719
-Pokéshi Doll|1720
 Volcano Balm|1721
 Mountain Balm|1722
 Snow Balm|1723
@@ -1716,7 +1603,6 @@ Honey Cake|1724
 Grain Cake|1725
 Bean Cake|1726
 Mushroom Cake|1727
-Salt Cake|1728
 Swap Snack|1729
 Choice Dumpling|1730
 Twice-Spiced Radish|1731
@@ -1734,30 +1620,14 @@ Warding Charm Y|1742
 Wall Fragment|1743
 Basculegion Food|1744
 Old Journal|1745
-Wing Ball|1746
-Jet Ball|1747
-Heavy Ball|1748
-Leaden Ball|1749
-Gigaton Ball|1750
-Wing Ball|1751
-Jet Ball|1752
-Heavy Ball|1753
 Hopo Berry|1754
 Superb Remedy|1755
-Aux Power|1756
-Aux Guard|1757
-Aux Evasion|1758
 Grit Dust|1759
 Grit Gravel|1760
 Grit Pebble|1761
 Grit Rock|1762
-Secret Medicine|1763
 Tempting Charm R|1764
 Lost Satchel|1765
-Lost Satchel|1766
-Lost Satchel|1767
-Lost Satchel|1768
-Lost Satchel|1769
 ???|1770
 Origin Ball|1771
 ???|1772
@@ -2148,7 +2018,6 @@ Tinkatink Hair|2156
 Charcadet Soot|2157
 Toedscool Flaps|2158
 Wooper Slime|2159
-TM100|2160
 TM101|2161
 TM102|2162
 TM103|2163
@@ -2302,23 +2171,19 @@ None|2310
 Picnic Set|2311
 None|2312
 Academy Bottle|2313
-Academy Bottle|2314
 Polka-Dot Bottle|2315
 Striped Bottle|2316
 Diamond Bottle|2317
 Academy Cup|2318
-Academy Cup|2319
 Striped Cup|2320
 Polka-Dot Cup|2321
 Flower Pattern Cup|2322
 Academy Tablecloth|2323
-Academy Tablecloth|2324
 Whimsical Tablecloth|2325
 Leafy Tablecloth|2326
 Spooky Tablecloth|2327
 None|2328
 Academy Ball|2329
-Academy Ball|2330
 Marill Ball|2331
 Yarn Ball|2332
 Cyber Ball|2333
@@ -2407,7 +2272,6 @@ Clever Mochi|2415
 Swift Mochi|2416
 Simple Chairs|2417
 Academy Chairs|2418
-Academy Chairs|2419
 Whimsical Chairs|2420
 Leafy Chairs|2421
 Spooky Chairs|2422
