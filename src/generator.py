@@ -199,6 +199,8 @@ def genTemplate(topcut):
         icon_tera_y = 270 + (40 * (i % 2)) + 150*(i//2)
         icon_tera_x_base = 93 if (i % 2 == 0) else 631
         icon_gmax_x_base = 43 if (i % 2 == 0) else 587
+        icon_shadow_y = 310 + (40 * (i % 2)) + 150*(i//2)
+        icon_shadow_x_base = 90 if (i % 2 == 0) else 632
 
         newPokemon = topcut.players[i].pokemon
 
@@ -255,6 +257,23 @@ def genTemplate(topcut):
                 tera_icon = tera_icon.resize((32,32))
                 im.paste(tera_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=tera_icon)
 
+            if(newPokemon[p].shadow):
+                shadow_icon = Image.open(os.path.join(SOURCE_PATH, "shadow_GO.png"))
+                shadow_icon = shadow_icon.convert("RGBA")
+                shadow_icon = shadow_icon.resize((36,36))
+                im.paste(shadow_icon, (icon_shadow_x_base + 80*p, icon_shadow_y), mask=shadow_icon)
+
+            if(newPokemon[p].purified):
+                purified_icon = Image.open(os.path.join(SOURCE_PATH, "purified_GO.png"))
+                purified_icon = purified_icon.convert("RGBA")
+                purified_icon = purified_icon.resize((36,36))
+                im.paste(purified_icon, (icon_shadow_x_base + 80*p, icon_shadow_y), mask=purified_icon)
+
+            if(newPokemon[p].best_friend):
+                best_friend_icon = Image.open(os.path.join(SOURCE_PATH, "best_buddy_GO.png"))
+                best_friend_icon = best_friend_icon.convert("RGBA")
+                best_friend_icon = best_friend_icon.resize((24,24))
+                im.paste(best_friend_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=best_friend_icon)
 
 
     #icon_test = Image.open(urlopen(POKEMON_ICONS_SRC + "ogerpon.png"))
