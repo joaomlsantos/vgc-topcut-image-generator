@@ -51,8 +51,8 @@ def generateTopcut(topcut):
     buf = io.BytesIO()
     image.save(buf, "PNG")
     
-    # Only submit data if all players have at least 4 pokemon
-    if all(len(player.pokemon) >= 4 for player in topcut.players):
+    # Only submit data if all players have at least 4 pokemon with non-empty names
+    if all(len([p for p in player.pokemon if p.name.strip()]) >= 4 for player in topcut.players):
         submit_data(topcut)
     
     return buf.getvalue()
