@@ -36,6 +36,9 @@ class Pokemon(BaseModel):
     teratype: str = ""
     item: str = ""
     gmax: bool = False
+    shadow: bool = False
+    best_friend: bool = False
+    purified: bool = False
 
 class Player(BaseModel):
     name: str = ""
