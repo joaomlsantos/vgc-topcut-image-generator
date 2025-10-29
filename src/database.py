@@ -53,8 +53,8 @@ def submit_data(topcut):
         print("Final formatted date:", formatted_date)  # Add debug
         
         cursor.execute(
-            sql.SQL("INSERT INTO tournaments (tour_name, tour_type, date, format) VALUES (%s, %s, %s, %s) RETURNING id"),
-            (topcut.tour_name, topcut.tour_type, formatted_date, topcut.format)
+            sql.SQL("INSERT INTO tournaments (tour_name, tour_type, date, format, game) VALUES (%s, %s, %s, %s, %s) RETURNING id"),
+            (topcut.tour_name, topcut.tour_type, formatted_date, topcut.format, topcut.game)
         )
         tournament_id = cursor.fetchone()[0]
         for index, player in enumerate(topcut.players):

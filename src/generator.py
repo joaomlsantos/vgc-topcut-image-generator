@@ -1,6 +1,6 @@
 import json
 from helper import reorder_pokemon, change_form_item, contains_cjk_characters
-from model import TournamentType, Player, TopCut
+from model import TournamentType, Player, TopCut, GameType
 import io
 from PIL import Image, ImageDraw, ImageFont
 import os
@@ -90,7 +90,9 @@ def genTemplate(topcut):
 
     im = Image.new("RGBA", (template.size[0], dynamic_height))
 
-    background = Image.open(os.path.join(SOURCE_PATH, "solid_background.png"))
+    backgroundPath = "solid_background.png" if topcut.game == GameType.VGC else "solid_background_GO.png"
+
+    background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
     background = background.convert("RGBA")
     background = background.crop((0,0,w,dynamic_height))
     im.paste(background, (0,0), mask=background)
@@ -136,7 +138,8 @@ def genTemplate(topcut):
 
     mult_2 = 0
     for i in range(len(topcut.players)):
-        player_el = Image.open(os.path.join(SOURCE_PATH, "player_element_circles.png"))
+        element_circles = "player_element_circles_GO.png" if topcut.game == GameType.GO else "player_element_circles.png"
+        player_el = Image.open(os.path.join(SOURCE_PATH, element_circles))
         player_el_x = 35 if (i % 2 == 0) else 573
         player_el_y = 215 + (40 * (i % 2)) + 151*(i//2)
         im.paste(player_el, (player_el_x, player_el_y), mask=player_el)

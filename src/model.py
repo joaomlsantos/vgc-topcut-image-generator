@@ -50,6 +50,9 @@ class Division(BaseModel):
     senior: int = 0
     master: int = 0
 
+class GameType(str, Enum):
+    VGC = "VGC"
+    GO = "GO"
 
 class TopCut(BaseModel):
     tour_name: str = ""
@@ -58,6 +61,7 @@ class TopCut(BaseModel):
     players: List[Player]
     date: str = ""
     format: str = ""
+    game: GameType = GameType.VGC
 
 class TomHtmlUrl(BaseModel):
     url: str
