@@ -71,6 +71,7 @@ def genTemplate(topcut):
     font_regular = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 24)
     font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
     font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
+    font_player_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
 
 
     font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
@@ -167,11 +168,12 @@ def genTemplate(topcut):
         icon_pokemon_y = 0
 
         player_name = topcut.players[i].name
-        if(len(player_name) > 23):
+
+        if(len(player_name) > 30):
             p_names = player_name.split()
             if(len(p_names) > 2):   #cut middle names
                 p_names = [p_names[0], p_names[-1]]
-                if(len(" ".join(p_names)) <= 23):
+                if(len(" ".join(p_names)) <= 30):
                     player_name = " ".join(p_names)
                 else:
                     p_names[-1] = p_names[-1][0] + "."
@@ -182,6 +184,9 @@ def genTemplate(topcut):
         
         # Choose appropriate font based on character set
         player_font = font_player_JP if contains_cjk_characters(player_name) else font_player
+
+        if(len(player_name) > 23):
+            player_font = font_player_small
         
 
         if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]):
