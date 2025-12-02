@@ -8,6 +8,25 @@ from urllib.request import urlopen
 from pathlib import Path
 from database import submit_data
 
+# Constants
+SOURCE_PATH = "../img"
+# POKEMON_ICONS_SRC = "https://limitlesstcg.s3.us-east-2.amazonaws.com/pokemon/gen9/"
+POKEMON_ICONS_SRC = "https://img.generator.joaoabel.pt/pokemon/projectpokemon/"
+ITEM_ICONS_SRC = "https://img.generator.joaoabel.pt/items/item_"
+LOCAL_POKEMON_ICONS_SRC = "../img/pokemon/projectpokemon/"
+LOCAL_ITEM_ICONS_SRC = "../img/items/item_"
+LOCAL_TERA_ICONS_SRC = "../img/teras/"
+
+# Fonts
+font_regular = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 24)
+font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
+font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
+font_player_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
+
+font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
+font_player_JP.set_variation_by_name("Bold")
+
+num_player_font = ImageFont.truetype("../fonts/Edo/edo.ttf", 24)
 
 
 def loadItemIndex():
@@ -60,26 +79,6 @@ def generateTopcut(topcut):
 
 
 def genTemplate(topcut):
-    SOURCE_PATH = "../img"
-    #POKEMON_ICONS_SRC = "https://limitlesstcg.s3.us-east-2.amazonaws.com/pokemon/gen9/"
-    POKEMON_ICONS_SRC = "https://img.generator.joaoabel.pt/pokemon/projectpokemon/"
-    ITEM_ICONS_SRC = "https://img.generator.joaoabel.pt/items/item_"
-    LOCAL_POKEMON_ICONS_SRC = "../img/pokemon/projectpokemon/"
-    LOCAL_ITEM_ICONS_SRC = "../img/items/item_"
-    LOCAL_TERA_ICONS_SRC = "../img/teras/"
-
-    font_regular = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 24)
-    font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
-    font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
-    font_player_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
-
-
-    font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
-    font_player_JP.set_variation_by_name("Bold")
-
-    num_player_font = ImageFont.truetype("../fonts/Edo/edo.ttf", 24)
-
-
 
     template = Image.open(os.path.join(SOURCE_PATH, "fulltemplate_v2.png"))
 
