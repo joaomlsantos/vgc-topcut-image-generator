@@ -77,6 +77,45 @@ def generateTopcut(topcut):
     return buf.getvalue()
 
 
+def draw_header(im, topcut):
+    # Paste header bar background
+    header_bar = Image.open(os.path.join(SOURCE_PATH, "header_bar.png"))
+    im.paste(header_bar, (0, 41))
+
+    # Determine available tour icons
+    formats = [Path(tour_img).stem for tour_img in os.listdir(os.path.join(SOURCE_PATH, "tours"))]
+    if topcut.tour_type.lower() in formats:
+        tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
+        im.paste(tour_icon, (22, 25), mask=tour_icon)
+
+    d = ImageDraw.Draw(im)
+
+    # Tournament name & format positioning depends on whether we have a tour icon
+    if topcut.tour_type.lower() in formats:
+        d.text((200, 80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
+        d.text((200, 115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+    else:
+        d.text((60, 80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
+        d.text((60, 115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+
+    # Date placement adjusts based on long tournament names
+    if len(topcut.tour_name) > 38:
+        d.text((860, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    else:
+        d.text((860, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+
+    # Division labels
+    d.text((940, 80), "JR", fill="white", anchor="rs", font=font_bold)
+    d.text((1010, 80), "SR", fill="white", anchor="rs", font=font_bold)
+    d.text((1080, 80), "MA", fill="white", anchor="rs", font=font_bold)
+
+    # Division counts
+    d.text((940, 115), str(topcut.divisions.junior), fill="white", anchor="rs", font=font_bold)
+    d.text((1010, 115), str(topcut.divisions.senior), fill="white", anchor="rs", font=font_bold)
+    d.text((1080, 115), str(topcut.divisions.master), fill="white", anchor="rs", font=font_bold)
+
+    return im
+
 
 def genTemplate(topcut):
 
@@ -97,44 +136,11 @@ def genTemplate(topcut):
     background = background.crop((0,0,w,dynamic_height))
     im.paste(background, (0,0), mask=background)
 
-    header_bar = Image.open(os.path.join(SOURCE_PATH, "header_bar.png"))
-    im.paste(header_bar, (0, 41))
+    # Draw reusable header section
+    draw_header(im, topcut)
 
-    #im.paste(template, (0, 0), mask=template)
-
-
-    formats = [Path(tour_img).stem for tour_img in os.listdir(os.path.join(SOURCE_PATH, "tours"))]
-    if(topcut.tour_type.lower() in formats):
-        tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
-        im.paste(tour_icon, (22, 25), mask=tour_icon)
-
+    # Create a drawing context for subsequent player rendering
     d = ImageDraw.Draw(im)
-
-    if(topcut.tour_type.lower() in formats):
-        #d.text((200,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((200,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((200,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
-        
-    else:
-        #d.text((60,100), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((60,80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((60,115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
-
-
-    #d.text((860,80), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-    #d.text((860,115), str(topcut.format), fill="white", anchor="rs", font=font_bold)
-    if (len(topcut.tour_name) > 38):
-        d.text((860,115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-    else:
-        d.text((860,98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-
-    d.text((940,80), "JR", fill="white", anchor="rs", font=font_bold)
-    d.text((1010,80), "SR", fill="white", anchor="rs", font=font_bold)
-    d.text((1080,80), "MA", fill="white", anchor="rs", font=font_bold)
-
-    d.text((940,115), str(topcut.divisions.junior), fill="white", anchor="rs", font=font_bold)
-    d.text((1010,115), str(topcut.divisions.senior), fill="white", anchor="rs", font=font_bold)
-    d.text((1080,115), str(topcut.divisions.master), fill="white", anchor="rs", font=font_bold)
 
     mult_2 = 0
     for i in range(len(topcut.players)):
