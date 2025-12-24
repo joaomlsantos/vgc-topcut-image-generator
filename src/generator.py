@@ -7,6 +7,7 @@ import os
 from urllib.request import urlopen
 from pathlib import Path
 from database import submit_data
+import base64
 
 # Constants
 SOURCE_PATH = "../img"
@@ -84,14 +85,24 @@ def draw_header(im, topcut):
 
     # Determine available tour icons
     formats = [Path(tour_img).stem for tour_img in os.listdir(os.path.join(SOURCE_PATH, "tours"))]
-    if topcut.tour_type.lower() in formats:
-        tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
+    # Paste tour icon if available
+    if(topcut.image != ""):
+        # Decode base64 string to bytes
+        image_data = base64.b64decode(topcut.image)
+
+        tour_icon = Image.open(io.BytesIO(image_data)).convert("RGBA")
+        width, height = tour_icon.size
+        tour_icon = tour_icon.resize((width * 160 // height, 160))
         im.paste(tour_icon, (22, 25), mask=tour_icon)
+    else:
+        if topcut.tour_type.lower() in formats:
+            tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
+            im.paste(tour_icon, (22, 25), mask=tour_icon)
 
     d = ImageDraw.Draw(im)
 
     # Tournament name & format positioning depends on whether we have a tour icon
-    if topcut.tour_type.lower() in formats:
+    if topcut.tour_type.lower() in formats or topcut.image != "":
         d.text((200, 80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200, 115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
     else:
@@ -231,14 +242,14 @@ def genTemplate(topcut):
         newPokemon = reorder_pokemon(newPokemon, restricted_list, mythical_list)
 
         for p in range(len(newPokemon)):
-            print(newPokemon[p])
+            #print(newPokemon[p])
             newPokemon[p].name = change_form_item(newPokemon[p].name, newPokemon[p].item, forms_list)
             icon_name = newPokemon[p].name.lower().replace(" ", "-")
             if(icon_name == ""):
                 continue
             pokemon_icon_id = pokemonindex[icon_name]
             if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
-                print(POKEMON_ICONS_SRC + newPokemon[p].name.lower().replace(" ", "-") + ".png")
+                #print(POKEMON_ICONS_SRC + newPokemon[p].name.lower().replace(" ", "-") + ".png")
                 icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
                 content = icon_url.read()
                 with open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png", "wb") as download:
@@ -257,7 +268,7 @@ def genTemplate(topcut):
 
             if(newPokemon[p].item != ""):
                 if(not os.path.isfile(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")):
-                    print(ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
+                    #print(ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
                     icon_url = urlopen(ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
                     content = icon_url.read()
                     with open(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png", "wb") as download:

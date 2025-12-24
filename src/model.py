@@ -62,6 +62,7 @@ class TopCut(BaseModel):
     date: str = ""
     format: str = ""
     game: GameType = GameType.VGC
+    image: str = ""
 
 class TomHtmlUrl(BaseModel):
     url: str

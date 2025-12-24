@@ -34,7 +34,7 @@ def reorder_pokemon(pokemon_list, restricted_list, mythical_list):
     return mythical_pokemon + restricted_pokemon + non_restricted_pokemon
 
 def change_form_item(pokemon, item, forms_list):
-    print(f"Changing form for {pokemon} with item {item}")
+    #print(f"Changing form for {pokemon} with item {item}")
     for form in forms_list:
         if form['name'] == pokemon and form['item_name'] == item:
             return form['final']
