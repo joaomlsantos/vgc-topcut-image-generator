@@ -63,6 +63,8 @@ class TopCut(BaseModel):
     format: str = ""
     game: GameType = GameType.VGC
     image: str = ""
+    show_logo: bool = False
+    show_background: bool = False
 
 class TomHtmlUrl(BaseModel):
     url: str

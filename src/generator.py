@@ -86,7 +86,7 @@ def draw_header(im, topcut):
     # Determine available tour icons
     formats = [Path(tour_img).stem for tour_img in os.listdir(os.path.join(SOURCE_PATH, "tours"))]
     # Paste tour icon if available
-    if(topcut.image != ""):
+    if(topcut.image != "" and topcut.show_logo):
         # Decode base64 string to bytes
         image_data = base64.b64decode(topcut.image)
 
@@ -145,6 +145,36 @@ def genTemplate(topcut):
     background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
     background = background.convert("RGBA")
     background = background.crop((0,0,w,dynamic_height))
+
+    if topcut.image != "" and topcut.show_background:
+        # Decode base64 string to bytes
+        image_data = base64.b64decode(topcut.image)
+        tour_icon = Image.open(io.BytesIO(image_data)).convert("RGBA")
+
+        # Calculate proportional size based on background dimensions
+        width, height = tour_icon.size
+        max_width = int(w * 0.8)
+        max_height = int(dynamic_height * 0.6)
+
+        width_ratio = max_width / width
+        height_ratio = max_height / height
+        scale_factor = min(width_ratio, height_ratio)
+        
+        new_width = int(width * scale_factor)
+        new_height = int(height * scale_factor)
+        tour_icon = tour_icon.resize((new_width, new_height))
+        
+        # Reduce transparency to 80%
+        alpha = tour_icon.split()[3]
+        alpha = alpha.point(lambda p: int(p * 0.8))
+        tour_icon.putalpha(alpha)
+
+        # Center the image horizontally and vertically
+        centered_x = (w - tour_icon.width) // 2
+        centered_y = (dynamic_height - tour_icon.height + 136) // 2
+
+        background.paste(tour_icon, (centered_x, centered_y), mask=tour_icon)
+
     im.paste(background, (0,0), mask=background)
 
     # Draw reusable header section
