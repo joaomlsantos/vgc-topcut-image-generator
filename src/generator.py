@@ -156,6 +156,10 @@ def genTemplate(topcut):
         max_width = int(w * 0.8)
         max_height = int(dynamic_height * 0.6)
 
+        #Limit the height to more than 8 players based on the 8 player height
+        if max_height > 533:
+            max_height = 533
+
         width_ratio = max_width / width
         height_ratio = max_height / height
         scale_factor = min(width_ratio, height_ratio)
