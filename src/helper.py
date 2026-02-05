@@ -1,4 +1,9 @@
 import unicodedata
+from PIL import Image
+import os
+
+# Constants
+LOCAL_FLAGS_SRC = "../img/flags/"
 
 def roll(im, delta):
     """Roll an image sideways."""
@@ -34,7 +39,6 @@ def reorder_pokemon(pokemon_list, restricted_list, mythical_list):
     return mythical_pokemon + restricted_pokemon + non_restricted_pokemon
 
 def change_form_item(pokemon, item, forms_list):
-    #print(f"Changing form for {pokemon} with item {item}")
     for form in forms_list:
         if form['name'] == pokemon and form['item_name'] == item:
             return form['final']
@@ -48,3 +52,14 @@ def contains_cjk_characters(text):
         if any(x in name for x in ['CJK', 'HIRAGANA', 'KATAKANA', 'HANGUL']):
             return True
     return False
+
+def loadFlag(country_code, height):
+    flag_path = os.path.join(LOCAL_FLAGS_SRC, f"{country_code.lower()}.png")
+    if not os.path.isfile(flag_path):
+        return None
+    flag_img = Image.open(flag_path).convert("RGBA")
+    width, img_height = flag_img.size
+    if img_height != height:
+        new_width = int(width * height / img_height)
+        flag_img = flag_img.resize((new_width, height))
+    return flag_img

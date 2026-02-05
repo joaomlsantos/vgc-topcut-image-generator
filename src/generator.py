@@ -1,5 +1,5 @@
 import json
-from helper import reorder_pokemon, change_form_item, contains_cjk_characters
+from helper import reorder_pokemon, change_form_item, contains_cjk_characters, loadFlag
 from model import TournamentType, Player, TopCut, GameType
 import io
 from PIL import Image, ImageDraw, ImageFont
@@ -237,22 +237,40 @@ def genTemplate(topcut):
 
         if(len(player_name) > 23):
             player_font = font_player_small
-        
 
+        # Calculate positions based on player index and tournament type
         if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]):
             if(i % 2 == 0):
-                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
-                d.text((500, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+                player_x = 108
+                player_y = 253 + 150*(i//2)
+                record_x = 500
             else:
-                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
-                d.text((1038, 293 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+                player_x = 646
+                player_y = 293 + 150*(i//2)
+                record_x = 1038
         else:
             if(i % 2 == 0):
-                d.text((108, 253 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
-                d.text((412, 253 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+                player_x = 108
+                player_y = 253 + 150*(i//2)
+                record_x = 412
             else:
-                d.text((646, 293 + 150*(i//2)), player_name, fill="white", anchor="ls", font=player_font)
-                d.text((950, 293 + 150*(i//2)), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+                player_x = 646
+                player_y = 293 + 150*(i//2)
+                record_x = 950
+        
+        # Draw player name
+        d.text((player_x, player_y), player_name, fill="white", anchor="ls", font=player_font)
+        
+        # Add flag to the right of player name
+        flag_img = loadFlag(topcut.players[i].flag, 16)
+        if flag_img:
+            text_bbox = d.textbbox((player_x, player_y), player_name, font=player_font, anchor="ls")
+            flag_x = text_bbox[2] + 5  # 5 pixels padding after text
+            flag_y = player_y - flag_img.height
+            im.paste(flag_img, (flag_x, flag_y), mask=flag_img)
+        
+        # Draw player record
+        d.text((record_x, player_y), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
 
         icon_pokemon_y = 274 + (41 * (i % 2)) + 151*(i//2)
         icon_pokemon_x_base = 49 if (i % 2 == 0) else 587

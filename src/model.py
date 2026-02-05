@@ -44,6 +44,7 @@ class Player(BaseModel):
     name: str = ""
     pokemon: List[Pokemon] = []
     record: str = ""
+    flag: str = ""
 
 class Division(BaseModel):
     junior: int = 0
