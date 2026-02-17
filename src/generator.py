@@ -94,15 +94,16 @@ def draw_header(im, topcut):
         width, height = tour_icon.size
         tour_icon = tour_icon.resize((width * 160 // height, 160))
         im.paste(tour_icon, (22, 25), mask=tour_icon)
-    else:
-        if topcut.tour_type.lower() in formats:
-            tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
-            im.paste(tour_icon, (22, 25), mask=tour_icon)
+    #else:
+    #    if topcut.tour_type.lower() in formats:
+    #        tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
+    #        im.paste(tour_icon, (22, 25), mask=tour_icon)
 
     d = ImageDraw.Draw(im)
 
     # Tournament name & format positioning depends on whether we have a tour icon
-    if topcut.tour_type.lower() in formats or topcut.image != "":
+    #if topcut.tour_type.lower() in formats or topcut.image != "":
+    if topcut.image != "":
         d.text((200, 80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
         d.text((200, 115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
     else:
