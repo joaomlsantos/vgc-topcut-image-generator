@@ -903,7 +903,7 @@ ursaluna|0901
 basculegion|0902
 sneasler|0903
 overqwil|0904
-enamorus-incarnate|0905
+enamorus|0905
 sprigatito|0906
 floragato|0907
 meowscarada|0908
