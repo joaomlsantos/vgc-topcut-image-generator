@@ -2342,6 +2342,8 @@ Meganiumite|2563
 Feraligite|2564
 Skarmorite|2565
 Froslassite|2566
+Heatranite|2567
+Darkranite|2568
 Emboarite|2569
 Excadrite|2570
 Scolipite|2571
@@ -2359,4 +2361,21 @@ Dragalgite|2582
 Hawluchanite|2583
 Zygardite|2584
 Drampanite|2585
+Zeraorite|2586
 Falinksite|2587
+Raichunite X|2635
+Raichunite Y|2636
+Chimechite|2637
+Absolite Z|2638
+Staraptite|2639
+Garchompite Z|2640
+Lucarionite Z|2641
+Golurkite|2642
+Meowsticite|2643
+Crabominite|2644
+Golisopite|2645
+Magearnite|2646
+Scovillainite|2647
+Baxcalibrite|2648
+Tatsugirinite|2649
+Glimmoranite|2650
