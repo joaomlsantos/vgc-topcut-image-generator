@@ -70,4 +70,18 @@ class TopCut(BaseModel):
 class TomHtmlUrl(BaseModel):
     url: str
 
+class PokemonStats(BaseModel):
+    name: str = ""
+    usage_count: int = 0
 
+class Usage(BaseModel):
+    tour_name: str = ""
+    tour_type: TournamentType
+    divisions: Division
+    date: str = ""
+    format: str = ""
+    game: GameType = GameType.VGC
+    image: str = ""
+    show_logo: bool = False
+    show_background: bool = False
+    pokemon: List[PokemonStats] = []
