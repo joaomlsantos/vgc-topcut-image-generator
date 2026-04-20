@@ -211,9 +211,9 @@ def genTemplate(topcut):
 
             if(cur_cp > 0):
                 if(i % 2 == 0):
-                    d.text((506, 253 + 150*(i//2)), str(cur_cp) + " CP", fill="white", anchor="rs", font=font_player)
+                    d.text((506, 248 + 151*(i//2)), str(cur_cp) + " CP", fill="white", anchor="rs", font=font_player)
                 else:
-                    d.text((1045, 293 + 150*(i//2)), str(cur_cp) + " CP", fill="white", anchor="rs", font=font_player)
+                    d.text((1045, 288 + 151*(i//2)), str(cur_cp) + " CP", fill="white", anchor="rs", font=font_player)
             
 
         icon_pokemon_y = 0
@@ -243,20 +243,20 @@ def genTemplate(topcut):
         if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]):
             if(i % 2 == 0):
                 player_x = 108
-                player_y = 253 + 150*(i//2)
+                player_y = 248 + 151*(i//2)
                 record_x = 500
             else:
                 player_x = 646
-                player_y = 293 + 150*(i//2)
+                player_y = 288 + 151*(i//2)
                 record_x = 1038
         else:
             if(i % 2 == 0):
                 player_x = 108
-                player_y = 253 + 150*(i//2)
+                player_y = 248 + 151*(i//2)
                 record_x = 412
             else:
                 player_x = 646
-                player_y = 293 + 150*(i//2)
+                player_y = 288 + 151*(i//2)
                 record_x = 950
         
         # Draw player name
@@ -273,14 +273,14 @@ def genTemplate(topcut):
         # Draw player record
         d.text((record_x, player_y), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
 
-        icon_pokemon_y = 274 + (41 * (i % 2)) + 151*(i//2)
+        icon_pokemon_y = 274 + (40 * (i % 2)) + 151*(i//2)
         icon_pokemon_x_base = 49 if (i % 2 == 0) else 587
-        icon_item_y = 320 + (40 * (i % 2)) + 150*(i//2)
+        icon_item_y = 320 + (40 * (i % 2)) + 151*(i//2)
         icon_item_x_base = 94 if (i % 2 == 0) else 632
-        icon_tera_y = 270 + (40 * (i % 2)) + 150*(i//2)
+        icon_tera_y = 270 + (40 * (i % 2)) + 151*(i//2)
         icon_tera_x_base = 93 if (i % 2 == 0) else 631
         icon_gmax_x_base = 43 if (i % 2 == 0) else 587
-        icon_shadow_y = 310 + (40 * (i % 2)) + 150*(i//2)
+        icon_shadow_y = 310 + (40 * (i % 2)) + 151*(i//2)
         icon_shadow_x_base = 90 if (i % 2 == 0) else 632
 
         newPokemon = topcut.players[i].pokemon
