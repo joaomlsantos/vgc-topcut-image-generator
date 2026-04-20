@@ -116,15 +116,28 @@ def draw_header(im, topcut):
     else:
         d.text((860, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
 
-    # Division labels
-    d.text((940, 80), "JR", fill="white", anchor="rs", font=font_bold)
-    d.text((1010, 80), "SR", fill="white", anchor="rs", font=font_bold)
-    d.text((1080, 80), "MA", fill="white", anchor="rs", font=font_bold)
+    divisions = [
+        ("MA", topcut.divisions.master),
+        ("SR", topcut.divisions.senior),
+        ("JR", topcut.divisions.junior),
+    ]
 
-    # Division counts
-    d.text((940, 115), str(topcut.divisions.junior), fill="white", anchor="rs", font=font_bold)
-    d.text((1010, 115), str(topcut.divisions.senior), fill="white", anchor="rs", font=font_bold)
-    d.text((1080, 115), str(topcut.divisions.master), fill="white", anchor="rs", font=font_bold)
+    positions = [
+        ((1080,80), (1080, 115)), #Label - Count Positions
+        ((1010,80), (1010, 115)),
+        ((940,80), (940, 115)),
+    ]
+
+    visible = [(label, count) for label, count in divisions if count > 0]
+
+    if len(visible) > 0:
+        last_x = positions[len(visible) - 1][0][0]
+        d.rectangle([last_x - 55, 58, last_x - 53, 117], fill="white")
+    for i, (label, count) in enumerate(visible):
+        label_pos, count_pos = positions[i]
+
+        d.text(label_pos, label, fill="white", anchor="rs", font=font_bold)
+        d.text(count_pos, str(count), fill="white", anchor="rs", font=font_bold)
 
     return im
 
