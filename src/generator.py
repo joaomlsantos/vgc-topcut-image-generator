@@ -111,10 +111,10 @@ def draw_header(im, topcut):
         d.text((60, 115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
 
     # Date placement adjusts based on long tournament names
-    if len(topcut.tour_name) > 38:
-        d.text((860, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-    else:
-        d.text((860, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    #if len(topcut.tour_name) > 38:
+    #    d.text((860, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    #else:
+    #    d.text((860, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
 
     divisions = [
         ("MA", topcut.divisions.master),
@@ -129,6 +129,22 @@ def draw_header(im, topcut):
     ]
 
     visible = [(label, count) for label, count in divisions if count > 0]
+
+    if len(visible) == 3:
+        if len(topcut.tour_name) > 38:
+            d.text((860, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+        else:
+            d.text((860, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    if len(visible) == 2:
+        if len(topcut.tour_name) > 48:
+            d.text((930, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+        else:
+            d.text((930, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    if len(visible) == 1:
+        if len(topcut.tour_name) > 53:
+            d.text((1000, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+        else:
+            d.text((1000, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
 
     if len(visible) > 0:
         last_x = positions[len(visible) - 1][0][0]
