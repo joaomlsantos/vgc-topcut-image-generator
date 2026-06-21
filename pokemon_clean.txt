@@ -1334,3 +1334,14 @@ crabominable-mega|0740_01
 drampa-mega|0780_01
 scovillain-mega|0952_01
 glimmora-mega|0970_01
+raichu-mega-x|0026_02
+raichu-mega-y|0026_03
+staraptor-mega|0398_01
+scolipede-mega|0545_01
+scrafty-mega|0560_01
+eelektross-mega|0604_01
+pyroar-mega|0668_01
+malamar-mega|0687_01
+barbaracle-mega|0689_01
+dragalge-mega|0691_01
+falinks-mega|0870_01
