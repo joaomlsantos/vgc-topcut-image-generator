@@ -53,13 +53,13 @@ def contains_cjk_characters(text):
             return True
     return False
 
-def loadFlag(country_code, height):
+def loadFlag(country_code, width):
     flag_path = os.path.join(LOCAL_FLAGS_SRC, f"{country_code.lower()}.png")
     if not os.path.isfile(flag_path):
         return None
     flag_img = Image.open(flag_path).convert("RGBA")
-    width, img_height = flag_img.size
-    if img_height != height:
-        new_width = int(width * height / img_height)
-        flag_img = flag_img.resize((new_width, height))
+    img_width, img_height = flag_img.size
+    if img_width != width:
+        new_height = int(img_height * width / img_width)
+        flag_img = flag_img.resize((width, new_height))
     return flag_img

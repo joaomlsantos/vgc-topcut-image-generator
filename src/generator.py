@@ -23,6 +23,7 @@ font_regular = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular
 font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
 font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
 font_player_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
+font_player_social = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 14)
 
 font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
 font_player_JP.set_variation_by_name("Bold")
@@ -287,16 +288,22 @@ def genTemplate(topcut):
                 player_x = 646
                 player_y = 288 + 151*(i//2)
                 record_x = 950
+        if topcut.players[i].flag:
+            player_x += 25
         
         # Draw player name
-        d.text((player_x, player_y), player_name, fill="white", anchor="ls", font=player_font)
+        if (topcut.players[i].social and topcut.players[i].social.strip() != ""):
+            d.text((player_x, player_y-10), player_name, fill="white", anchor="ls", font=player_font)
+            d.text((player_x, player_y+10), topcut.players[i].social, fill="white", anchor="ls", font=font_player_social)
+        else:
+            d.text((player_x, player_y), player_name, fill="white", anchor="ls", font=player_font)
         
         # Add flag to the right of player name
-        flag_img = loadFlag(topcut.players[i].flag, 16)
+        flag_width = 30
+        flag_img = loadFlag(topcut.players[i].flag, flag_width)
         if flag_img:
-            text_bbox = d.textbbox((player_x, player_y), player_name, font=player_font, anchor="ls")
-            flag_x = text_bbox[2] + 5  # 5 pixels padding after text
-            flag_y = player_y - flag_img.height
+            flag_x = player_x-35
+            flag_y = player_y - flag_img.height + 3
             im.paste(flag_img, (flag_x, flag_y), mask=flag_img)
         
         # Draw player record
@@ -321,7 +328,8 @@ def genTemplate(topcut):
         with open('../data/pokemon_forms_items.json') as f:
             forms_list = json.load(f)
 
-        newPokemon = reorder_pokemon(newPokemon, restricted_list, mythical_list)
+        if topcut.reorder:
+            newPokemon = reorder_pokemon(newPokemon, restricted_list, mythical_list)
 
         for p in range(len(newPokemon)):
             #print(newPokemon[p])

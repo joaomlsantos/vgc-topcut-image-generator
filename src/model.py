@@ -42,6 +42,7 @@ class Pokemon(BaseModel):
 
 class Player(BaseModel):
     name: str = ""
+    social: str = ""
     pokemon: List[Pokemon] = []
     record: str = ""
     flag: str = ""
@@ -66,6 +67,7 @@ class TopCut(BaseModel):
     image: str = ""
     show_logo: bool = False
     show_background: bool = False
+    reorder: bool = False
 
 class TomHtmlUrl(BaseModel):
     url: str
@@ -84,4 +86,5 @@ class Usage(BaseModel):
     image: str = ""
     show_logo: bool = False
     show_background: bool = False
+    reorder: bool = False
     pokemon: List[PokemonStats] = []
