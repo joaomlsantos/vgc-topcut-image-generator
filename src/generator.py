@@ -173,6 +173,11 @@ def genTemplate(topcut):
 
     backgroundPath = "solid_background.png" if topcut.game == GameType.VGC else "solid_background_GO.png"
 
+    is_toronto = topcut.tour_name.lower().startswith("[toronto]")
+    if is_toronto:
+        backgroundPath = "solid_background_toronto.png"
+        topcut.tour_name = topcut.tour_name[9:].strip()  # Remove "[Toronto]" from the tournament name
+
     background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
     background = background.convert("RGBA")
     background = background.crop((0,0,w,dynamic_height))
@@ -221,6 +226,8 @@ def genTemplate(topcut):
     mult_2 = 0
     for i in range(len(topcut.players)):
         element_circles = "player_element_circles_GO.png" if topcut.game == GameType.GO else "player_element_circles.png"
+        if is_toronto:
+            element_circles = "player_element_circles_toronto.png"
         player_el = Image.open(os.path.join(SOURCE_PATH, element_circles))
         player_el_x = 35 if (i % 2 == 0) else 573
         player_el_y = 215 + (40 * (i % 2)) + 151*(i//2)
