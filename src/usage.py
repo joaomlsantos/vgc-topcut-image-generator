@@ -1,5 +1,5 @@
 import json
-from generator import draw_header
+from generator import draw_header, loadPokemonIndex
 from helper import reorder_pokemon, change_form_item, contains_cjk_characters, loadFlag
 from model import Usage, PokemonStats, GameType
 import io
@@ -29,6 +29,8 @@ font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.tt
 font_player_JP.set_variation_by_name("Bold")
 
 num_player_font = ImageFont.truetype("../fonts/Edo/edo.ttf", 24)
+
+pokemonindex = loadPokemonIndex()
 
 def generateUsage(usage):
     image = genTemplate(usage)
@@ -95,6 +97,75 @@ def genTemplate(usage):
     draw_header(im, usage)
 
     #TODO: draw usage stats
+    # Create a drawing context for subsequent player rendering
+    d = ImageDraw.Draw(im)
+
+    #implementar forma de escolher usage entre masters, seniors e juniors futuramente
+    
+    total_players=usage.divisions.master
+
+    #Começar com a ordenação dos Pokemon e fazer total 
+
+    sorted_pokemon = sorted(
+        [pokemon for pokemon in usage.pokemon if pokemon.name.strip() != ""],
+        key=lambda pokemon: pokemon.usage_count,
+        reverse=True
+    )
+
+    percentages=[] #percentagens de uso por ordem
+    for i in range(len(sorted_pokemon)):
+        pokemon=sorted_pokemon[i]
+        usage_count=pokemon.usage_count
+        percentages[i] = (usage_count / total_players ) * 100
+
+
+    #colocar espaços para Pokémon
+    path_circles="img/usage_circles.png"
+    image_circles = Image.open(os.path.join(SOURCE_PATH, path_circles))
+
+    left_margin=0 #Nao sei
+    top_margin=0 #Nao sei
+    space_between_columns=0 #Nao sei
+    space_between_lines=0 #Nao sei
+    square_size=160 
+
+    for line in range(2):
+        for column in range(6):
+            x=left_margin + column * (square_size + space_between_columns)
+            y=top_margin + line * (square_size + space_between_lines)
+            im.paste(image_circles, (x,y))    
+
+    d = ImageDraw.Draw(im)
+    
+    #Escolher fonts a usar - vou colocar font_regular em tudo como placeholder
+
+    #colocar infos de Pokémon
+    #Nao faco ideia como escolher a posicao em que começo a escrever cada nome
+    for i in range(len(sorted_pokemon)):
+        if(i>=12):
+            break
+        else:
+            x_name=0 #a definir
+            y_name=0 #a definir
+            x_value=0 #a definir
+            y_value=0 #a definir
+            d.text((x_name,y_name), sorted_pokemon[i].name, font_regular, fill="white")
+            d.text((x_value, y_value), str(percentages[i]), font_regular, fill="white", anchor="mm")
+
+            #Investigar onde estão as imagens de cada Pokémon
+            icon_name = sorted_pokemon[i].name.lower().replace(" ", "-")
+            if(icon_name == ""):
+                continue
+            pokemon_icon_id = pokemonindex[icon_name]
+            
+
+
+        #Codigo antigo (necessário?)
+        image_background_x = 35 if (i % 2 == 0) else 573
+        image_background_y = 215 + (40 * (i % 2)) + 151*(i//2)
+        image_background=image_background.resize((100, 100))
+        im.paste(image_background, (image_background_x, image_background_y)) 
+
 
     return im
 
