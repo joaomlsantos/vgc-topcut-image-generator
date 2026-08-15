@@ -117,54 +117,90 @@ def genTemplate(usage):
         pokemon=sorted_pokemon[i]
         usage_count=pokemon.usage_count
         percentages[i] = (usage_count / total_players ) * 100
-
-
-    #colocar espaços para Pokémon
-    path_circles="img/usage_circles.png"
-    image_circles = Image.open(os.path.join(SOURCE_PATH, path_circles))
-
-    left_margin=0 #Nao sei
-    top_margin=0 #Nao sei
-    space_between_columns=0 #Nao sei
-    space_between_lines=0 #Nao sei
-    square_size=160 
-
-    for line in range(2):
-        for column in range(6):
-            x=left_margin + column * (square_size + space_between_columns)
-            y=top_margin + line * (square_size + space_between_lines)
-            im.paste(image_circles, (x,y))    
+   
 
     d = ImageDraw.Draw(im)
     
     #Escolher fonts a usar - vou colocar font_regular em tudo como placeholder
 
     #colocar infos de Pokémon
-    #Nao faco ideia como escolher a posicao em que começo a escrever cada nome
+    pokemon_spacing_x= (im.width - 70) // 6
+    pokemon_start_y= 215 # Start roughly where first player_el starts in generator.py
+    pokemon_row_height = 190  # Height between rows
+
+    pokemon_per_row=6
+    path_circles="img/usage_circles.png"
+    image_circles = Image.open(os.path.join(SOURCE_PATH, path_circles))
     for i in range(len(sorted_pokemon)):
-        if(i>=12):
-            break
+        row=i
+        col=i % pokemon_per_row
+
+        #Calculate positions
+        pokemon_el_x=42+(col*pokemon_spacing_x)
+        pokemon_el_y=pokemon_start_y+(row*pokemon_row_height)
+
+        #Place where each Pokémon data will be 
+        im.paste(image_circles, (pokemon_el_x, pokemon_el_y), image_circles)
+
+        #Pokémon names
+        text_x = pokemon_el_x + (pokemon_spacing_x // 2) - 28
+        text_y = pokemon_el_y + 133
+
+        # Measure text size
+        bbox = d.textbbox((text_x, text_y), sorted_pokemon[i].name, font=font_regular)
+        text_width = bbox[2] - bbox[0]
+
+        if text_width <= 80:
+            d.text((text_x, text_y), sorted_pokemon[i].name, fill="white", anchor="mm", font=font_regular)
         else:
-            x_name=0 #a definir
-            y_name=0 #a definir
-            x_value=0 #a definir
-            y_value=0 #a definir
-            d.text((x_name,y_name), sorted_pokemon[i].name, font_regular, fill="white")
-            d.text((x_value, y_value), str(percentages[i]), font_regular, fill="white", anchor="mm")
+            sorted_name = sorted_pokemon[i].name.split(" ")
+            if len(sorted_name) == 2:
+                d.text((text_x, text_y - 6), sorted_name[0], fill="white", anchor="mm", font=font_regular)
+                d.text((text_x, text_y + 6), sorted_name[1], fill="white", anchor="mm", font=font_regular)
+            if len(sorted_name) == 3:
+                bbox2 = d.textbbox((text_x, text_y), sorted_name[0] + " " + sorted_name[1], font=font_regular)
+                text_width2 = bbox2[2] - bbox2[0]
+                if text_width2 <= 80:
+                    d.text((text_x, text_y - 6), sorted_name[0] + " " + sorted_name[1], fill="white", anchor="mm", font=font_regular)
+                    d.text((text_x, text_y + 6), sorted_name[2], fill="white", anchor="mm", font=font_regular)
+                else:
+                    bbox3 = d.textbbox((text_x, text_y), sorted_name[1] + " " + sorted_name[2], font=font_regular)
+                    text_width3 = bbox3[2] - bbox3[0]
+                    if text_width3 <= 80:
+                        d.text((text_x, text_y - 6), sorted_name[0], fill="white", anchor="mm", font=font_regular)
+                        d.text((text_x, text_y + 6), sorted_name[1] + " " + sorted_name[2], fill="white", anchor="mm", font=font_regular)
+                    else:
+                        d.text((text_x, text_y - 10), sorted_name[0], fill="white", anchor="mm", font=font_regular)
+                        d.text((text_x, text_y), sorted_name[1], fill="white", anchor="mm", font=font_regular)
+                        d.text((text_x, text_y + 10), sorted_name[2], fill="white", anchor="mm", font=font_regular)
 
-            #Investigar onde estão as imagens de cada Pokémon
-            icon_name = sorted_pokemon[i].name.lower().replace(" ", "-")
-            if(icon_name == ""):
-                continue
-            pokemon_icon_id = pokemonindex[icon_name]
-            
+        #percentagens
+        distance_name_percentage=10 #a definir
+        pokemon_percentage_x=text_x+distance_name_percentage
+        pokemon_percentage_y=text_y
 
+        d.text((pokemon_percentage_x, pokemon_percentage_y), str(percentages[i])+"%", fill="white", anchor="mm", font=font_regular)
 
-        #Codigo antigo (necessário?)
-        image_background_x = 35 if (i % 2 == 0) else 573
-        image_background_y = 215 + (40 * (i % 2)) + 151*(i//2)
-        image_background=image_background.resize((100, 100))
-        im.paste(image_background, (image_background_x, image_background_y)) 
+        #sprite
+        pokemon_sprite_x=pokemon_el_x + 5 #a definir
+        pokemon_sprite_y=pokemon_el_y + 5 #a definir
+        
+        icon_name = sorted_pokemon[i].name.lower().replace(" ", "-")
+        if(icon_name == ""):
+            continue
+        pokemon_icon_id = pokemonindex[icon_name]
+
+        if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
+            #print(POKEMON_ICONS_SRC + newPokemon[p].name.lower().replace(" ", "-") + ".png")
+            icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
+            content = icon_url.read()
+            with open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png", "wb") as download:
+                download.write(content)
+        
+        p_icon = Image.open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
+        p_icon = p_icon.convert("RGBA")
+        p_icon = p_icon.resize((60,60))
+        im.paste(p_icon, (pokemon_sprite_y, pokemon_sprite_y), mask=p_icon)
 
 
     return im
