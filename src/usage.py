@@ -20,7 +20,6 @@ font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf",
 font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
 font_player_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
 font_pokemon_name = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 12)
-font_percentage = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 10)
 
 font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
 font_player_JP.set_variation_by_name("Bold")
@@ -105,7 +104,7 @@ def genTemplate(usage):
     for i in range(len(sorted_pokemon)):
         pokemon=sorted_pokemon[i]
         usage_count=pokemon.usage_count
-        percentages.append(round((usage_count / usage.total ) * 100, 2))
+        percentages.append(f"{(usage_count / usage.total) * 100:.1f}".removesuffix(".0"))
    
 
     d = ImageDraw.Draw(im)
@@ -166,7 +165,7 @@ def genTemplate(usage):
         #percentages
         pokemon_percentage_x=text_x+79
         
-        d.text((pokemon_percentage_x, text_y), str(percentages[i])+"%", fill="white", anchor="mm", font=font_percentage)
+        d.text((pokemon_percentage_x, text_y), str(percentages[i])+"%", fill="white", anchor="mm", font=font_pokemon_name)
 
         #sprite
         icon_name = sorted_pokemon[i].name.lower().replace(" ", "-")
