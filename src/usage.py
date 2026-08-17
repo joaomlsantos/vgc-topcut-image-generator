@@ -116,7 +116,7 @@ def genTemplate(usage):
     for i in range(len(sorted_pokemon)):
         pokemon=sorted_pokemon[i]
         usage_count=pokemon.usage_count
-        percentages[i] = (usage_count / total_players ) * 100
+        percentages.append((usage_count / total_players ) * 100)
    
 
     d = ImageDraw.Draw(im)
@@ -129,7 +129,7 @@ def genTemplate(usage):
     pokemon_row_height = 190  # Height between rows
 
     pokemon_per_row=6
-    path_circles="img/usage_circles.png"
+    path_circles="usage_circles.png"
     image_circles = Image.open(os.path.join(SOURCE_PATH, path_circles))
     for i in range(len(sorted_pokemon)):
         row=i
@@ -140,7 +140,7 @@ def genTemplate(usage):
         pokemon_el_y=pokemon_start_y+(row*pokemon_row_height)
 
         #Place where each Pokémon data will be 
-        im.paste(image_circles, (pokemon_el_x, pokemon_el_y), image_circles)
+        im.paste(image_circles, (pokemon_el_x, pokemon_el_y), mask=image_circles)
 
         #Pokémon names
         text_x = pokemon_el_x + (pokemon_spacing_x // 2) - 28

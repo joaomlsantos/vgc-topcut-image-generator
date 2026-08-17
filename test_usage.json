@@ -1,0 +1,134 @@
+{
+  "tour_name": "European International Championship",
+  "tour_type": "INTERNATIONAL",
+  "date": "15/02/2026",
+  "format": "VGC 2025 - Regulation F",
+  "game": "VGC",
+  "divisions": {
+    "junior": 65,
+    "senior": 94,
+    "master": 1455
+  },
+  "pokemon":[
+    {
+      "name": "Incineroar",
+      "usage_count": "5"
+    },
+    {
+      "name": "Dragonite",
+      "usage_count": "2"
+    },
+    {
+      "name": "Meganium",
+      "usage_count": "2"
+    },
+    {
+      "name": "Pelipper",
+      "usage_count": "1"
+    },
+    {
+      "name": "Basculegion",
+      "usage_count": "5"
+    },
+    {
+      "name": "Archaludon",
+      "usage_count": "1"
+    },
+    {
+      "name": "Delphox",
+      "usage_count": "1"
+    },
+    {
+      "name": "Sneasler",
+      "usage_count": "3"
+    },
+    {
+      "name": "Clefable",
+      "usage_count": "1"
+    },
+    {
+      "name": "Kingambit",
+      "usage_count": "3"
+    },
+    {
+      "name": "Farigiraf",
+      "usage_count": "1"
+    },
+    {
+      "name": "Decidueye-Hisui",
+      "usage_count": "1"
+    },
+    {
+      "name": "Primarina",
+      "usage_count": "1"
+    },
+    {
+      "name": "Golurk",
+      "usage_count": "1"
+    },
+    {
+      "name": "Corviknight",
+      "usage_count": "1"
+    },
+    {
+      "name": "Charizard",
+      "usage_count": "1"
+    },
+    {
+      "name": "Garchomp",
+      "usage_count": "2"
+    },
+    {
+      "name": "Venusaur",
+      "usage_count": "1"
+    },
+    {
+      "name": "Torkoal",
+      "usage_count": "1"
+    },
+    {
+      "name": "Gardevoir",
+      "usage_count": "1"
+    },
+    {
+      "name": "Sinistcha",
+      "usage_count": "2"
+    },
+    {
+      "name": "Aerodactyl",
+      "usage_count": "2"
+    },
+    {
+      "name": "Glimmora",
+      "usage_count": "1"
+    },
+    {
+      "name": "Gyarados",
+      "usage_count": "1"
+    },
+    {
+      "name": "Talonflame",
+      "usage_count": "1"
+    },
+    {
+      "name": "Maushold",
+      "usage_count": "1"
+    },
+    {
+      "name": "Gallade",
+      "usage_count": "1"
+    },
+    {
+      "name": "Froslass",
+      "usage_count": "1"
+    },
+    {
+      "name": "Zoroark-Hisui",
+      "usage_count": "1"
+    },
+    {
+      "name": "Arcanine-Hisui",
+      "usage_count": "1"
+    }
+  ]
+}
