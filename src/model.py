@@ -85,3 +85,4 @@ class Usage(BaseModel):
     show_logo: bool = False
     show_background: bool = False
     pokemon: List[PokemonStats] = []
+    total: int
