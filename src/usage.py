@@ -119,6 +119,8 @@ def genTemplate(usage):
     )
 
     percentages=[]
+    if usage.total == 0:
+        usage.total = usage.divisions.junior + usage.divisions.senior + usage.divisions.master
     for i in range(len(sorted_pokemon)):
         pokemon=sorted_pokemon[i]
         usage_count=pokemon.usage_count
