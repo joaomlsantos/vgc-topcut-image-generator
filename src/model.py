@@ -76,7 +76,6 @@ class PokemonStats(BaseModel):
 
 class Usage(BaseModel):
     tour_name: str = ""
-    tour_type: TournamentType
     divisions: Division
     date: str = ""
     format: str = ""
