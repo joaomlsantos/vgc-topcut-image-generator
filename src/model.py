@@ -78,7 +78,6 @@ class PokemonStats(BaseModel):
 
 class Usage(BaseModel):
     tour_name: str = ""
-    tour_type: TournamentType
     divisions: Division
     date: str = ""
     format: str = ""
@@ -88,3 +87,4 @@ class Usage(BaseModel):
     show_background: bool = False
     reorder: bool = False
     pokemon: List[PokemonStats] = []
+    total: int
