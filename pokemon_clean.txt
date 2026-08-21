@@ -27,9 +27,11 @@ raichu|0026|Electric|Null
 sandshrew|0027|Ground|Null
 sandslash|0028|Ground|Null
 nidoran-f|0029|Poison|Null
+nidoran-female|0029|Poison|Null
 nidorina|0030|Poison|Null
 nidoqueen|0031|Poison|Ground
 nidoran-m|0032|Poison|Null
+nidoran-male|0032|Poison|Null
 nidorino|0033|Poison|Null
 nidoking|0034|Poison|Ground
 clefairy|0035|Fairy|Null
@@ -553,6 +555,7 @@ krokorok|0552|Ground|Dark
 krookodile|0553|Ground|Dark
 darumaka|0554|Fire|Null
 darmanitan-standard|0555|Fire|Null
+darmanitan|0555|Fire|Null
 maractus|0556|Grass|Null
 dwebble|0557|Bug|Rock
 crustle|0558|Bug|Rock
@@ -679,6 +682,7 @@ meowstic|0678|Psychic|Null
 meowstic-male|0678|Psychic|Null
 honedge|0679|Steel|Ghost
 doublade|0680|Steel|Ghost
+aegislash|0681|Steel|Ghost
 aegislash-shield|0681|Steel|Ghost
 spritzee|0682|Fairy|Null
 aromatisse|0683|Fairy|Null
@@ -774,9 +778,11 @@ pyukumuku|0771|Water|Null
 type-null|0772|Normal|Null
 silvally|0773|Normal|Null
 minior-red-meteor|0774|Rock|Flying
+minior|0774|Rock|Flying
 komala|0775|Normal|Null
 turtonator|0776|Fire|Dragon
 togedemaru|0777|Electric|Steel
+mimikyu|0778|Ghost|Fairy
 mimikyu-disguised|0778|Ghost|Fairy
 bruxish|0779|Water|Psychic
 drampa|0780|Normal|Dragon
@@ -874,6 +880,7 @@ pincurchin|0871|Electric|Null
 snom|0872|Ice|Bug
 frosmoth|0873|Ice|Bug
 stonjourner|0874|Rock|Null
+eiscue|0875|Ice|Null
 eiscue-ice|0875|Ice|Null
 indeedee|0876|Psychic|Normal
 morpeko-full-belly|0877|Electric|Dark
@@ -1046,7 +1053,7 @@ castform-sunny|0351_01|Fire|Null
 castform-rainy|0351_02|Water|Null
 castform-snowy|0351_03|Ice|Null
 basculin-blue-striped|0550_01|Water|Null
-darmanitan-zen|0555_01|Fire|Psychic
+darmanitan-zen|0555_02|Fire|Psychic
 meloetta-pirouette|0648_01|Normal|Fighting
 tornadus-therian|0641_01|Flying|Null
 thundurus-therian|0642_01|Electric|Flying
@@ -1148,6 +1155,7 @@ exeggutor-alola|0103_01|Grass|Dragon
 marowak-alola|0105_01|Fire|Ghost
 greninja-battle-bond|0658_01|Water|Dark
 greninja-ash|0658_02|Water|Dark
+ash-greninja|0658_02|Water|Dark
 zygarde-10%|0718_01|Dragon|Ground
 zygarde-complete|0718_04|Dragon|Ground
 gumshoos-totem|0735_01|Normal|Null
@@ -1185,7 +1193,9 @@ lycanroc-dusk|0745_02|Rock|Null
 araquanid-totem|0752_01|Water|Bug
 togedemaru-totem|0777_01|Electric|Steel
 necrozma-dusk|0800_01|Psychic|Steel
+necrozma-dusk-mane|0800_01|Psychic|Steel
 necrozma-dawn|0800_02|Psychic|Ghost
+necrozma-dawn-wings|0800_02|Psychic|Ghost
 necrozma-ultra|0800_03|Psychic|Dragon
 pikachu-starter|0025_14|Electric|Null
 eevee-starter|0133_01|Normal|Null
@@ -1206,7 +1216,8 @@ corsola-galar|0222_01|Ghost|Null
 zigzagoon-galar|0263_01|Dark|Normal
 linoone-galar|0264_01|Dark|Normal
 darumaka-galar|0554_01|Ice|Null
-darmanitan-galar-standard|0555_02|Ice|Null
+darmanitan-galar|0555_01|Ice|Null
+darmanitan-galar-standard|0555_01|Ice|Null
 darmanitan-galar-zen|0555_03|Ice|Fire
 yamask-galar|0562_01|Ground|Ghost
 stunfisk-galar|0618_01|Ground|Steel
@@ -1216,6 +1227,8 @@ cramorant-gorging|0845_02|Water|Flying
 toxtricity-low-key|0849_01|Electric|Poison
 eiscue-noice|0875_01|Ice|Null
 indeedee-f|0876_01|Psychic|Normal
+indeedee-female|0876_01|Psychic|Normal
+morpeko|0877_01|Electric|Dark
 morpeko-hangry|0877_01|Electric|Dark
 zacian-crowned|0888_01|Fairy|Steel
 zamazenta-crowned|0889_01|Fighting|Steel

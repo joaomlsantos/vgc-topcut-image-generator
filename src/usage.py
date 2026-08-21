@@ -195,6 +195,7 @@ def genTemplate(usage):
         icon_name = sorted_pokemon[i].name.lower().replace(" ", "-")
         icon_name = icon_name.replace(".", "")
         icon_name = icon_name.replace(":", "-")
+        icon_name = icon_name.replace("'", "")
         if(icon_name == ""):
             continue
         pokemon_icon_id = pokemonindex[icon_name]["id"]
