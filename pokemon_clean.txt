@@ -1359,3 +1359,6 @@ malamar-mega|0687_01|Dark|Psychic
 barbaracle-mega|0689_01|Rock|Fighting
 dragalge-mega|0691_01|Poison|Dragon
 falinks-mega|0870_01|Fighting|Null
+absol-mega-z|0359_02|Dark|Ghost
+garchomp-mega-z|0445_02|Dragon|Null
+lucario-mega-z|0448_02|Fighting|Steel
