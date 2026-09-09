@@ -1362,3 +1362,5 @@ falinks-mega|0870_01|Fighting|Null
 absol-mega-z|0359_02|Dark|Ghost
 garchomp-mega-z|0445_02|Dragon|Null
 lucario-mega-z|0448_02|Fighting|Steel
+golisopod-mega|0768_01|Bug|Steel
+baxcalibur-mega|0998_01|Dragon|Ice
