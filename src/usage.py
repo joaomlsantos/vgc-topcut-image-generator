@@ -68,6 +68,11 @@ def genTemplate(usage):
 
     backgroundPath = "solid_background.png" if usage.game == GameType.VGC else "solid_background_GO.png"
 
+    is_toronto = usage.tour_name.lower().startswith("[toronto]")
+    if is_toronto:
+        backgroundPath = "solid_background_toronto.png"
+        usage.tour_name = usage.tour_name[9:].strip()  # Remove "[Toronto]" from the tournament name
+
     background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
     background = background.convert("RGBA")
     background = background.crop((0,0,w,dynamic_height))
@@ -136,7 +141,10 @@ def genTemplate(usage):
     pokemon_row_height = 190  # Height between rows
 
     path_element="usage_element.png"
+    if is_toronto:
+            path_element = "usage_element_toronto.png"
     image_element = Image.open(os.path.join(SOURCE_PATH, path_element))
+    
     for i in range(len(sorted_pokemon)):
         row=i // pokemon_per_row
         col=i % pokemon_per_row
