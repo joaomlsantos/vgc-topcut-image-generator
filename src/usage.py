@@ -3,33 +3,36 @@ from model import GameType
 import io
 from PIL import Image, ImageDraw, ImageFont
 import os
+from pathlib import Path
 from urllib.request import urlopen
 import base64
 
 # Constants
-SOURCE_PATH = "../img"
+BASE_DIR = Path(__file__).resolve().parent.parent
+SOURCE_PATH = str(BASE_DIR / "img")
 # POKEMON_ICONS_SRC = "https://limitlesstcg.s3.us-east-2.amazonaws.com/pokemon/gen9/"
 POKEMON_ICONS_SRC = "https://img.generator.joaoabel.pt/pokemon/projectpokemon/"
 ITEM_ICONS_SRC = "https://img.generator.joaoabel.pt/items/item_"
-LOCAL_POKEMON_ICONS_SRC = "../img/pokemon/projectpokemon/"
-LOCAL_ITEM_ICONS_SRC = "../img/items/item_"
-LOCAL_TERA_ICONS_SRC = "../img/teras/"
+LOCAL_POKEMON_ICONS_SRC = str(BASE_DIR / "img" / "pokemon" / "projectpokemon") + "/"
+LOCAL_ITEM_ICONS_SRC = str(BASE_DIR / "img" / "items" / "item_")
+LOCAL_TERA_ICONS_SRC = str(BASE_DIR / "img" / "teras") + "/"
 
-# Fonts=font_pokemon_name = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 24)
-font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
-font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
-font_player_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
-font_pokemon_name = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
-font_pokemon_name_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 12)
-font_percentage = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
+# Fonts
+FONTS_DIR = BASE_DIR / "fonts"
+font_bold = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 24)
+font_player = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 18)
+font_player_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
+font_pokemon_name = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
+font_pokemon_name_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 12)
+font_percentage = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
 
-font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
+font_player_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 18)
 font_player_JP.set_variation_by_name("Bold")
 
-num_player_font = ImageFont.truetype("../fonts/Edo/edo.ttf", 24)
+num_player_font = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 24)
 
 def loadPokemonIndex():
-    SOURCE_PATH = "../pokemon_clean.txt"
+    SOURCE_PATH = BASE_DIR / "pokemon_clean.txt"
     index = {}
     with open(SOURCE_PATH, "r", encoding="utf8") as f:
         for line in f:

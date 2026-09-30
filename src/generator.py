@@ -10,45 +10,49 @@ from database import submit_data
 import base64
 
 # Constants
-SOURCE_PATH = "../img"
+BASE_DIR = Path(__file__).resolve().parent.parent
+SOURCE_PATH = str(BASE_DIR / "img")
 # POKEMON_ICONS_SRC = "https://limitlesstcg.s3.us-east-2.amazonaws.com/pokemon/gen9/"
 POKEMON_ICONS_SRC = "https://img.generator.joaoabel.pt/pokemon/projectpokemon/"
 ITEM_ICONS_SRC = "https://img.generator.joaoabel.pt/items/item_"
-LOCAL_POKEMON_ICONS_SRC = "../img/pokemon/projectpokemon/"
-LOCAL_ITEM_ICONS_SRC = "../img/items/item_"
-LOCAL_TERA_ICONS_SRC = "../img/teras/"
+LOCAL_POKEMON_ICONS_SRC = str(BASE_DIR / "img" / "pokemon" / "projectpokemon") + "/"
+LOCAL_ITEM_ICONS_SRC = str(BASE_DIR / "img" / "items" / "item_")
+LOCAL_TERA_ICONS_SRC = str(BASE_DIR / "img" / "teras") + "/"
 
 # Fonts
-font_regular = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 24)
-font_bold = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
-font_player = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 18)
-font_player_small = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 16)
-font_player_social = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Regular.ttf", 14)
+FONTS_DIR = BASE_DIR / "fonts"
+font_regular = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 24)
+font_bold = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 24)
+font_player = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 18)
+font_player_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
+font_player_social = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 14)
 
-font_player_JP = ImageFont.truetype("../fonts/SourceHansSans/SourceHanSans-VF.ttf", 18)
+font_player_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 18)
 font_player_JP.set_variation_by_name("Bold")
 
-num_player_font = ImageFont.truetype("../fonts/Edo/edo.ttf", 24)
+num_player_font = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 24)
 
 
 def loadItemIndex():
-    SOURCE_PATH = "../items_clean.txt"
+    SOURCE_PATH = str(BASE_DIR / "items_clean.txt")
     index = {}
     f = open(SOURCE_PATH, "r", encoding="utf8")
     for l in f:
         item_id_pair = l.strip().split("|")
         fixed_id = "0" * (4 - len(item_id_pair[1])) + item_id_pair[1]
         index[item_id_pair[0]] = fixed_id
+    f.close()
     return index
 
 
 def loadPokemonIndex():
-    SOURCE_PATH = "../pokemon_clean.txt"
+    SOURCE_PATH = str(BASE_DIR / "pokemon_clean.txt")
     index = {}
     f = open(SOURCE_PATH, "r", encoding="utf8")
     for l in f:
         pokemon_id_pair = l.strip().split("|")
         index[pokemon_id_pair[0]] = pokemon_id_pair[1]
+    f.close()
     return index
 
 
@@ -328,11 +332,11 @@ def genTemplate(topcut):
 
         newPokemon = topcut.players[i].pokemon
 
-        with open('../data/restricted.json') as f:
+        with open(BASE_DIR / 'data' / 'restricted.json') as f:
             restricted_list = json.load(f)
-        with open('../data/mythical.json') as f:
+        with open(BASE_DIR / 'data' / 'mythical.json') as f:
             mythical_list = json.load(f)
-        with open('../data/pokemon_forms_items.json') as f:
+        with open(BASE_DIR / 'data' / 'pokemon_forms_items.json') as f:
             forms_list = json.load(f)
 
         if topcut.reorder:
@@ -434,8 +438,8 @@ def mergeImages():
     SOURCE_PATH = "C:/Users/HAWKE-PC/Pictures/dream-world"
 
 
-    font_regular = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 24)
-    font = ImageFont.truetype("../fonts/Montserrat/static/Montserrat-Bold.ttf", 48)
+    font_regular = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 24)
+    font = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 48)
 
     im1 = Image.open(SOURCE_PATH + "/348.png")
     im2 = Image.open("C:/Users/HAWKE-PC/Pictures/two.png")

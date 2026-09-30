@@ -2,23 +2,36 @@
 
 import psycopg2
 from psycopg2 import sql
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import os
 from datetime import datetime
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(find_dotenv())
 
 def connect_to_db():
     try:
-        # Get connection parameters from environment variables
-        connection = psycopg2.connect(
-            dbname=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            host=os.getenv("DB_HOST"),
-            port=os.getenv("DB_PORT")
-        )
+        db_url = os.getenv("DATABASE_URL")
+        if db_url:
+            connect_kwargs = {}
+            if "neon.tech" in db_url and "sslmode" not in db_url:
+                connect_kwargs["sslmode"] = "require"
+            connection = psycopg2.connect(db_url, **connect_kwargs)
+        else:
+            connect_kwargs = {
+                "dbname": os.getenv("DB_NAME"),
+                "user": os.getenv("DB_USER"),
+                "password": os.getenv("DB_PASSWORD"),
+                "host": os.getenv("DB_HOST"),
+                "port": os.getenv("DB_PORT", 5432),
+            }
+            sslmode = os.getenv("DB_SSLMODE")
+            if not sslmode and "neon.tech" in (os.getenv("DB_HOST") or ""):
+                sslmode = "require"
+            if sslmode:
+                connect_kwargs["sslmode"] = sslmode
+            connection = psycopg2.connect(**connect_kwargs)
+
         print("Connection to database established successfully.")
         return connection
     except Exception as error:

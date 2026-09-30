@@ -1,9 +1,11 @@
 import unicodedata
 from PIL import Image
 import os
+from pathlib import Path
 
 # Constants
-LOCAL_FLAGS_SRC = "../img/flags/"
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOCAL_FLAGS_SRC = str(BASE_DIR / "img" / "flags") + "/"
 
 def roll(im, delta):
     """Roll an image sideways."""

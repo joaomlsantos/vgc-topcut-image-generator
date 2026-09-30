@@ -1,0 +1,35 @@
+# Virtual environments
+venv/
+src/venv/
+.venv/
+env/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*.pyc
+build/
+dist/
+*.egg-info/
+
+# Git
+.git/
+.gitignore
+
+# Environment variables & local secrets
+.env
+.env.*
+!.env.example
+
+# IDE & OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Test & scratch outputs
+src/output_test.txt
+src/output_test.json
+inputs/
+outputs/
+*.zip
+*.log

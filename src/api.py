@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+
+# Ensure src directory is on sys.path so sibling modules can be imported
+SRC_DIR = Path(__file__).resolve().parent
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
