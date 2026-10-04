@@ -33,3 +33,7 @@ inputs/
 outputs/
 *.zip
 *.log
+
+# Explicitly include pokemon and item icons for deployment (overriding nested .gitignore files)
+!img/pokemon/projectpokemon/**
+!img/items/**
