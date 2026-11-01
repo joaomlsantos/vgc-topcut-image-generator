@@ -30,6 +30,10 @@ font_player_social = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" 
 font_player_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 18)
 font_player_JP.set_variation_by_name("Bold")
 
+# Instagram header fonts
+font_regular_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 71)
+font_bold_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 71)
+
 num_player_font = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 24)
 
 
@@ -59,6 +63,13 @@ def loadPokemonIndex():
 itemIndex = loadItemIndex()
 pokemonindex = loadPokemonIndex()
 
+with open(BASE_DIR / 'data' / 'restricted.json') as f:
+    restricted_list = json.load(f)
+with open(BASE_DIR / 'data' / 'mythical.json') as f:
+    mythical_list = json.load(f)
+with open(BASE_DIR / 'data' / 'pokemon_forms_items.json') as f:
+    forms_list = json.load(f)
+
 cp_distribution = {}    # tour_type -> (points, kicker)
 cp_distribution["PREMIER"] = [(30, 0), (16, 0), (12, 0), (8, 17), (6, 48), (4, 80)]
 cp_distribution["MSS"] = [(50, 0), (40, 0), (32, 0), (25, 17), (20, 48), (16, 80), (13, 128)]
@@ -82,86 +93,189 @@ def generateTopcut(topcut):
     
     return buf.getvalue()
 
+def generateTopcutInstagram(topcut):
+    image = genTemplateInstagram(topcut)
+    buf = io.BytesIO()
+    image.save(buf, "PNG")
+    
+    # Only submit data if all players have at least 4 pokemon with non-empty names
+    if all(len([p for p in player.pokemon if p.name.strip()]) >= 4 for player in topcut.players):
+        submit_data(topcut)
+    
+    return buf.getvalue()
 
-def draw_header(im, topcut):
-    # Paste header bar background
-    header_bar = Image.open(os.path.join(SOURCE_PATH, "header_bar.png"))
-    im.paste(header_bar, (0, 41))
+def format_player_name(player_name: str) -> str:
+    """Shortens player names longer than 30 characters."""
+    if len(player_name) > 30:
+        p_names = player_name.split()
+        if len(p_names) > 2:  # Cut middle names
+            p_names = [p_names[0], p_names[-1]]
+            if len(" ".join(p_names)) <= 30:
+                return " ".join(p_names)
+            else:
+                p_names[-1] = p_names[-1][0] + "."
+                return " ".join(p_names)
+        else:
+            p_names[-1] = p_names[-1][0] + "."
+            return " ".join(p_names)
+    return player_name
 
-    # Determine available tour icons
-    formats = [Path(tour_img).stem for tour_img in os.listdir(os.path.join(SOURCE_PATH, "tours"))]
-    # Paste tour icon if available
-    if(topcut.image != "" and topcut.show_logo):
-        # Decode base64 string to bytes
-        image_data = base64.b64decode(topcut.image)
+def calculate_player_cp(rank: int, tour_type: str, master_count: int, mult_2: int) -> tuple[int, int]:
+    """Calculates CP points for a player rank and updates the mult_2 index."""
+    cur_cp = 0
+    cp_tour_types = [
+        "PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", 
+        "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL"
+    ]
+    if tour_type in cp_tour_types:
+        cp_dist = cp_distribution[tour_type]
+        cur_sel = cp_dist[mult_2]
+        cur_cp = cur_sel[0] if master_count >= cur_sel[1] else 0
+        if (rank & (rank - 1) == 0) and rank != 0:
+            mult_2 += 1
 
-        tour_icon = Image.open(io.BytesIO(image_data)).convert("RGBA")
-        width, height = tour_icon.size
-        tour_icon = tour_icon.resize((width * 160 // height, 160))
-        im.paste(tour_icon, (22, 25), mask=tour_icon)
-    #else:
-    #    if topcut.tour_type.lower() in formats:
-    #        tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
-    #        im.paste(tour_icon, (22, 25), mask=tour_icon)
+    return cur_cp, mult_2
 
-    d = ImageDraw.Draw(im)
+def load_pokemon_icon(name: str) -> Image.Image | None:
+    """Downloads Pokemon sprite if not cached and returns a 60x60 RGBA image."""
+    icon_name = name.lower().replace(" ", "-")
+    if not icon_name or icon_name not in pokemonindex:
+        return None
 
-    # Tournament name & format positioning depends on whether we have a tour icon
-    #if topcut.tour_type.lower() in formats or topcut.image != "":
-    if topcut.image != "":
-        d.text((200, 80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((200, 115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+    pokemon_icon_id = pokemonindex[icon_name]
+    local_path = LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png"
+    if not os.path.isfile(local_path):
+        icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
+        content = icon_url.read()
+        with open(local_path, "wb") as download:
+            download.write(content)
+
+    p_icon = Image.open(local_path).convert("RGBA")
+    return p_icon.resize((60, 60))
+
+def load_item_icon(item_name: str) -> Image.Image | None:
+    """Downloads item icon if not cached and returns a 24x24 RGBA image."""
+    if not item_name or item_name not in itemIndex:
+        return None
+
+    local_path = LOCAL_ITEM_ICONS_SRC + itemIndex[item_name] + ".png"
+    if not os.path.isfile(local_path):
+        icon_url = urlopen(ITEM_ICONS_SRC + itemIndex[item_name] + ".png")
+        content = icon_url.read()
+        with open(local_path, "wb") as download:
+            download.write(content)
+
+    item_icon = Image.open(local_path).convert("RGBA")
+    return item_icon.resize((24, 24))
+
+def draw_player_card(im, d, i: int, player, tour_type: str, game: GameType, cur_cp: int = 0, is_toronto: bool = False):
+    """Draws player card background, rank number, CP, name, social, flag, and record."""
+    # 1. Card background circle
+    element_circles = os.path.join("pokemonGO", "player_element_circles_GO.png") if game == GameType.GO else "player_element_circles.png"
+    if is_toronto:
+        element_circles = "player_element_circles_toronto.png"
+    player_el = Image.open(os.path.join(SOURCE_PATH, element_circles))
+    player_el_x = 35 if (i % 2 == 0) else 573
+    player_el_y = 215 + (40 * (i % 2)) + 151 * (i // 2)
+    im.paste(player_el, (player_el_x, player_el_y), mask=player_el)
+
+    # 2. Rank number
+    num_player_x = 75 if (i % 2 == 0) else 615
+    num_player_y = 250 + (40 * (i % 2)) + 151 * (i // 2)
+    d.text((num_player_x, num_player_y), str(i + 1), fill="white", anchor="rs", font=num_player_font)
+
+    # 3. Championship Points
+    if cur_cp > 0:
+        cp_x = 506 if (i % 2 == 0) else 1045
+        cp_y = (248 if (i % 2 == 0) else 288) + 151 * (i // 2)
+        d.text((cp_x, cp_y), f"{cur_cp} CP", fill="white", anchor="rs", font=font_player)
+
+    # 4. Formatted player name & font selection
+    player_name = format_player_name(player.name)
+    player_font = font_player_JP if contains_cjk_characters(player_name) else font_player
+    if len(player_name) > 23:
+        player_font = font_player_small
+
+    # 5. Position calculations
+    no_cp_tours = ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]
+    if tour_type in no_cp_tours:
+        player_x = 108 if (i % 2 == 0) else 646
+        player_y = (248 if (i % 2 == 0) else 288) + 151 * (i // 2)
+        record_x = 500 if (i % 2 == 0) else 1038
     else:
-        d.text((60, 80), topcut.tour_name, fill="white", anchor="ls", font=font_bold)
-        d.text((60, 115), str(topcut.format), fill="white", anchor="ls", font=font_regular)
+        player_x = 108 if (i % 2 == 0) else 646
+        player_y = (248 if (i % 2 == 0) else 288) + 151 * (i // 2)
+        record_x = 412 if (i % 2 == 0) else 950
 
-    # Date placement adjusts based on long tournament names
-    #if len(topcut.tour_name) > 38:
-    #    d.text((860, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-    #else:
-    #    d.text((860, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+    if player.flag:
+        player_x += 25
 
-    divisions = [
-        ("MA", topcut.divisions.master),
-        ("SR", topcut.divisions.senior),
-        ("JR", topcut.divisions.junior),
-    ]
+    # 6. Name and social
+    if player.social and player.social.strip() != "":
+        d.text((player_x, player_y - 10), player_name, fill="white", anchor="ls", font=player_font)
+        d.text((player_x, player_y + 10), player.social, fill="white", anchor="ls", font=font_player_social)
+    else:
+        d.text((player_x, player_y), player_name, fill="white", anchor="ls", font=player_font)
 
-    positions = [
-        ((1080,80), (1080, 115)), #Label - Count Positions
-        ((1010,80), (1010, 115)),
-        ((940,80), (940, 115)),
-    ]
+    # 7. Country flag
+    if player.flag:
+        flag_img = loadFlag(player.flag, 30)
+        if flag_img:
+            im.paste(flag_img, (player_x - 35, player_y - flag_img.height + 3), mask=flag_img)
 
-    visible = [(label, count) for label, count in divisions if count > 0]
+    # 8. Match record
+    d.text((record_x, player_y), player.record, fill="white", anchor="rs", font=font_player)
 
-    if len(visible) == 3:
-        if len(topcut.tour_name) > 38:
-            d.text((860, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-        else:
-            d.text((860, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-    if len(visible) == 2:
-        if len(topcut.tour_name) > 48:
-            d.text((930, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-        else:
-            d.text((930, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-    if len(visible) == 1:
-        if len(topcut.tour_name) > 53:
-            d.text((1000, 115), str(topcut.date), fill="white", anchor="rs", font=font_bold)
-        else:
-            d.text((1000, 98), str(topcut.date), fill="white", anchor="rs", font=font_bold)
+def draw_player_team(im, i: int, pokemon_list: list, reorder: bool = False):
+    """Renders the 6 pokemon slots (sprites, items, teras, and badges) for a player."""
+    icon_pokemon_y = 274 + (40 * (i % 2)) + 151 * (i // 2)
+    icon_pokemon_x_base = 49 if (i % 2 == 0) else 587
+    icon_item_y = 320 + (40 * (i % 2)) + 151 * (i // 2)
+    icon_item_x_base = 94 if (i % 2 == 0) else 632
+    icon_tera_y = 270 + (40 * (i % 2)) + 151 * (i // 2)
+    icon_tera_x_base = 93 if (i % 2 == 0) else 631
+    icon_gmax_x_base = 43 if (i % 2 == 0) else 587
+    icon_shadow_y = 310 + (40 * (i % 2)) + 151 * (i // 2)
+    icon_shadow_x_base = 90 if (i % 2 == 0) else 632
 
-    if len(visible) > 0:
-        last_x = positions[len(visible) - 1][0][0]
-        d.rectangle([last_x - 55, 58, last_x - 53, 117], fill="white")
-    for i, (label, count) in enumerate(visible):
-        label_pos, count_pos = positions[i]
+    newPokemon = pokemon_list
+    if reorder:
+        newPokemon = reorder_pokemon(newPokemon, restricted_list, mythical_list)
 
-        d.text(label_pos, label, fill="white", anchor="rs", font=font_bold)
-        d.text(count_pos, str(count), fill="white", anchor="rs", font=font_bold)
+    for p in range(len(newPokemon)):
+        mon = newPokemon[p]
+        mon.name = change_form_item(mon.name, mon.item, forms_list)
+        p_icon = load_pokemon_icon(mon.name)
+        if not p_icon:
+            continue
+        im.paste(p_icon, (icon_pokemon_x_base + 80 * p, icon_pokemon_y), mask=p_icon)
 
-    return im
+        if mon.gmax:
+            gmax_icon = Image.open(os.path.join(SOURCE_PATH, "gmax.png")).convert("RGBA").resize((24, 24))
+            im.paste(gmax_icon, (icon_gmax_x_base + 80 * p, icon_tera_y), mask=gmax_icon)
 
+        if mon.item != "":
+            item_icon = load_item_icon(mon.item)
+            if item_icon:
+                im.paste(item_icon, (icon_item_x_base + 80 * p, icon_item_y), mask=item_icon)
+
+        if mon.teratype.strip().lower() != "":
+            tera_path = LOCAL_TERA_ICONS_SRC + mon.teratype.strip().lower() + ".png"
+            if os.path.isfile(tera_path):
+                tera_icon = Image.open(tera_path).convert("RGBA").resize((32, 32))
+                im.paste(tera_icon, (icon_tera_x_base + 80 * p, icon_tera_y), mask=tera_icon)
+
+        if mon.shadow:
+            shadow_icon = Image.open(os.path.join(SOURCE_PATH, "pokemonGO", "shadow_GO.png")).convert("RGBA").resize((36, 36))
+            im.paste(shadow_icon, (icon_shadow_x_base + 80 * p, icon_shadow_y), mask=shadow_icon)
+
+        if mon.purified:
+            purified_icon = Image.open(os.path.join(SOURCE_PATH, "pokemonGO", "purified_GO.png")).convert("RGBA").resize((36, 36))
+            im.paste(purified_icon, (icon_shadow_x_base + 80 * p, icon_shadow_y), mask=purified_icon)
+
+        if mon.best_friend:
+            best_friend_icon = Image.open(os.path.join(SOURCE_PATH, "pokemonGO", "best_buddy_GO.png")).convert("RGBA").resize((24, 24))
+            im.paste(best_friend_icon, (icon_tera_x_base + 80 * p, icon_tera_y), mask=best_friend_icon)
 
 def genTemplate(topcut):
 
@@ -175,7 +289,7 @@ def genTemplate(topcut):
 
     im = Image.new("RGBA", (template.size[0], dynamic_height))
 
-    backgroundPath = "solid_background.png" if topcut.game == GameType.VGC else "solid_background_GO.png"
+    backgroundPath = "solid_background.png" if topcut.game == GameType.VGC else os.path.join("pokemonGO", "solid_background_GO.png")
 
     is_toronto = topcut.tour_name.lower().startswith("[toronto]")
     if is_toronto:
@@ -186,38 +300,7 @@ def genTemplate(topcut):
     background = background.convert("RGBA")
     background = background.crop((0,0,w,dynamic_height))
 
-    if topcut.image != "" and topcut.show_background:
-        # Decode base64 string to bytes
-        image_data = base64.b64decode(topcut.image)
-        tour_icon = Image.open(io.BytesIO(image_data)).convert("RGBA")
-
-        # Calculate proportional size based on background dimensions
-        width, height = tour_icon.size
-        max_width = int(w * 0.8)
-        max_height = int(dynamic_height * 0.6)
-
-        #Limit the height to more than 8 players based on the 8 player height
-        if max_height > 533:
-            max_height = 533
-
-        width_ratio = max_width / width
-        height_ratio = max_height / height
-        scale_factor = min(width_ratio, height_ratio)
-        
-        new_width = int(width * scale_factor)
-        new_height = int(height * scale_factor)
-        tour_icon = tour_icon.resize((new_width, new_height))
-        
-        # Reduce transparency to 80%
-        alpha = tour_icon.split()[3]
-        alpha = alpha.point(lambda p: int(p * 0.8))
-        tour_icon.putalpha(alpha)
-
-        # Center the image horizontally and vertically
-        centered_x = (w - tour_icon.width) // 2
-        centered_y = (dynamic_height - tour_icon.height + 136) // 2
-
-        background.paste(tour_icon, (centered_x, centered_y), mask=tour_icon)
+    draw_background_image(background, topcut)
 
     im.paste(background, (0,0), mask=background)
 
@@ -228,232 +311,347 @@ def genTemplate(topcut):
     d = ImageDraw.Draw(im)
 
     mult_2 = 0
-    for i in range(len(topcut.players)):
-        element_circles = "player_element_circles_GO.png" if topcut.game == GameType.GO else "player_element_circles.png"
-        if is_toronto:
-            element_circles = "player_element_circles_toronto.png"
-        player_el = Image.open(os.path.join(SOURCE_PATH, element_circles))
-        player_el_x = 35 if (i % 2 == 0) else 573
-        player_el_y = 215 + (40 * (i % 2)) + 151*(i//2)
-        im.paste(player_el, (player_el_x, player_el_y), mask=player_el)
-        
-        num_player_x = 75 if (i % 2 == 0) else 615
-        num_player_y = 250 + (40 * (i % 2)) + 151*(i//2)
-        d.text((num_player_x, num_player_y), str(i+1), fill="white", anchor="rs", font=num_player_font)
-        
-        
-        if(topcut.tour_type in ["PREMIER", "MSS", "REGIONAL", "INTERNATIONAL", "CUP", "CHALLENGE", "OLDREGIONAL", "OLDINTERNATIONAL"]):
-            cur_p = i+1
-            cp_dist = cp_distribution[topcut.tour_type]
-            cur_sel = cp_dist[mult_2]
-            cur_cp = cur_sel[0] if topcut.divisions.master >= cur_sel[1] else 0
-            if((cur_p & (cur_p-1) == 0) and cur_p != 0):
-                mult_2 += 1
+    for i, player in enumerate(topcut.players):
+        cur_cp, mult_2 = calculate_player_cp(i + 1, topcut.tour_type, topcut.divisions.master, mult_2)
+        draw_player_card(im, d, i, player, topcut.tour_type, topcut.game, cur_cp, is_toronto)
+        draw_player_team(im, i, player.pokemon, reorder=topcut.reorder)
 
-            if(cur_cp > 0):
-                if(i % 2 == 0):
-                    d.text((506, 248 + 151*(i//2)), str(cur_cp) + " CP", fill="white", anchor="rs", font=font_player)
-                else:
-                    d.text((1045, 288 + 151*(i//2)), str(cur_cp) + " CP", fill="white", anchor="rs", font=font_player)
-            
+    return im
 
-        icon_pokemon_y = 0
+def genTemplateInstagram(topcut):
+    backgroundPath = os.path.join("instagramMode", "solid_background_vgc_IG.png")
+    background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
+    background = background.convert("RGBA")
+    w = background.size[0]
+    h = background.size[1]
 
-        player_name = topcut.players[i].name
+    im = Image.new("RGBA", (w, h))
 
-        if(len(player_name) > 30):
-            p_names = player_name.split()
-            if(len(p_names) > 2):   #cut middle names
-                p_names = [p_names[0], p_names[-1]]
-                if(len(" ".join(p_names)) <= 30):
-                    player_name = " ".join(p_names)
-                else:
-                    p_names[-1] = p_names[-1][0] + "."
-                    player_name = " ".join(p_names)
-            else:
-                p_names[-1] = p_names[-1][0] + "."
-                player_name = " ".join(p_names)
-        
-        # Choose appropriate font based on character set
-        player_font = font_player_JP if contains_cjk_characters(player_name) else font_player
+    draw_background_image(background, topcut, is_instagram=True)
 
-        if(len(player_name) > 23):
-            player_font = font_player_small
+    im.paste(background, (0,0), mask=background)
+    draw_header(im, topcut, is_instagram=True)
 
-        # Calculate positions based on player index and tournament type
-        if(topcut.tour_type in ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]):
-            if(i % 2 == 0):
-                player_x = 108
-                player_y = 248 + 151*(i//2)
-                record_x = 500
-            else:
-                player_x = 646
-                player_y = 288 + 151*(i//2)
-                record_x = 1038
-        else:
-            if(i % 2 == 0):
-                player_x = 108
-                player_y = 248 + 151*(i//2)
-                record_x = 412
-            else:
-                player_x = 646
-                player_y = 288 + 151*(i//2)
-                record_x = 950
-        if topcut.players[i].flag:
-            player_x += 25
-        
-        # Draw player name
-        if (topcut.players[i].social and topcut.players[i].social.strip() != ""):
-            d.text((player_x, player_y-10), player_name, fill="white", anchor="ls", font=player_font)
-            d.text((player_x, player_y+10), topcut.players[i].social, fill="white", anchor="ls", font=font_player_social)
-        else:
-            d.text((player_x, player_y), player_name, fill="white", anchor="ls", font=player_font)
-        
-        # Add flag to the right of player name
-        flag_width = 30
-        flag_img = loadFlag(topcut.players[i].flag, flag_width)
-        if flag_img:
-            flag_x = player_x-35
-            flag_y = player_y - flag_img.height + 3
-            im.paste(flag_img, (flag_x, flag_y), mask=flag_img)
-        
-        # Draw player record
-        d.text((record_x, player_y), topcut.players[i].record, fill="white", anchor="rs", font=font_player)
+    layout_elements = {
+        1: [
+            ("player_element_circles_1st_IG.png", (340, 1185)),
+        ],
+        2: [
+            ("player_element_circles_1st_IG.png", (340, 1185)),
+            ("player_element_circles_2nd_IG.png", (518, 2176)),
+        ],
+        3: [
+            ("player_element_circles_1st_IG.png", (340, 885)),
+            ("player_element_circles_2nd_IG.png", (518, 1876)),
+            ("player_element_circles.png", (893, 2773)),
+        ],
+        4: [
+            ("player_element_circles_1st_IG.png", (340, 783)),
+            ("player_element_circles_2nd_IG.png", (518, 1754)),
+            ("player_element_circles.png", (893, 2671)),
+            ("player_element_circles.png", (893, 3366)),
+        ],
+        5: [
+            ("player_element_circles_1st_IG.png", (340, 779)),
+            ("player_element_circles_2nd_IG.png", (518, 1614)),
+            ("player_element_circles.png", (894, 2350)),
+            ("player_element_circles.png", (894, 2884)),
+            ("player_element_circles.png", (894, 3418)),
+        ],
+        6: [
+            ("player_element_circles_1st_IG.png", (340, 783)),
+            ("player_element_circles_2nd_IG.png", (518, 1754)),
+            ("player_element_circles.png", (94, 2591)),
+            ("player_element_circles.png", (1695, 2671)),
+            ("player_element_circles.png", (94, 3286)),
+            ("player_element_circles.png", (1695, 3366)),
+        ],
+        7: [
+            ("player_element_circles_1st_IG.png", (340, 741)),
+            ("player_element_circles_2nd_IG.png", (518, 1576)),
+            ("player_element_circles.png", (94, 2312)),
+            ("player_element_circles.png", (1695, 2392)),
+            ("player_element_circles.png", (94, 2846)),
+            ("player_element_circles.png", (1695, 2926)),
+            ("player_element_circles.png", (894, 3380)),
+        ],
+        8: [
+            ("player_element_circles_1st_IG.png", (340, 741)),
+            ("player_element_circles_2nd_IG.png", (518, 1576)),
+            ("player_element_circles.png", (94, 2312)),
+            ("player_element_circles.png", (1695, 2392)),
+            ("player_element_circles.png", (94, 2846)),
+            ("player_element_circles.png", (1695, 2926)),
+            ("player_element_circles.png", (94, 3380)),
+            ("player_element_circles.png", (1695, 3460)),
+        ],
+        9: [
+            ("player_element_circles_1st_IG.png", (340, 663)),
+            ("player_element_circles_2nd_IG.png", (518, 1423)),
+            ("player_element_circles.png", (94, 2085)),
+            ("player_element_circles.png", (1695, 2125)),
+            ("player_element_circles.png", (94, 2545)),
+            ("player_element_circles.png", (1695, 2585)),
+            ("player_element_circles.png", (94, 3005)),
+            ("player_element_circles.png", (1695, 3045)),
+            ("player_element_circles.png", (894, 3505)),
+        ],
+        10: [
+            ("player_element_circles_1st_IG.png", (340, 663)),
+            ("player_element_circles_2nd_IG.png", (518, 1423)),
+            ("player_element_circles.png", (94, 2085)),
+            ("player_element_circles.png", (1695, 2125)),
+            ("player_element_circles.png", (94, 2545)),
+            ("player_element_circles.png", (1695, 2585)),
+            ("player_element_circles.png", (94, 3005)),
+            ("player_element_circles.png", (1695, 3045)),
+            ("player_element_circles.png", (94, 3465)),
+            ("player_element_circles.png", (1695, 3505)),
+        ],
+        11: [
+            ("player_element_circles.png", (94, 743)),
+            ("player_element_circles.png", (1695, 843)),
+            ("player_element_circles.png", (94, 1289)),
+            ("player_element_circles.png", (1695, 1389)),
+            ("player_element_circles.png", (94, 1835)),
+            ("player_element_circles.png", (1695, 1935)),
+            ("player_element_circles.png", (94, 2381)),
+            ("player_element_circles.png", (1695, 2481)),
+            ("player_element_circles.png", (94, 2927)),
+            ("player_element_circles.png", (1695, 3027)),
+            ("player_element_circles.png", (894, 3473)),
+        ],
+        12: [
+            ("player_element_circles.png", (94, 743)),
+            ("player_element_circles.png", (1695, 843)),
+            ("player_element_circles.png", (94, 1289)),
+            ("player_element_circles.png", (1695, 1389)),
+            ("player_element_circles.png", (94, 1835)),
+            ("player_element_circles.png", (1695, 1935)),
+            ("player_element_circles.png", (94, 2381)),
+            ("player_element_circles.png", (1695, 2481)),
+            ("player_element_circles.png", (94, 2927)),
+            ("player_element_circles.png", (1695, 3027)),
+            ("player_element_circles.png", (94, 3473)),
+            ("player_element_circles.png", (1695, 3573))
+        ],
+        13: [
+            ("player_element_circles.png", (94, 698)),
+            ("player_element_circles.png", (1695, 748)),
+            ("player_element_circles.png", (94, 1169)),
+            ("player_element_circles.png", (1695, 1219)),
+            ("player_element_circles.png", (94, 1641)),
+            ("player_element_circles.png", (1695, 1691)),
+            ("player_element_circles.png", (94, 2113)),
+            ("player_element_circles.png", (1695, 2163)),
+            ("player_element_circles.png", (94, 2585)),
+            ("player_element_circles.png", (1695, 2635)),
+            ("player_element_circles.png", (94, 3057)),
+            ("player_element_circles.png", (1695, 3107)),
+            ("player_element_circles.png", (894, 3579)),
+        ],
+        14: [
+            ("player_element_circles.png", (94, 698)),
+            ("player_element_circles.png", (1695, 748)),
+            ("player_element_circles.png", (94, 1169)),
+            ("player_element_circles.png", (1695, 1219)),
+            ("player_element_circles.png", (94, 1641)),
+            ("player_element_circles.png", (1695, 1691)),
+            ("player_element_circles.png", (94, 2113)),
+            ("player_element_circles.png", (1695, 2163)),
+            ("player_element_circles.png", (94, 2585)),
+            ("player_element_circles.png", (1695, 2635)),
+            ("player_element_circles.png", (94, 3057)),
+            ("player_element_circles.png", (1695, 3107)),
+            ("player_element_circles.png", (94, 3529)),
+            ("player_element_circles.png", (1695, 3579)),
+        ],
+        15: [
+            ("player_element_circles.png", (94, 571)),
+            ("player_element_circles.png", (1695, 611)),
+            ("player_element_circles.png", (94, 1002)),
+            ("player_element_circles.png", (1695, 1042)),
+            ("player_element_circles.png", (94, 1434)),
+            ("player_element_circles.png", (1695, 1474)),
+            ("player_element_circles.png", (94, 1866)),
+            ("player_element_circles.png", (1695, 1906)),
+            ("player_element_circles.png", (94, 2298)),
+            ("player_element_circles.png", (1695, 2338)),
+            ("player_element_circles.png", (94, 2730)),
+            ("player_element_circles.png", (1695, 2770)),
+            ("player_element_circles.png", (94, 3162)),
+            ("player_element_circles.png", (1695, 3202)),
+            ("player_element_circles.png", (894, 3634))
+        ],
+        16: [
+            ("player_element_circles.png", (94, 571)),
+            ("player_element_circles.png", (1695, 611)),
+            ("player_element_circles.png", (94, 1002)),
+            ("player_element_circles.png", (1695, 1042)),
+            ("player_element_circles.png", (94, 1434)),
+            ("player_element_circles.png", (1695, 1474)),
+            ("player_element_circles.png", (94, 1866)),
+            ("player_element_circles.png", (1695, 1906)),
+            ("player_element_circles.png", (94, 2298)),
+            ("player_element_circles.png", (1695, 2338)),
+            ("player_element_circles.png", (94, 2730)),
+            ("player_element_circles.png", (1695, 2770)),
+            ("player_element_circles.png", (94, 3162)),
+            ("player_element_circles.png", (1695, 3202)),
+            ("player_element_circles.png", (94, 3594)),
+            ("player_element_circles.png", (1695, 3634))
+        ],
+    }
 
-        icon_pokemon_y = 274 + (40 * (i % 2)) + 151*(i//2)
-        icon_pokemon_x_base = 49 if (i % 2 == 0) else 587
-        icon_item_y = 320 + (40 * (i % 2)) + 151*(i//2)
-        icon_item_x_base = 94 if (i % 2 == 0) else 632
-        icon_tera_y = 270 + (40 * (i % 2)) + 151*(i//2)
-        icon_tera_x_base = 93 if (i % 2 == 0) else 631
-        icon_gmax_x_base = 43 if (i % 2 == 0) else 587
-        icon_shadow_y = 310 + (40 * (i % 2)) + 151*(i//2)
-        icon_shadow_x_base = 90 if (i % 2 == 0) else 632
+    for filename, pos in layout_elements.get(len(topcut.players), []):
+        element_path = os.path.join(SOURCE_PATH, "instagramMode", filename)
+        with Image.open(element_path) as player_el:
+            im.paste(player_el, pos, mask=player_el)
 
-        newPokemon = topcut.players[i].pokemon
-
-        with open(BASE_DIR / 'data' / 'restricted.json') as f:
-            restricted_list = json.load(f)
-        with open(BASE_DIR / 'data' / 'mythical.json') as f:
-            mythical_list = json.load(f)
-        with open(BASE_DIR / 'data' / 'pokemon_forms_items.json') as f:
-            forms_list = json.load(f)
-
-        if topcut.reorder:
-            newPokemon = reorder_pokemon(newPokemon, restricted_list, mythical_list)
-
-        for p in range(len(newPokemon)):
-            #print(newPokemon[p])
-            newPokemon[p].name = change_form_item(newPokemon[p].name, newPokemon[p].item, forms_list)
-            icon_name = newPokemon[p].name.lower().replace(" ", "-")
-            if(icon_name == ""):
-                continue
-            pokemon_icon_id = pokemonindex[icon_name]
-            if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
-                #print(POKEMON_ICONS_SRC + newPokemon[p].name.lower().replace(" ", "-") + ".png")
-                icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
-                content = icon_url.read()
-                with open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png", "wb") as download:
-                    download.write(content)
-            
-            p_icon = Image.open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
-            p_icon = p_icon.convert("RGBA")
-            p_icon = p_icon.resize((60,60))
-            im.paste(p_icon, (icon_pokemon_x_base + 80*p, icon_pokemon_y), mask=p_icon)
-
-            if(newPokemon[p].gmax):
-                gmax_icon = Image.open(os.path.join(SOURCE_PATH, "gmax.png"))
-                gmax_icon = gmax_icon.convert("RGBA")
-                gmax_icon = gmax_icon.resize((24,24))
-                im.paste(gmax_icon, (icon_gmax_x_base + 80*p, icon_tera_y), mask=gmax_icon)
-
-            if(newPokemon[p].item != ""):
-                if(not os.path.isfile(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")):
-                    #print(ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
-                    icon_url = urlopen(ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
-                    content = icon_url.read()
-                    with open(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png", "wb") as download:
-                        download.write(content)
-
-                item_icon = Image.open(LOCAL_ITEM_ICONS_SRC + itemIndex[newPokemon[p].item] + ".png")
-                item_icon = item_icon.convert("RGBA")
-                item_icon = item_icon.resize((24,24))
-                im.paste(item_icon, (icon_item_x_base + 80*p, icon_item_y), mask=item_icon)
-
-            if(newPokemon[p].teratype.strip().lower() != ""):
-                tera_icon = Image.open(LOCAL_TERA_ICONS_SRC + newPokemon[p].teratype.strip().lower() + ".png")
-                tera_icon = tera_icon.convert("RGBA")
-                tera_icon = tera_icon.resize((32,32))
-                im.paste(tera_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=tera_icon)
-
-            if(newPokemon[p].shadow):
-                shadow_icon = Image.open(os.path.join(SOURCE_PATH, "shadow_GO.png"))
-                shadow_icon = shadow_icon.convert("RGBA")
-                shadow_icon = shadow_icon.resize((36,36))
-                im.paste(shadow_icon, (icon_shadow_x_base + 80*p, icon_shadow_y), mask=shadow_icon)
-
-            if(newPokemon[p].purified):
-                purified_icon = Image.open(os.path.join(SOURCE_PATH, "purified_GO.png"))
-                purified_icon = purified_icon.convert("RGBA")
-                purified_icon = purified_icon.resize((36,36))
-                im.paste(purified_icon, (icon_shadow_x_base + 80*p, icon_shadow_y), mask=purified_icon)
-
-            if(newPokemon[p].best_friend):
-                best_friend_icon = Image.open(os.path.join(SOURCE_PATH, "best_buddy_GO.png"))
-                best_friend_icon = best_friend_icon.convert("RGBA")
-                best_friend_icon = best_friend_icon.resize((24,24))
-                im.paste(best_friend_icon, (icon_tera_x_base + 80*p, icon_tera_y), mask=best_friend_icon)
-
-
-    #icon_test = Image.open(urlopen(POKEMON_ICONS_SRC + "ogerpon.png"))
-    #icon_test = icon_test.resize((56,56))
-    #im.paste(icon_test, (60, 280), mask=icon_test)
-
-
-    #usages = computeUsage(pokepastTeams)
     
 
     return im
 
+def draw_background_image(background, topcut, is_instagram: bool = False):
+    if topcut.image != "" and topcut.show_background:
+        # Decode base64 string to bytes
+        image_data = base64.b64decode(topcut.image)
+        tour_icon = Image.open(io.BytesIO(image_data)).convert("RGBA")
 
-def computeUsage(teams):
-    pokemon_count = {}
-    total_pokemon = 0
-    for t in teams:
-        for p in t:
-            if(p.name not in pokemon_count.keys()):
-                pokemon_count[p.name] = 0
-            pokemon_count[p.name] += 1
-            total_pokemon += 1
+        w, h = background.size
 
-    pokemon_ratio = {k: v / len(teams) for k, v in pokemon_count.items()}
+        # Calculate proportional size based on background dimensions
+        width, height = tour_icon.size
+        max_width = int(w * 0.8)
+        max_height = int(h * 0.6)
 
-    return sorted(pokemon_ratio.items(), key=lambda i: i[1], reverse=True)
+        is_ig = is_instagram or (w == 3240)
 
+        # Limit the height for standard template based on the 8 player height
+        if not is_ig and max_height > 533:
+            max_height = 533
 
+        width_ratio = max_width / width
+        height_ratio = max_height / height
+        scale_factor = min(width_ratio, height_ratio)
 
+        new_width = int(width * scale_factor)
+        new_height = int(height * scale_factor)
+        tour_icon = tour_icon.resize((new_width, new_height))
 
+        # Reduce transparency to 80%
+        alpha = tour_icon.split()[3]
+        alpha = alpha.point(lambda p: int(p * 0.8))
+        tour_icon.putalpha(alpha)
 
-def mergeImages():
-    SOURCE_PATH = "C:/Users/HAWKE-PC/Pictures/dream-world"
+        # Center the image horizontally and vertically
+        header_offset = 401 if is_ig else 136
+        centered_x = (w - tour_icon.width) // 2
+        centered_y = (h - tour_icon.height + header_offset) // 2
 
+        background.paste(tour_icon, (centered_x, centered_y), mask=tour_icon)
 
-    font_regular = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 24)
-    font = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 48)
+    return background
 
-    im1 = Image.open(SOURCE_PATH + "/348.png")
-    im2 = Image.open("C:/Users/HAWKE-PC/Pictures/two.png")
+def draw_header(im, topcut, is_instagram: bool = False):
+    is_ig = is_instagram or (im.size[0] == 3240)
 
+    if is_ig:
+        header_bar_name = os.path.join("instagramMode", "header_bar_IG.png")
+        bar_y = 121
+        f_bold = font_bold_IG
+        f_regular = font_regular_IG
+        icon_h = 471
+        icon_pos = (65, 74)
+        text_x = 589 if topcut.image != "" else 177
+        tour_name_y = 236
+        format_y = 339
+        date_multiline_y = 339
+        date_centered_y = 289
+        positions = [
+            ((3181, 236), (3181, 339)), #Label - Count Positions
+            ((2975, 236), (2975, 339)),
+            ((2769, 236), (2769, 339)),
+        ]
+    else:
+        header_bar_name = "header_bar.png"
+        bar_y = 41
+        f_bold = font_bold
+        f_regular = font_regular
+        icon_h = 160
+        icon_pos = (22, 25)
+        text_x = 200 if topcut.image != "" else 60
+        tour_name_y = 80
+        format_y = 115
+        date_multiline_y = 115
+        date_centered_y = 98
+        positions = [
+            ((1080, 80), (1080, 115)), #Label - Count Positions
+            ((1010, 80), (1010, 115)),
+            ((940, 80), (940, 115)),
+        ]
 
-    w = max(im1.size[0], im2.size[0])
-    h = max(im1.size[1], im2.size[1])
+    # Paste header bar background
+    header_bar = Image.open(os.path.join(SOURCE_PATH, header_bar_name))
+    im.paste(header_bar, (0, bar_y))
 
-    im = Image.new("RGBA", (w, h))
+    # Determine available tour icons - deprecated to remove TPCi copyrighted logos
+    # formats = [Path(tour_img).stem for tour_img in os.listdir(os.path.join(SOURCE_PATH, "tours"))]
+    # Paste tour icon if available
+    if(topcut.image != "" and topcut.show_logo):
+        # Decode base64 string to bytes
+        image_data = base64.b64decode(topcut.image)
 
-    im.paste(im2, (0, 0))
-    im.paste(im1, (0, 0), mask=im1)
+        tour_icon = Image.open(io.BytesIO(image_data)).convert("RGBA")
+        width, height = tour_icon.size
+        tour_icon = tour_icon.resize((width * icon_h // height, icon_h))
+        im.paste(tour_icon, icon_pos, mask=tour_icon)
+    #else:
+    #    if topcut.tour_type.lower() in formats:
+    #        tour_icon = Image.open(os.path.join(SOURCE_PATH, "tours", topcut.tour_type.lower() + ".png"))
+    #        width, height = tour_icon.size
+    #        tour_icon = tour_icon.resize((width * icon_h // height, icon_h))
+    #        im.paste(tour_icon, icon_pos, mask=tour_icon)
 
     d = ImageDraw.Draw(im)
-    d.text((w/2,h-10), "Pinated", fill="white", anchor="ms", font=font)
+
+    # Tournament name & format positioning depends on whether we have a tour icon
+    #if topcut.tour_type.lower() in formats or topcut.image != "":
+    d.text((text_x, tour_name_y), topcut.tour_name, fill="white", anchor="ls", font=f_bold)
+    d.text((text_x, format_y), str(topcut.format), fill="white", anchor="ls", font=f_regular)
+
+    divisions = [
+        ("MA", topcut.divisions.master),
+        ("SR", topcut.divisions.senior),
+        ("JR", topcut.divisions.junior),
+    ]
+
+    visible = [(label, count) for label, count in divisions if count > 0]
+
+    if len(visible) == 3:
+        date_x = 2533 if is_ig else 860
+        date_y = date_multiline_y if len(topcut.tour_name) > 38 else date_centered_y
+        d.text((date_x, date_y), str(topcut.date), fill="white", anchor="rs", font=f_bold)
+    elif len(visible) == 2:
+        date_x = 2739 if is_ig else 930
+        date_y = date_multiline_y if len(topcut.tour_name) > 48 else date_centered_y
+        d.text((date_x, date_y), str(topcut.date), fill="white", anchor="rs", font=f_bold)
+    elif len(visible) == 1:
+        date_x = 2945 if is_ig else 1000
+        date_y = date_multiline_y if len(topcut.tour_name) > 53 else date_centered_y
+        d.text((date_x, date_y), str(topcut.date), fill="white", anchor="rs", font=f_bold)
+
+    if len(visible) > 0:
+        last_x = positions[len(visible) - 1][0][0]
+        if is_ig:
+            d.rectangle([last_x - 162, 171, last_x - 156, 345], fill="white")
+        else:
+            d.rectangle([last_x - 55, 58, last_x - 53, 117], fill="white")
+
+    for i, (label, count) in enumerate(visible):
+        label_pos, count_pos = positions[i]
+
+        d.text(label_pos, label, fill="white", anchor="rs", font=f_bold)
+        d.text(count_pos, str(count), fill="white", anchor="rs", font=f_bold)
 
     return im

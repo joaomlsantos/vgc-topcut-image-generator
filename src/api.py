@@ -64,6 +64,21 @@ async def postUsage(usage: Usage, format: Union[str, None] = None):
         return "data:image/png;base64," + encoded_img.decode("utf-8")
     return Response(content=image_bytes, media_type="image/png")
 
+@app.post("/topcut/instagram/{format}")
+async def postTopcutInstagram(topcut: TopCut, format: Union[str, None] = None):
+    if((format != None) and (format not in allowed_formats)):
+        raise HTTPException(status_code=400, detail="Format not allowed; please omit the parameter or use one of the following formats: " + ",".join(allowed_formats))
+    
+    image_bytes = generator.generateTopcutInstagram(topcut)
+    
+    if(format == "png"):
+        return Response(content=image_bytes, media_type="image/png")
+    if(format == "base64"):
+        encoded_img = base64.b64encode(image_bytes)
+        # return Response(content=encoded_img, media_type="image/png")
+        return "data:image/png;base64," + encoded_img.decode("utf-8")
+    return Response(content=image_bytes, media_type="image/png")
+
 
 @app.post("/pairings")
 async def postPairings(url: TomHtmlUrl):

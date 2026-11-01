@@ -69,7 +69,7 @@ def genTemplate(usage):
 
     im = Image.new("RGBA", (template.size[0], dynamic_height))
 
-    backgroundPath = "solid_background.png" if usage.game == GameType.VGC else "solid_background_GO.png"
+    backgroundPath = "solid_background.png" if usage.game == GameType.VGC else os.path.join("pokemonGO", "solid_background_GO.png")
 
     is_toronto = usage.tour_name.lower().startswith("[toronto]")
     if is_toronto:
