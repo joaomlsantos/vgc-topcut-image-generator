@@ -28,13 +28,33 @@ font_player_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" /
 font_player_social = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 14)
 
 font_player_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 18)
+font_player_JP_IG_1st = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 94)
+font_player_JP_IG_2nd = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 84)
+font_player_JP_IG_T4 = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 74)
+font_player_JP_IG = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 54)
 font_player_JP.set_variation_by_name("Bold")
+font_player_JP_IG_1st.set_variation_by_name("Bold")
+font_player_JP_IG_2nd.set_variation_by_name("Bold")
+font_player_JP_IG_T4.set_variation_by_name("Bold")
+font_player_JP_IG.set_variation_by_name("Bold")
 
 # Instagram header fonts
-font_regular_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 71)
-font_bold_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 71)
+font_regular_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 74)
+font_bold_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 74)
 
 num_player_font = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 24)
+num_player_font_IG = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 74)
+num_player_font_IG_1st = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 146)
+num_player_font_IG_2nd = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 144)
+num_player_font_IG_T4 = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 114)
+font_player_IG_1st = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 90)
+font_player_IG_2nd = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 86)
+font_player_IG_T4 = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 75)
+font_player_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 60)
+font_player_social_IG_1st = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 80)
+font_player_social_IG_2nd = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 70)
+font_player_social_IG_T4 = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 60)
+font_player_social_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 50)
 
 
 def loadItemIndex():
@@ -136,8 +156,8 @@ def calculate_player_cp(rank: int, tour_type: str, master_count: int, mult_2: in
 
     return cur_cp, mult_2
 
-def load_pokemon_icon(name: str) -> Image.Image | None:
-    """Downloads Pokemon sprite if not cached and returns a 60x60 RGBA image."""
+def load_pokemon_icon(name: str, size: tuple[int, int]) -> Image.Image | None:
+    """Downloads Pokemon sprite if not cached and returns an image of the specified size."""
     icon_name = name.lower().replace(" ", "-")
     if not icon_name or icon_name not in pokemonindex:
         return None
@@ -151,10 +171,10 @@ def load_pokemon_icon(name: str) -> Image.Image | None:
             download.write(content)
 
     p_icon = Image.open(local_path).convert("RGBA")
-    return p_icon.resize((60, 60))
+    return p_icon.resize(size)
 
-def load_item_icon(item_name: str) -> Image.Image | None:
-    """Downloads item icon if not cached and returns a 24x24 RGBA image."""
+def load_item_icon(item_name: str, size: tuple[int, int]) -> Image.Image | None:
+    """Downloads item icon if not cached and returns an image of the specified size."""
     if not item_name or item_name not in itemIndex:
         return None
 
@@ -166,7 +186,7 @@ def load_item_icon(item_name: str) -> Image.Image | None:
             download.write(content)
 
     item_icon = Image.open(local_path).convert("RGBA")
-    return item_icon.resize((24, 24))
+    return item_icon.resize(size)
 
 def draw_player_card(im, d, i: int, player, tour_type: str, game: GameType, cur_cp: int = 0, is_toronto: bool = False):
     """Draws player card background, rank number, CP, name, social, flag, and record."""
@@ -245,7 +265,7 @@ def draw_player_team(im, i: int, pokemon_list: list, reorder: bool = False):
     for p in range(len(newPokemon)):
         mon = newPokemon[p]
         mon.name = change_form_item(mon.name, mon.item, forms_list)
-        p_icon = load_pokemon_icon(mon.name)
+        p_icon = load_pokemon_icon(mon.name, (60,60))
         if not p_icon:
             continue
         im.paste(p_icon, (icon_pokemon_x_base + 80 * p, icon_pokemon_y), mask=p_icon)
@@ -255,7 +275,7 @@ def draw_player_team(im, i: int, pokemon_list: list, reorder: bool = False):
             im.paste(gmax_icon, (icon_gmax_x_base + 80 * p, icon_tera_y), mask=gmax_icon)
 
         if mon.item != "":
-            item_icon = load_item_icon(mon.item)
+            item_icon = load_item_icon(mon.item, (24, 24))
             if item_icon:
                 im.paste(item_icon, (icon_item_x_base + 80 * p, icon_item_y), mask=item_icon)
 
@@ -337,26 +357,26 @@ def genTemplateInstagram(topcut):
             ("player_element_circles_1st_IG.png", (340, 1185)),
         ],
         2: [
-            ("player_element_circles_1st_IG.png", (340, 1185)),
-            ("player_element_circles_2nd_IG.png", (518, 2176)),
+            ("player_element_circles_1st_IG.png", (340, 1150)),
+            ("player_element_circles_2nd_IG.png", (518, 2895)),
         ],
         3: [
-            ("player_element_circles_1st_IG.png", (340, 885)),
-            ("player_element_circles_2nd_IG.png", (518, 1876)),
-            ("player_element_circles.png", (893, 2773)),
+            ("player_element_circles_1st_IG.png", (340, 1044)),
+            ("player_element_circles_2nd_IG.png", (518, 2073)),
+            ("player_element_circles_T4_IG.png", (694, 3004)),
         ],
         4: [
-            ("player_element_circles_1st_IG.png", (340, 783)),
-            ("player_element_circles_2nd_IG.png", (518, 1754)),
-            ("player_element_circles.png", (893, 2671)),
-            ("player_element_circles.png", (893, 3366)),
+            ("player_element_circles_1st_IG.png", (340, 591)),
+            ("player_element_circles_2nd_IG.png", (518, 1620)),
+            ("player_element_circles_T4_IG.png", (694, 2551)),
+            ("player_element_circles_T4_IG.png", (694, 3388)),
         ],
         5: [
-            ("player_element_circles_1st_IG.png", (340, 779)),
-            ("player_element_circles_2nd_IG.png", (518, 1614)),
-            ("player_element_circles.png", (894, 2350)),
-            ("player_element_circles.png", (894, 2884)),
-            ("player_element_circles.png", (894, 3418)),
+            ("player_element_circles_1st_IG.png", (340, 591)),
+            ("player_element_circles_2nd_IG.png", (518, 1431)),
+            ("player_element_circles_T4_IG.png", (694, 2168)),
+            ("player_element_circles_T4_IG.png", (694, 2811)),
+            ("player_element_circles_T4_IG.png", (694, 3454)),
         ],
         6: [
             ("player_element_circles_1st_IG.png", (340, 783)),
@@ -503,16 +523,210 @@ def genTemplateInstagram(topcut):
         ],
     }
 
-    for filename, pos in layout_elements.get(len(topcut.players), []):
+    no_cp_tours = ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]
+    has_cp = topcut.tour_type not in no_cp_tours
+    mult_2 = 0
+
+    tier_styles = {
+        "player_element_circles_1st_IG.png": {
+            "num_font": num_player_font_IG_1st,
+            "num_offset": (200, 180),
+            "flag_size": 150,
+            "flag_offset": (350, 192),
+            "flag_text_offset": 210,
+            "font_player": font_player_IG_1st,
+            "font_player_jp": font_player_JP_IG_1st,
+            "font_social": font_player_social_IG_1st,
+            "cp_pos": (2500, 165),
+            "cp_spacing": 231,
+            "name_x": 340,
+            "name_y_social": 105,
+            "social_y": 225,
+            "name_y_no_social": 160,
+            "step_x": 424,
+            "mon_size": (340, 340),
+            "mon_offset": (65, 290),
+            "gmax_size": (96, 96),
+            "gmax_offset": (55, 280),
+            "item_size": (96, 96),
+            "item_offset": (330, 550),
+            "tera_size": (135, 135),
+            "tera_offset": (310, 280),
+            "shadow_offset": (330, 550),
+            "best_friend_offset": (330, 280),
+            "go_badge_size": (110, 110),
+        },
+        "player_element_circles_2nd_IG.png": {
+            "num_font": num_player_font_IG_2nd,
+            "num_offset": (180, 160),
+            "flag_size": 120,
+            "flag_offset": (300, 161),
+            "flag_text_offset": 210,
+            "font_player": font_player_IG_2nd,
+            "font_player_jp": font_player_JP_IG_2nd,
+            "font_social": font_player_social_IG_2nd,
+            "cp_pos": (2150, 147),
+            "cp_spacing": 164,
+            "name_x": 260,
+            "name_y_social": 100,
+            "social_y": 190,
+            "name_y_no_social": 147,
+            "step_x": 364,
+            "mon_size": (280, 280),
+            "mon_offset": (63, 250),
+            "gmax_size": (82, 82),
+            "gmax_offset": (47, 240),
+            "item_size": (82, 82),
+            "item_offset": (292, 472),
+            "tera_size": (116, 116),
+            "tera_offset": (283, 240),
+            "shadow_offset": (283, 472),
+            "best_friend_offset": (283, 240),
+            "go_badge_size": (94, 94),
+        },
+        "player_element_circles_T4_IG.png": {
+            "num_font": num_player_font_IG_T4,
+            "num_offset": (150, 129),
+            "flag_size": 105,
+            "flag_offset": (260, 135),
+            "flag_text_offset": 160,
+            "font_player": font_player_IG_T4,
+            "font_player_jp": font_player_JP_IG_T4,
+            "font_social": font_player_social_IG_T4,
+            "cp_pos": (1780, 122),
+            "cp_spacing": 117,
+            "name_x": 260,
+            "name_y_social": 80,
+            "social_y": 165,
+            "name_y_no_social": 122,
+            "step_x": 303,
+            "mon_size": (233, 233),
+            "mon_offset": (50, 210),
+            "gmax_size": (70, 70),
+            "gmax_offset": (43, 200),
+            "item_size": (69, 69),
+            "item_offset": (230, 400),
+            "tera_size": (96, 96),
+            "tera_offset": (230, 210),
+            "shadow_offset": (230, 400),
+            "best_friend_offset": (230, 210),
+            "go_badge_size": (69, 69),
+        },
+        "player_element_circles.png": {
+            "num_font": num_player_font_IG,
+            "num_offset": (120, 99),
+            "flag_size": 80,
+            "flag_offset": (200, 107),
+            "flag_text_offset": 100,
+            "font_player": font_player_IG,
+            "font_player_jp": font_player_JP_IG,
+            "font_social": font_player_social_IG,
+            "cp_pos": (1420, 97),
+            "cp_spacing": 120,
+            "name_x": 220,
+            "name_y_social": 65,
+            "social_y": 130,
+            "name_y_no_social": 97,
+            "step_x": 243,
+            "mon_size": (194, 194),
+            "mon_offset": (36, 166),
+            "gmax_size": (55, 55),
+            "gmax_offset": (35, 160),
+            "item_size": (55, 55),
+            "item_offset": (195, 310),
+            "tera_size": (77, 77),
+            "tera_offset": (189, 160),
+            "shadow_offset": (189, 310),
+            "best_friend_offset": (189, 160),
+            "go_badge_size": (63, 63),
+        },
+    }
+
+    d = ImageDraw.Draw(im)
+
+    for index, (filename, pos) in enumerate(layout_elements.get(len(topcut.players), [])):
         element_path = os.path.join(SOURCE_PATH, "instagramMode", filename)
         with Image.open(element_path) as player_el:
             im.paste(player_el, pos, mask=player_el)
+        player = topcut.players[index]
+        cur_cp = 0
+        if has_cp:
+            cur_cp, mult_2 = calculate_player_cp(index + 1, topcut.tour_type, topcut.divisions.master, mult_2)
+        if topcut.reorder:
+            player.pokemon = reorder_pokemon(player.pokemon, restricted_list, mythical_list)
+        player_name = format_player_name(player.name)
+        cfg = tier_styles.get(filename, tier_styles["player_element_circles.png"])
 
-    
+        # Player Position
+        d.text((pos[0] + cfg["num_offset"][0], pos[1] + cfg["num_offset"][1]), str(index + 1), fill="white", anchor="rs", font=cfg["num_font"])
+
+        # Player flag
+        if player.flag:
+            flag_img = loadFlag(player.flag, cfg["flag_size"])
+            if flag_img:
+                im.paste(flag_img, (pos[0] + cfg["flag_offset"][0], pos[1] + cfg["flag_offset"][1] - flag_img.height), mask=flag_img)
+
+        # Championship Points
+        cp_offset = 0
+        if cur_cp > 0:
+            d.text((pos[0] + cfg["cp_pos"][0], pos[1] + cfg["cp_pos"][1]), f"{cur_cp} CP", fill="white", anchor="rs", font=cfg["font_player"])
+            bbox = cfg["font_player"].getbbox(f"{cur_cp} CP")
+            cp_offset = bbox[2] - bbox[0] + cfg["cp_spacing"]
+
+        # Player Name & Social
+        player_font = cfg["font_player_jp"] if contains_cjk_characters(player_name) else cfg["font_player"]
+        flag_offset = cfg["flag_text_offset"] if player.flag else 0
+        name_x = pos[0] + cfg["name_x"] + flag_offset
+        if player.social and player.social.strip() != "":
+            d.text((name_x, pos[1] + cfg["name_y_social"]), player_name, fill="white", anchor="ls", font=player_font)
+            d.text((name_x, pos[1] + cfg["social_y"]), player.social, fill="white", anchor="ls", font=cfg["font_social"])
+        else:
+            d.text((name_x, pos[1] + cfg["name_y_no_social"]), player_name, fill="white", anchor="ls", font=player_font)
+
+        # Match record
+        d.text((pos[0] + cfg["cp_pos"][0] - cp_offset, pos[1] + cfg["cp_pos"][1]), player.record, fill="white", anchor="rs", font=cfg["font_player"])
+
+        # Draw the player's team (sprites, items, teras, and badges)
+        step_x = cfg["step_x"]
+        for p in range(len(player.pokemon)):
+            mon = player.pokemon[p]
+            mon.name = change_form_item(mon.name, mon.item, forms_list)
+            p_icon = load_pokemon_icon(mon.name, cfg["mon_size"])
+            if not p_icon:
+                continue
+            im.paste(p_icon, (pos[0] + cfg["mon_offset"][0] + step_x * p, pos[1] + cfg["mon_offset"][1]), mask=p_icon)
+
+            if mon.gmax:
+                gmax_icon = Image.open(os.path.join(SOURCE_PATH, "gmax.png")).convert("RGBA").resize(cfg["gmax_size"])
+                im.paste(gmax_icon, (pos[0] + cfg["gmax_offset"][0] + step_x * p, pos[1] + cfg["gmax_offset"][1]), mask=gmax_icon)
+
+            if mon.item != "":
+                item_icon = load_item_icon(mon.item, cfg["item_size"])
+                if item_icon:
+                    im.paste(item_icon, (pos[0] + cfg["item_offset"][0] + step_x * p, pos[1] + cfg["item_offset"][1]), mask=item_icon)
+
+            if mon.teratype.strip().lower() != "":
+                tera_path = LOCAL_TERA_ICONS_SRC + mon.teratype.strip().lower() + ".png"
+                if os.path.isfile(tera_path):
+                    tera_icon = Image.open(tera_path).convert("RGBA").resize(cfg["tera_size"])
+                    im.paste(tera_icon, (pos[0] + cfg["tera_offset"][0] + step_x * p, pos[1] + cfg["tera_offset"][1]), mask=tera_icon)
+
+            if mon.shadow:
+                shadow_icon = Image.open(os.path.join(SOURCE_PATH, "pokemonGO", "shadow_GO.png")).convert("RGBA").resize(cfg["go_badge_size"])
+                im.paste(shadow_icon, (pos[0] + cfg["shadow_offset"][0] + step_x * p, pos[1] + cfg["shadow_offset"][1]), mask=shadow_icon)
+
+            if mon.purified:
+                purified_icon = Image.open(os.path.join(SOURCE_PATH, "pokemonGO", "purified_GO.png")).convert("RGBA").resize(cfg["go_badge_size"])
+                im.paste(purified_icon, (pos[0] + cfg["shadow_offset"][0] + step_x * p, pos[1] + cfg["shadow_offset"][1]), mask=purified_icon)
+
+            if mon.best_friend:
+                best_friend_icon = Image.open(os.path.join(SOURCE_PATH, "pokemonGO", "best_buddy_GO.png")).convert("RGBA").resize(cfg["go_badge_size"])
+                im.paste(best_friend_icon, (pos[0] + cfg["best_friend_offset"][0] + step_x * p, pos[1] + cfg["best_friend_offset"][1]), mask=best_friend_icon)
+
 
     return im
 
-def draw_background_image(background, topcut, is_instagram: bool = False):
+def draw_background_image(background, topcut, is_instagram: bool = False):#
     if topcut.image != "" and topcut.show_background:
         # Decode base64 string to bytes
         image_data = base64.b64decode(topcut.image)
@@ -563,7 +777,7 @@ def draw_header(im, topcut, is_instagram: bool = False):
         f_regular = font_regular_IG
         icon_h = 471
         icon_pos = (65, 74)
-        text_x = 589 if topcut.image != "" else 177
+        text_x = 589 if topcut.image != "" and topcut.show_logo else 177
         tour_name_y = 236
         format_y = 339
         date_multiline_y = 339
@@ -580,7 +794,7 @@ def draw_header(im, topcut, is_instagram: bool = False):
         f_regular = font_regular
         icon_h = 160
         icon_pos = (22, 25)
-        text_x = 200 if topcut.image != "" else 60
+        text_x = 200 if topcut.image != "" and topcut.show_logo else 60
         tour_name_y = 80
         format_y = 115
         date_multiline_y = 115
