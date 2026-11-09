@@ -339,7 +339,7 @@ def genTemplate(topcut):
     return im
 
 def genTemplateInstagram(topcut):
-    backgroundPath = os.path.join("instagramMode", "solid_background_vgc_IG.png")
+    backgroundPath = os.path.join("instagramMode", "solid_background_vgc_IG.png") if topcut.game == GameType.VGC else os.path.join("instagramMode", "pokemonGO", "solid_background_go_IG.png")
 
     is_toronto = topcut.tour_name.lower().startswith("[toronto]")
     if is_toronto:
@@ -654,6 +654,8 @@ def genTemplateInstagram(topcut):
         element_path = os.path.join(SOURCE_PATH, "instagramMode", filename)
         if is_toronto:
             element_path = os.path.join(SOURCE_PATH, "instagramMode", filename).replace(".png", "_toronto.png")
+        if topcut.game == GameType.GO and not is_toronto:
+            element_path = os.path.join(SOURCE_PATH, "instagramMode", "pokemonGO", filename).replace(".png", "_GO.png")
 
         with Image.open(element_path) as player_el:
             im.paste(player_el, pos, mask=player_el)
