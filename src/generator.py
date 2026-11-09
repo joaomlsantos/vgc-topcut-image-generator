@@ -340,6 +340,12 @@ def genTemplate(topcut):
 
 def genTemplateInstagram(topcut):
     backgroundPath = os.path.join("instagramMode", "solid_background_vgc_IG.png")
+
+    is_toronto = topcut.tour_name.lower().startswith("[toronto]")
+    if is_toronto:
+        backgroundPath = os.path.join("instagramMode", "solid_background_vgc_IG_toronto.png")
+        topcut.tour_name = topcut.tour_name[9:].strip()  # Remove "[Toronto]" from the tournament name
+
     background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
     background = background.convert("RGBA")
     w = background.size[0]
@@ -646,6 +652,9 @@ def genTemplateInstagram(topcut):
 
     for index, (filename, pos) in enumerate(layout_elements.get(len(topcut.players), [])):
         element_path = os.path.join(SOURCE_PATH, "instagramMode", filename)
+        if is_toronto:
+            element_path = os.path.join(SOURCE_PATH, "instagramMode", filename).replace(".png", "_toronto.png")
+
         with Image.open(element_path) as player_el:
             im.paste(player_el, pos, mask=player_el)
         player = topcut.players[index]
