@@ -1,6 +1,6 @@
 import json
 from helper import reorder_pokemon, change_form_item, contains_cjk_characters, loadFlag
-from model import TournamentType, Player, TopCut, GameType
+from model import Palette, TournamentType, Player, TopCut, GameType
 import io
 from PIL import Image, ImageDraw, ImageFont
 import os
@@ -188,12 +188,10 @@ def load_item_icon(item_name: str, size: tuple[int, int]) -> Image.Image | None:
     item_icon = Image.open(local_path).convert("RGBA")
     return item_icon.resize(size)
 
-def draw_player_card(im, d, i: int, player, tour_type: str, game: GameType, cur_cp: int = 0, is_toronto: bool = False):
+def draw_player_card(im, d, i: int, player, tour_type: str, palette: Palette, cur_cp: int = 0):
     """Draws player card background, rank number, CP, name, social, flag, and record."""
     # 1. Card background circle
-    element_circles = os.path.join("pokemonGO", "player_element_circles_GO.png") if game == GameType.GO else "player_element_circles.png"
-    if is_toronto:
-        element_circles = "player_element_circles_toronto.png"
+    element_circles = os.path.join("colors", palette.value, "player_element_circles.png")
     player_el = Image.open(os.path.join(SOURCE_PATH, element_circles))
     player_el_x = 35 if (i % 2 == 0) else 573
     player_el_y = 215 + (40 * (i % 2)) + 151 * (i // 2)
@@ -309,12 +307,7 @@ def genTemplate(topcut):
 
     im = Image.new("RGBA", (template.size[0], dynamic_height))
 
-    backgroundPath = "solid_background.png" if topcut.game == GameType.VGC else os.path.join("pokemonGO", "solid_background_GO.png")
-
-    is_toronto = topcut.tour_name.lower().startswith("[toronto]")
-    if is_toronto:
-        backgroundPath = "solid_background_toronto.png"
-        topcut.tour_name = topcut.tour_name[9:].strip()  # Remove "[Toronto]" from the tournament name
+    backgroundPath = os.path.join("colors", topcut.palette.value, "solid_background.png")
 
     background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
     background = background.convert("RGBA")
@@ -333,13 +326,13 @@ def genTemplate(topcut):
     mult_2 = 0
     for i, player in enumerate(topcut.players):
         cur_cp, mult_2 = calculate_player_cp(i + 1, topcut.tour_type, topcut.divisions.master, mult_2)
-        draw_player_card(im, d, i, player, topcut.tour_type, topcut.game, cur_cp, is_toronto)
+        draw_player_card(im, d, i, player, topcut.tour_type, topcut.palette, cur_cp)
         draw_player_team(im, i, player.pokemon, reorder=topcut.reorder)
 
     return im
 
 def genTemplateInstagram(topcut):
-    backgroundPath = os.path.join("instagramMode", "solid_background_vgc_IG.png") if topcut.game == GameType.VGC else os.path.join("instagramMode", "pokemonGO", "solid_background_go_IG.png")
+    backgroundPath = os.path.join("colors", topcut.palette.value, "IG", "solid_background.png")
 
     is_toronto = topcut.tour_name.lower().startswith("[toronto]")
     if is_toronto:
@@ -360,41 +353,41 @@ def genTemplateInstagram(topcut):
 
     layout_elements = {
         1: [
-            ("player_element_circles_1st_IG.png", (340, 1185)),
+            ("player_element_circles_1st.png", (340, 1185)),
         ],
         2: [
-            ("player_element_circles_1st_IG.png", (340, 1150)),
-            ("player_element_circles_2nd_IG.png", (518, 2895)),
+            ("player_element_circles_1st.png", (340, 1150)),
+            ("player_element_circles_2nd.png", (518, 2895)),
         ],
         3: [
-            ("player_element_circles_1st_IG.png", (340, 1044)),
-            ("player_element_circles_2nd_IG.png", (518, 2073)),
-            ("player_element_circles_T4_IG.png", (694, 3004)),
+            ("player_element_circles_1st.png", (340, 1044)),
+            ("player_element_circles_2nd.png", (518, 2073)),
+            ("player_element_circles_T4.png", (694, 3004)),
         ],
         4: [
-            ("player_element_circles_1st_IG.png", (340, 591)),
-            ("player_element_circles_2nd_IG.png", (518, 1620)),
-            ("player_element_circles_T4_IG.png", (694, 2551)),
-            ("player_element_circles_T4_IG.png", (694, 3388)),
+            ("player_element_circles_1st.png", (340, 591)),
+            ("player_element_circles_2nd.png", (518, 1620)),
+            ("player_element_circles_T4.png", (694, 2551)),
+            ("player_element_circles_T4.png", (694, 3388)),
         ],
         5: [
-            ("player_element_circles_1st_IG.png", (340, 591)),
-            ("player_element_circles_2nd_IG.png", (518, 1431)),
-            ("player_element_circles_T4_IG.png", (694, 2168)),
-            ("player_element_circles_T4_IG.png", (694, 2811)),
-            ("player_element_circles_T4_IG.png", (694, 3454)),
+            ("player_element_circles_1st.png", (340, 591)),
+            ("player_element_circles_2nd.png", (518, 1431)),
+            ("player_element_circles_T4.png", (694, 2168)),
+            ("player_element_circles_T4.png", (694, 2811)),
+            ("player_element_circles_T4.png", (694, 3454)),
         ],
         6: [
-            ("player_element_circles_1st_IG.png", (340, 783)),
-            ("player_element_circles_2nd_IG.png", (518, 1754)),
+            ("player_element_circles_1st.png", (340, 783)),
+            ("player_element_circles_2nd.png", (518, 1754)),
             ("player_element_circles.png", (94, 2591)),
             ("player_element_circles.png", (1695, 2671)),
             ("player_element_circles.png", (94, 3286)),
             ("player_element_circles.png", (1695, 3366)),
         ],
         7: [
-            ("player_element_circles_1st_IG.png", (340, 741)),
-            ("player_element_circles_2nd_IG.png", (518, 1576)),
+            ("player_element_circles_1st.png", (340, 741)),
+            ("player_element_circles_2nd.png", (518, 1576)),
             ("player_element_circles.png", (94, 2312)),
             ("player_element_circles.png", (1695, 2392)),
             ("player_element_circles.png", (94, 2846)),
@@ -402,8 +395,8 @@ def genTemplateInstagram(topcut):
             ("player_element_circles.png", (894, 3380)),
         ],
         8: [
-            ("player_element_circles_1st_IG.png", (340, 741)),
-            ("player_element_circles_2nd_IG.png", (518, 1576)),
+            ("player_element_circles_1st.png", (340, 741)),
+            ("player_element_circles_2nd.png", (518, 1576)),
             ("player_element_circles.png", (94, 2312)),
             ("player_element_circles.png", (1695, 2392)),
             ("player_element_circles.png", (94, 2846)),
@@ -412,8 +405,8 @@ def genTemplateInstagram(topcut):
             ("player_element_circles.png", (1695, 3460)),
         ],
         9: [
-            ("player_element_circles_1st_IG.png", (340, 663)),
-            ("player_element_circles_2nd_IG.png", (518, 1423)),
+            ("player_element_circles_1st.png", (340, 663)),
+            ("player_element_circles_2nd.png", (518, 1423)),
             ("player_element_circles.png", (94, 2085)),
             ("player_element_circles.png", (1695, 2125)),
             ("player_element_circles.png", (94, 2545)),
@@ -423,8 +416,8 @@ def genTemplateInstagram(topcut):
             ("player_element_circles.png", (894, 3505)),
         ],
         10: [
-            ("player_element_circles_1st_IG.png", (340, 663)),
-            ("player_element_circles_2nd_IG.png", (518, 1423)),
+            ("player_element_circles_1st.png", (340, 663)),
+            ("player_element_circles_2nd.png", (518, 1423)),
             ("player_element_circles.png", (94, 2085)),
             ("player_element_circles.png", (1695, 2125)),
             ("player_element_circles.png", (94, 2545)),
@@ -534,7 +527,7 @@ def genTemplateInstagram(topcut):
     mult_2 = 0
 
     tier_styles = {
-        "player_element_circles_1st_IG.png": {
+        "player_element_circles_1st.png": {
             "num_font": num_player_font_IG_1st,
             "num_offset": (200, 180),
             "flag_size": 150,
@@ -562,7 +555,7 @@ def genTemplateInstagram(topcut):
             "best_friend_offset": (330, 280),
             "go_badge_size": (110, 110),
         },
-        "player_element_circles_2nd_IG.png": {
+        "player_element_circles_2nd.png": {
             "num_font": num_player_font_IG_2nd,
             "num_offset": (180, 160),
             "flag_size": 120,
@@ -590,7 +583,7 @@ def genTemplateInstagram(topcut):
             "best_friend_offset": (283, 240),
             "go_badge_size": (94, 94),
         },
-        "player_element_circles_T4_IG.png": {
+        "player_element_circles_T4.png": {
             "num_font": num_player_font_IG_T4,
             "num_offset": (150, 129),
             "flag_size": 105,
@@ -651,12 +644,7 @@ def genTemplateInstagram(topcut):
     d = ImageDraw.Draw(im)
 
     for index, (filename, pos) in enumerate(layout_elements.get(len(topcut.players), [])):
-        element_path = os.path.join(SOURCE_PATH, "instagramMode", filename)
-        if is_toronto:
-            element_path = os.path.join(SOURCE_PATH, "instagramMode", filename).replace(".png", "_toronto.png")
-        if topcut.game == GameType.GO and not is_toronto:
-            element_path = os.path.join(SOURCE_PATH, "instagramMode", "pokemonGO", filename).replace(".png", "_GO.png")
-
+        element_path = os.path.join(SOURCE_PATH, "colors", topcut.palette.value, "IG", filename)
         with Image.open(element_path) as player_el:
             im.paste(player_el, pos, mask=player_el)
         player = topcut.players[index]
@@ -782,7 +770,7 @@ def draw_header(im, topcut, is_instagram: bool = False):
     is_ig = is_instagram or (im.size[0] == 3240)
 
     if is_ig:
-        header_bar_name = os.path.join("instagramMode", "header_bar_IG.png")
+        header_bar_name = os.path.join("instagramMode", "header_bar.png")
         bar_y = 121
         f_bold = font_bold_IG
         f_regular = font_regular_IG

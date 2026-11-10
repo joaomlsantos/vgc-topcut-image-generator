@@ -69,12 +69,7 @@ def genTemplate(usage):
 
     im = Image.new("RGBA", (template.size[0], dynamic_height))
 
-    backgroundPath = "solid_background.png" if usage.game == GameType.VGC else os.path.join("pokemonGO", "solid_background_GO.png")
-
-    is_toronto = usage.tour_name.lower().startswith("[toronto]")
-    if is_toronto:
-        backgroundPath = "solid_background_toronto.png"
-        usage.tour_name = usage.tour_name[9:].strip()  # Remove "[Toronto]" from the tournament name
+    backgroundPath = os.path.join("colors", usage.palette.value, "solid_background.png")
 
     background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
     background = background.convert("RGBA")
@@ -143,9 +138,7 @@ def genTemplate(usage):
     pokemon_start_y= 215 # Start roughly where first player_el starts in generator.py
     pokemon_row_height = 190  # Height between rows
 
-    path_element="usage_element.png"
-    if is_toronto:
-            path_element = "usage_element_toronto.png"
+    path_element=os.path.join("colors", usage.palette.value, "usage_element.png")
     image_element = Image.open(os.path.join(SOURCE_PATH, path_element))
     
     for i in range(len(sorted_pokemon)):

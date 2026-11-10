@@ -56,8 +56,14 @@ class GameType(str, Enum):
     VGC = "VGC"
     GO = "GO"
 
+class Palette(str, Enum):
+    RED = "red"
+    BLUE = "blue"
+    GREEN = "green"
+
 class TopCut(BaseModel):
     tour_name: str = ""
+    palette: Palette = Palette.BLUE
     tour_type: TournamentType
     divisions: Division
     players: List[Player]
@@ -80,6 +86,7 @@ class Usage(BaseModel):
     tour_name: str = ""
     divisions: Division
     date: str = ""
+    palette: Palette = Palette.BLUE
     format: str = ""
     game: GameType = GameType.VGC
     image: str = ""
