@@ -28,15 +28,37 @@ font_player_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" /
 font_player_social = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 14)
 
 font_player_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 18)
-font_player_JP_IG_1st = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 94)
+font_player_social_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 14)
+font_player_JP_IG_1st = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 90)
 font_player_JP_IG_2nd = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 84)
 font_player_JP_IG_T4 = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 74)
 font_player_JP_IG = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 54)
+
+font_player_social_JP_IG_1st = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 70)
+font_player_social_JP_IG_2nd = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 60)
+font_player_social_JP_IG_T4 = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 50)
+font_player_social_JP_IG = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 40)
+
+font_title_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 30)
+font_format_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 20)
+
+font_title_JP_IG = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 74)
+font_format_JP_IG = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 54)
+
 font_player_JP.set_variation_by_name("Bold")
 font_player_JP_IG_1st.set_variation_by_name("Bold")
 font_player_JP_IG_2nd.set_variation_by_name("Bold")
 font_player_JP_IG_T4.set_variation_by_name("Bold")
 font_player_JP_IG.set_variation_by_name("Bold")
+font_title_JP.set_variation_by_name("Bold")
+font_title_JP_IG.set_variation_by_name("Bold")
+font_format_JP.set_variation_by_name("Bold")
+font_format_JP_IG.set_variation_by_name("Bold")
+font_player_social_JP.set_variation_by_name("Bold")
+font_player_social_JP_IG_1st.set_variation_by_name("Bold")
+font_player_social_JP_IG_2nd.set_variation_by_name("Bold")
+font_player_social_JP_IG_T4.set_variation_by_name("Bold")
+font_player_social_JP_IG.set_variation_by_name("Bold")
 
 # Instagram header fonts
 font_regular_IG = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Regular.ttf"), 74)
@@ -213,6 +235,7 @@ def draw_player_card(im, d, i: int, player, tour_type: str, palette: Palette, cu
     player_font = font_player_JP if contains_cjk_characters(player_name) else font_player
     if len(player_name) > 23:
         player_font = font_player_small
+    player_social_font = font_player_social_JP if contains_cjk_characters(player.social) else font_player_social
 
     # 5. Position calculations
     no_cp_tours = ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]
@@ -231,7 +254,7 @@ def draw_player_card(im, d, i: int, player, tour_type: str, palette: Palette, cu
     # 6. Name and social
     if player.social and player.social.strip() != "":
         d.text((player_x, player_y - 10), player_name, fill="white", anchor="ls", font=player_font)
-        d.text((player_x, player_y + 10), player.social, fill="white", anchor="ls", font=font_player_social)
+        d.text((player_x, player_y + 10), player.social, fill="white", anchor="ls", font=player_social_font)
     else:
         d.text((player_x, player_y), player_name, fill="white", anchor="ls", font=player_font)
 
@@ -536,6 +559,7 @@ def genTemplateInstagram(topcut):
             "font_player": font_player_IG_1st,
             "font_player_jp": font_player_JP_IG_1st,
             "font_social": font_player_social_IG_1st,
+            "font_social_jp": font_player_social_JP_IG_1st,
             "cp_pos": (2500, 165),
             "cp_spacing": 231,
             "name_x": 340,
@@ -564,6 +588,7 @@ def genTemplateInstagram(topcut):
             "font_player": font_player_IG_2nd,
             "font_player_jp": font_player_JP_IG_2nd,
             "font_social": font_player_social_IG_2nd,
+            "font_social_jp": font_player_social_JP_IG_2nd,
             "cp_pos": (2150, 147),
             "cp_spacing": 164,
             "name_x": 260,
@@ -592,6 +617,7 @@ def genTemplateInstagram(topcut):
             "font_player": font_player_IG_T4,
             "font_player_jp": font_player_JP_IG_T4,
             "font_social": font_player_social_IG_T4,
+            "font_social_jp": font_player_social_JP_IG_T4,
             "cp_pos": (1780, 122),
             "cp_spacing": 117,
             "name_x": 260,
@@ -620,6 +646,7 @@ def genTemplateInstagram(topcut):
             "font_player": font_player_IG,
             "font_player_jp": font_player_JP_IG,
             "font_social": font_player_social_IG,
+            "font_social_jp": font_player_social_JP_IG,
             "cp_pos": (1420, 97),
             "cp_spacing": 120,
             "name_x": 220,
@@ -674,11 +701,12 @@ def genTemplateInstagram(topcut):
 
         # Player Name & Social
         player_font = cfg["font_player_jp"] if contains_cjk_characters(player_name) else cfg["font_player"]
+        player_social_font = cfg["font_social_jp"] if contains_cjk_characters(player.social) else cfg["font_social"]
         flag_offset = cfg["flag_text_offset"] if player.flag else 0
         name_x = pos[0] + cfg["name_x"] + flag_offset
         if player.social and player.social.strip() != "":
             d.text((name_x, pos[1] + cfg["name_y_social"]), player_name, fill="white", anchor="ls", font=player_font)
-            d.text((name_x, pos[1] + cfg["social_y"]), player.social, fill="white", anchor="ls", font=cfg["font_social"])
+            d.text((name_x, pos[1] + cfg["social_y"]), player.social, fill="white", anchor="ls", font=player_social_font)
         else:
             d.text((name_x, pos[1] + cfg["name_y_no_social"]), player_name, fill="white", anchor="ls", font=player_font)
 
@@ -774,6 +802,8 @@ def draw_header(im, topcut, is_instagram: bool = False):
         bar_y = 121
         f_bold = font_bold_IG
         f_regular = font_regular_IG
+        f_title_jp = font_title_JP_IG
+        f_format_jp = font_format_JP_IG
         icon_h = 471
         icon_pos = (65, 74)
         text_x = 589 if topcut.image != "" and topcut.show_logo else 177
@@ -791,6 +821,8 @@ def draw_header(im, topcut, is_instagram: bool = False):
         bar_y = 41
         f_bold = font_bold
         f_regular = font_regular
+        f_title_jp = font_title_JP
+        f_format_jp = font_format_JP
         icon_h = 160
         icon_pos = (22, 25)
         text_x = 200 if topcut.image != "" and topcut.show_logo else 60
@@ -830,8 +862,10 @@ def draw_header(im, topcut, is_instagram: bool = False):
 
     # Tournament name & format positioning depends on whether we have a tour icon
     #if topcut.tour_type.lower() in formats or topcut.image != "":
-    d.text((text_x, tour_name_y), topcut.tour_name, fill="white", anchor="ls", font=f_bold)
-    d.text((text_x, format_y), str(topcut.format), fill="white", anchor="ls", font=f_regular)
+    font_name = f_title_jp if contains_cjk_characters(topcut.tour_name) else f_bold
+    font_format = f_format_jp if contains_cjk_characters(str(topcut.format)) else f_regular
+    d.text((text_x, tour_name_y), topcut.tour_name, fill="white", anchor="ls", font=font_name)
+    d.text((text_x, format_y), str(topcut.format), fill="white", anchor="ls", font=font_format)
 
     divisions = [
         ("MA", topcut.divisions.master),
