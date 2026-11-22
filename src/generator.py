@@ -239,7 +239,7 @@ def draw_player_card(im, d, i: int, player, tour_type: str, palette: Palette, cu
 
     # 5. Position calculations
     no_cp_tours = ["PREMIERBALL", "MASTERBALL", "GREATBALL", "ULTRABALL", "GRASSROOTS", "WORLDS"]
-    if tour_type in no_cp_tours:
+    if tour_type in no_cp_tours or cur_cp == 0:
         player_x = 108 if (i % 2 == 0) else 646
         player_y = (248 if (i % 2 == 0) else 288) + 151 * (i // 2)
         record_x = 500 if (i % 2 == 0) else 1038
