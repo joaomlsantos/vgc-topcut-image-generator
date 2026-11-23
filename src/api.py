@@ -11,10 +11,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 import generator
-from model import TopCut, TomHtmlUrl, Usage
+from model import TopCut, Usage
 import base64
 from typing import Union
-import tom_html_parser
 import usage as usageGenerator
 
 
@@ -79,11 +78,6 @@ def postTopcutInstagram(topcut: TopCut, format: Union[str, None] = None):
         return "data:image/png;base64," + encoded_img.decode("utf-8")
     return Response(content=image_bytes, media_type="image/png")
 
-
-@app.post("/pairings")
-def postPairings(url: TomHtmlUrl):
-    pairings = tom_html_parser.parseTomHtml(url)
-    return pairings
 
 if __name__ == "__main__":
     import uvicorn

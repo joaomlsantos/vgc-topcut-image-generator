@@ -19,17 +19,9 @@ LOCAL_TERA_ICONS_SRC = str(BASE_DIR / "img" / "teras") + "/"
 
 # Fonts
 FONTS_DIR = BASE_DIR / "fonts"
-font_bold = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 24)
-font_player = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 18)
-font_player_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
 font_pokemon_name = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
 font_pokemon_name_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 12)
 font_percentage = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
-
-font_player_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 18)
-font_player_JP.set_variation_by_name("Bold")
-
-num_player_font = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 24)
 
 def loadPokemonIndex():
     SOURCE_PATH = BASE_DIR / "pokemon_clean.txt"

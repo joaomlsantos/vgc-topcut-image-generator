@@ -69,9 +69,6 @@ class TopCut(BaseModel):
     show_background: bool = False
     reorder: bool = False
 
-class TomHtmlUrl(BaseModel):
-    url: str
-
 class PokemonStats(BaseModel):
     name: str = ""
     usage_count: int = 0
