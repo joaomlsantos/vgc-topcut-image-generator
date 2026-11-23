@@ -5,28 +5,41 @@ from psycopg2 import sql
 from dotenv import load_dotenv, find_dotenv
 import os
 from datetime import datetime
+from pathlib import Path
 
-# Load environment variables from .env file
-load_dotenv(find_dotenv())
+# Load environment variables from .env file (without overriding hosting environment variables)
+ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
+if ENV_PATH.is_file():
+    load_dotenv(ENV_PATH)
+else:
+    load_dotenv(find_dotenv())
 
 def connect_to_db():
     try:
+        connect_timeout = int(os.getenv("DB_CONNECT_TIMEOUT", "5"))
         db_url = os.getenv("DATABASE_URL")
         if db_url:
             connect_kwargs = {}
             if "neon.tech" in db_url and "sslmode" not in db_url:
                 connect_kwargs["sslmode"] = "require"
+            if "connect_timeout" not in db_url:
+                connect_kwargs["connect_timeout"] = connect_timeout
             connection = psycopg2.connect(db_url, **connect_kwargs)
         else:
+            db_host = os.getenv("DB_HOST")
+            if not db_host:
+                print("Database not configured; skipping connection.")
+                return None
             connect_kwargs = {
                 "dbname": os.getenv("DB_NAME"),
                 "user": os.getenv("DB_USER"),
                 "password": os.getenv("DB_PASSWORD"),
-                "host": os.getenv("DB_HOST"),
+                "host": db_host,
                 "port": os.getenv("DB_PORT", 5432),
+                "connect_timeout": connect_timeout,
             }
             sslmode = os.getenv("DB_SSLMODE")
-            if not sslmode and "neon.tech" in (os.getenv("DB_HOST") or ""):
+            if not sslmode and "neon.tech" in db_host:
                 sslmode = "require"
             if sslmode:
                 connect_kwargs["sslmode"] = sslmode
@@ -44,6 +57,7 @@ def submit_data(topcut):
     if connection is None:
         return "Error connecting to database."
     
+    cursor = None
     try:
         cursor = connection.cursor()
         # Insert data into the database
@@ -94,5 +108,6 @@ def submit_data(topcut):
         print(f"Error submitting data: {error}")
         return "Error submitting data."
     finally:
-        cursor.close()
+        if cursor is not None:
+            cursor.close()
         connection.close()

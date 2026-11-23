@@ -210,14 +210,16 @@ def genTemplate(usage):
         if(icon_name == ""):
             continue
         pokemon_icon_id = pokemonindex[icon_name]["id"]
+        local_path = LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png"
 
-        if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
-            icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
-            content = icon_url.read()
-            with open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png", "wb") as download:
+        if(not os.path.isfile(local_path)):
+            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+            with urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png", timeout=10) as icon_url:
+                content = icon_url.read()
+            with open(local_path, "wb") as download:
                 download.write(content)
         
-        p_icon = Image.open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
+        p_icon = Image.open(local_path)
         p_icon = p_icon.convert("RGBA")
 
         alpha=p_icon.getchannel("A")
