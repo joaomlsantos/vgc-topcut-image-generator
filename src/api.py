@@ -20,7 +20,12 @@ import usage as usageGenerator
 
 
 
-app = FastAPI(root_path=os.getenv("ROOT_PATH", ""))
+app = FastAPI(
+    root_path=os.getenv("ROOT_PATH", ""),
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
+)
 
 app.add_middleware(
     CORSMiddleware,
