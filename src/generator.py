@@ -187,8 +187,9 @@ def load_pokemon_icon(name: str, size: tuple[int, int]) -> Image.Image | None:
     pokemon_icon_id = pokemonindex[icon_name]
     local_path = LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png"
     if not os.path.isfile(local_path):
-        icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
-        content = icon_url.read()
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+        with urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png", timeout=10) as icon_url:
+            content = icon_url.read()
         with open(local_path, "wb") as download:
             download.write(content)
 
@@ -202,8 +203,9 @@ def load_item_icon(item_name: str, size: tuple[int, int]) -> Image.Image | None:
 
     local_path = LOCAL_ITEM_ICONS_SRC + itemIndex[item_name] + ".png"
     if not os.path.isfile(local_path):
-        icon_url = urlopen(ITEM_ICONS_SRC + itemIndex[item_name] + ".png")
-        content = icon_url.read()
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
+        with urlopen(ITEM_ICONS_SRC + itemIndex[item_name] + ".png", timeout=10) as icon_url:
+            content = icon_url.read()
         with open(local_path, "wb") as download:
             download.write(content)
 

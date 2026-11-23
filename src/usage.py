@@ -19,17 +19,9 @@ LOCAL_TERA_ICONS_SRC = str(BASE_DIR / "img" / "teras") + "/"
 
 # Fonts
 FONTS_DIR = BASE_DIR / "fonts"
-font_bold = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 24)
-font_player = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 18)
-font_player_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
 font_pokemon_name = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
 font_pokemon_name_small = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 12)
 font_percentage = ImageFont.truetype(str(FONTS_DIR / "Montserrat" / "static" / "Montserrat-Bold.ttf"), 16)
-
-font_player_JP = ImageFont.truetype(str(FONTS_DIR / "SourceHansSans" / "SourceHanSans-VF.ttf"), 18)
-font_player_JP.set_variation_by_name("Bold")
-
-num_player_font = ImageFont.truetype(str(FONTS_DIR / "Edo" / "edo.ttf"), 24)
 
 def loadPokemonIndex():
     SOURCE_PATH = BASE_DIR / "pokemon_clean.txt"
@@ -203,14 +195,16 @@ def genTemplate(usage):
         if(icon_name == ""):
             continue
         pokemon_icon_id = pokemonindex[icon_name]["id"]
+        local_path = LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png"
 
-        if(not os.path.isfile(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")):
-            icon_url = urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
-            content = icon_url.read()
-            with open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png", "wb") as download:
+        if(not os.path.isfile(local_path)):
+            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+            with urlopen(POKEMON_ICONS_SRC + pokemon_icon_id + ".png", timeout=10) as icon_url:
+                content = icon_url.read()
+            with open(local_path, "wb") as download:
                 download.write(content)
         
-        p_icon = Image.open(LOCAL_POKEMON_ICONS_SRC + pokemon_icon_id + ".png")
+        p_icon = Image.open(local_path)
         p_icon = p_icon.convert("RGBA")
 
         alpha=p_icon.getchannel("A")

@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -10,18 +11,21 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 import generator
-from model import TopCut, TomHtmlUrl, Usage
+from model import TopCut, Usage
 import base64
 from typing import Union
-import tom_html_parser
-import uvicorn
 import usage as usageGenerator
 
 
 
 
 
-app = FastAPI()
+app = FastAPI(
+    root_path=os.getenv("ROOT_PATH", ""),
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,7 +39,7 @@ allowed_formats = ["base64", "png"]
 
 
 @app.post("/topcut/{format}")
-async def postTopcut(topcut: TopCut, format: Union[str, None] = None):
+def postTopcut(topcut: TopCut, format: Union[str, None] = None):
     if((format != None) and (format not in allowed_formats)):
         raise HTTPException(status_code=400, detail="Format not allowed; please omit the parameter or use one of the following formats: " + ",".join(allowed_formats))
     
@@ -50,7 +54,7 @@ async def postTopcut(topcut: TopCut, format: Union[str, None] = None):
     return Response(content=image_bytes, media_type="image/png")
 
 @app.post("/usage/{format}")
-async def postUsage(usage: Usage, format: Union[str, None] = None):
+def postUsage(usage: Usage, format: Union[str, None] = None):
     if((format != None) and (format not in allowed_formats)):
         raise HTTPException(status_code=400, detail="Format not allowed; please omit the parameter or use one of the following formats: " + ",".join(allowed_formats))
     
@@ -65,7 +69,7 @@ async def postUsage(usage: Usage, format: Union[str, None] = None):
     return Response(content=image_bytes, media_type="image/png")
 
 @app.post("/topcut/instagram/{format}")
-async def postTopcutInstagram(topcut: TopCut, format: Union[str, None] = None):
+def postTopcutInstagram(topcut: TopCut, format: Union[str, None] = None):
     if((format != None) and (format not in allowed_formats)):
         raise HTTPException(status_code=400, detail="Format not allowed; please omit the parameter or use one of the following formats: " + ",".join(allowed_formats))
     
@@ -80,10 +84,7 @@ async def postTopcutInstagram(topcut: TopCut, format: Union[str, None] = None):
     return Response(content=image_bytes, media_type="image/png")
 
 
-@app.post("/pairings")
-async def postPairings(url: TomHtmlUrl):
-    pairings = tom_html_parser.parseTomHtml(url)
-    return pairings
-
 if __name__ == "__main__":
+    import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
