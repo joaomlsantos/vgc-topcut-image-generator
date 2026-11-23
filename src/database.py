@@ -7,7 +7,7 @@ from dotenv import load_dotenv, find_dotenv
 import os
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import quote, urlparse
+from urllib.parse import quote, unquote, urlparse
 import requests
 
 # Load environment variables from .env file (without overriding hosting environment variables)
@@ -199,7 +199,113 @@ def connect_to_db():
         return None
     
 
+def _get_mysql_config() -> dict | None:
+    """Return MySQL connection settings when configured for MySQL."""
+    db_url = os.getenv("DATABASE_URL") or ""
+    if db_url.startswith(("mysql://", "mysql+pymysql://")):
+        parsed = urlparse(db_url)
+        return {
+            "host": parsed.hostname or "localhost",
+            "port": parsed.port or 3306,
+            "user": unquote(parsed.username or ""),
+            "password": unquote(parsed.password or ""),
+            "database": unquote(parsed.path.lstrip("/")),
+        }
+
+    if (os.getenv("DB_ENGINE") or "").lower() == "mysql" and os.getenv("DB_HOST"):
+        return {
+            "host": os.getenv("DB_HOST"),
+            "port": int(os.getenv("DB_PORT", "3306")),
+            "user": os.getenv("DB_USER") or "",
+            "password": os.getenv("DB_PASSWORD") or "",
+            "database": os.getenv("DB_NAME") or "",
+        }
+    return None
+
+
+def _submit_data_mysql(topcut, cfg: dict) -> str:
+    """Submit tournament data to MySQL using PyMySQL."""
+    import pymysql
+
+    connection = None
+    cursor = None
+    try:
+        connect_timeout = int(os.getenv("DB_CONNECT_TIMEOUT", "5"))
+        connection = pymysql.connect(
+            host=cfg["host"],
+            port=cfg["port"],
+            user=cfg["user"],
+            password=cfg["password"],
+            database=cfg["database"],
+            charset="utf8mb4",
+            connect_timeout=connect_timeout,
+            autocommit=False,
+            init_command="SET SESSION sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'",
+        )
+        print("Connection to MySQL database established successfully.")
+        cursor = connection.cursor()
+
+        formatted_date = _format_tournament_date(topcut.date)
+        print("Final formatted date:", formatted_date)
+
+        tour_type = topcut.tour_type.value if hasattr(topcut.tour_type, "value") else str(topcut.tour_type)
+        game = topcut.game.value if hasattr(topcut.game, "value") else str(topcut.game)
+
+        cursor.execute(
+            "INSERT INTO tournaments (tour_name, tour_type, date, format, game) VALUES (%s, %s, %s, %s, %s)",
+            (topcut.tour_name, tour_type, formatted_date, topcut.format, game),
+        )
+        tournament_id = cursor.lastrowid
+
+        for index, player in enumerate(topcut.players):
+            cursor.execute(
+                "INSERT INTO players (tournament_id, player_index) VALUES (%s, %s)",
+                (tournament_id, index),
+            )
+            player_id = cursor.lastrowid
+            pokemon_rows = [
+                (
+                    player_id,
+                    pokemon.name,
+                    None if pokemon.item == "" else pokemon.item,
+                    None if pokemon.teratype == "" else pokemon.teratype,
+                    bool(pokemon.gmax),
+                    bool(pokemon.shadow),
+                    bool(pokemon.purified),
+                    bool(pokemon.best_friend),
+                )
+                for pokemon in player.pokemon
+                if pokemon.name != ""
+            ]
+            if pokemon_rows:
+                cursor.executemany(
+                    "INSERT INTO pokemon (player_id, name, item, teratype, gigantamax, shadow, purified, best_friend) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    pokemon_rows,
+                )
+
+        connection.commit()
+        print("Data submitted successfully via MySQL.")
+        return "Data submitted successfully."
+    except Exception as error:
+        if connection is not None:
+            try:
+                connection.rollback()
+            except Exception:
+                pass
+        print(f"Error submitting data via MySQL: {error}")
+        return "Error submitting data."
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if connection is not None:
+            connection.close()
+
+
 def submit_data(topcut):
+    mysql_cfg = _get_mysql_config()
+    if mysql_cfg is not None:
+        return _submit_data_mysql(topcut, mysql_cfg)
+
     neon_cfg = _get_neon_http_config()
     if neon_cfg is not None:
         return _submit_data_neon_http(topcut, neon_cfg[0], neon_cfg[1])
