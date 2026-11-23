@@ -9,7 +9,6 @@ dependencies = [
     "beautifulsoup4==4.11.1",
     "fastapi==0.142.2",
     "Pillow==11.3.0",
-    "psycopg2-binary==2.9.10",
     "PyMySQL>=1.1.0,<2.0.0",
     "pydantic==2.13.5",
     "python-dotenv==1.1.1",
