@@ -61,6 +61,8 @@ class Palette(str, Enum):
     BLUE = "blue"
     GREEN = "green"
     EMERALD = "emerald"
+    RUBY = "ruby"
+    SAPPHIRE = "sapphire"
 
 class TopCut(BaseModel):
     tour_name: str = ""

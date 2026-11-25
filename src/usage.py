@@ -61,6 +61,8 @@ def genTemplate(usage):
 
     im = Image.new("RGBA", (template.size[0], dynamic_height))
 
+    print(usage.palette.value)
+
     backgroundPath = os.path.join("colors", usage.palette.value, "solid_background.png")
 
     background = Image.open(os.path.join(SOURCE_PATH, backgroundPath))
